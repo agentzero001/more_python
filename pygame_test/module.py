@@ -23,7 +23,7 @@ while True:
 
     keys = pg.key.get_pressed()
     if keys[pg.K_a]:
-        print('a pressed')
+        print(pg.K_a)
 
 
 # if __name__ == '__main__':
