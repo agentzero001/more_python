@@ -11,7 +11,7 @@ screen = pg.display.set_mode((640, 480))
 #
 #    return ans
 
-x = 0
+
 
 while True:
     for event in pg.event.get():

@@ -1,4 +1,4 @@
-import module
+import module2
 
-print('hi')
+module2.key_controller()
 
