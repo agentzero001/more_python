@@ -11,4 +11,5 @@ d1.stream_on()
 while True:
     img = d1.get_frame_read().frame
     img = cv2.resize(img, (360, 240))
-    cv2.imshow()
+    cv2.imshow('camera1', img)
+    cv2.waitKey(1)
