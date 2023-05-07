@@ -31,10 +31,21 @@ def getKey(kname):
     
     return pressed
 
-while True:
-    print(getKey('a'))
-
-
+# while True:
+#     if getKey('a'):
+#         print('a pressed')
+        
+#     if getKey('b'):
+#         print('b pressed')
+        
+#     if getKey('s'):
+#         print('s pressed')
+        
+#     if getKey('d'):
+#         print('d pressed')
+        
+    
+    
 
 if __name__ == '__main__':
     pass

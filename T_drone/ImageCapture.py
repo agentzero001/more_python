@@ -6,7 +6,7 @@ d1 = tello.Tello()
 d1.connect()
 print(d1.get_battery())
 
-d1.stream_on()
+d1.streamon()
 
 while True:
     img = d1.get_frame_read().frame
