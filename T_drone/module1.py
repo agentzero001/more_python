@@ -1,4 +1,58 @@
 import pygame as pg
+from djitellopy import tello
+
+            
+pg.init()
+pg.display.set_mode((200, 200))
+
+d1 = tello.Tello()
+            
+def getKey(kname):
+    pressed = False
+    for eve in pg.event.get(): pass
+    keyInput = pg.key.get_pressed()
+    myKey = getattr(pg, 'K_{}'.format(kname))
+    if keyInput[myKey]:
+       pressed = True
+    pg.display.update()
+    return pressed
+        
+def set_control():
+    ticks = 10
+    up_down, left_right, fwards_bwards, turn = 0, 0, 0, 0
+    
+    if   getKey('UP'):   up_down =  ticks
+    elif getKey('DOWN'): up_down = -ticks
+    
+    if   getKey('LEFT'):  turn =  ticks
+    elif getKey('RIGHT'): turn = -ticks
+         
+    if   getKey('w'): fwards_bwards =  ticks
+    elif getKey('s'): fwards_bwards = -ticks
+         
+    if   getKey('a'): left_right =  ticks
+    elif getKey('d'): left_right = -ticks
+    
+    if    getKey('c'): d1.land()
+    elif  getKey('v'): d1.takeoff()
+        
+    return [up_down, fwards_bwards, left_right, turn]    
+    
+    
+
+# while True:
+#     if getKey('a'):
+#         print('a pressed')
+        
+#     if getKey('b'):
+#         print('b pressed')
+        
+#     if getKey('s'):
+#         print('s pressed')
+        
+#     if getKey('d'):
+#         print('d pressed')
+
 
 # def key_controller():
 #     a=0
@@ -15,37 +69,7 @@ import pygame as pg
 #         if keys[pg.K_a]:
 #             a+=1
 #             print(a)
-            
-pg.init()
-pg.display.set_mode((200, 200))
 
-            
-def getKey(kname):
-    pressed = False
-    for eve in pg.event.get(): pass
-    keyInput = pg.key.get_pressed()
-    myKey = getattr(pg, 'K_{}'.format(kname))
-    if keyInput[myKey]:
-       pressed = True
-    pg.display.update()
-    
-    return pressed
-
-# while True:
-#     if getKey('a'):
-#         print('a pressed')
-        
-#     if getKey('b'):
-#         print('b pressed')
-        
-#     if getKey('s'):
-#         print('s pressed')
-        
-#     if getKey('d'):
-#         print('d pressed')
-        
-    
-    
 
 if __name__ == '__main__':
     pass

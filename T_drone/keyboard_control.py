@@ -39,6 +39,6 @@ def set_control():
 while True:
     values = set_control()
     d1.send_rc_control(values[2], values[1], values[0], values[3])
-    time.sleep(.1)
+    time.sleep(.1)  
     
     

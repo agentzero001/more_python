@@ -5,7 +5,6 @@ import time
 d1 = tello.Tello()
 d1.connect()
 print(d1.get_battery())
-
 d1.streamon()
 
 while True:
