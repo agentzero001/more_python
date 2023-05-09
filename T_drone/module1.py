@@ -40,18 +40,21 @@ def set_control():
     
     
 
-# while True:
-#     if getKey('a'):
-#         print('a pressed')
+
+
+
+while True:
+    if getKey('a'):
+        print('a pressed')
         
-#     if getKey('b'):
-#         print('b pressed')
+    if getKey('b'):
+        print('b pressed')
         
-#     if getKey('s'):
-#         print('s pressed')
+    if getKey('s'):
+        print('s pressed')
         
-#     if getKey('d'):
-#         print('d pressed')
+    if getKey('d'):
+        print('d pressed')
 
 
 # def key_controller():
