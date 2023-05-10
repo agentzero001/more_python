@@ -16,7 +16,7 @@ def getKey(kname):
        pressed = True
     pg.display.update()
     return pressed
-        
+
 def set_control():
     ticks = 10
     up_down, left_right, fwards_bwards, turn = 0, 0, 0, 0
@@ -36,7 +36,7 @@ def set_control():
     if    getKey('c'): d1.land()
     elif  getKey('v'): d1.takeoff()
         
-    return [up_down, fwards_bwards, left_right, turn]    
+    return [left_right, fwards_bwards, up_down, turn]    
     
     
 
