@@ -1,11 +1,18 @@
 import pygame as pg
 from djitellopy import tello
+import time
+import cv2
+
+
+
+global img
+d1 = tello.Tello()
+
 
             
 pg.init()
 pg.display.set_mode((200, 200))
 
-d1 = tello.Tello()
             
 def getKey(kname):
     pressed = False
@@ -18,6 +25,7 @@ def getKey(kname):
     return pressed
 
 def set_control():
+    a = 0
     ticks = 10
     up_down, left_right, fwards_bwards, turn = 0, 0, 0, 0
     
@@ -33,9 +41,15 @@ def set_control():
     if   getKey('a'): left_right =  ticks
     elif getKey('d'): left_right = -ticks
     
-    if    getKey('c'): d1.land()
-    elif  getKey('v'): d1.takeoff()
+    if   getKey('c'): d1.land()
+    elif getKey('v'): d1.takeoff()
+    
+    if getKey('p'):
+        cv2.imwrite('Resources/Unages/picture{}'.format(time.time()),img)
+        time.sleep(.2)  
+
         
+           
     return [left_right, fwards_bwards, up_down, turn]    
     
     
@@ -43,18 +57,18 @@ def set_control():
 
 
 
-while True:
-    if getKey('a'):
-        print('a pressed')
+# while True:
+#     if getKey('a'):
+#         print('a pressed')
         
-    if getKey('b'):
-        print('b pressed')
+#     if getKey('b'):
+#         print('b pressed')
         
-    if getKey('s'):
-        print('s pressed')
+#     if getKey('s'):
+#         print('s pressed')
         
-    if getKey('d'):
-        print('d pressed')
+#     if getKey('d'):
+#         print('d pressed')
 
 
 # def key_controller():
