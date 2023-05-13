@@ -20,6 +20,6 @@ while True:
     time.sleep(.1)  
     
     
-    # if m1.getKey('p'):
-    #     cv2.imwrite('Resources/Unages/picture{}'.format(time.time()),img)
-    #     time.sleep(.2)  
+    if m1.getKey('p'):
+        cv2.imwrite('Resources/Unages/picture{}'.format(time.time()),img)
+        time.sleep(.2)  
