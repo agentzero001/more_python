@@ -3,6 +3,8 @@ import module1 as m1
 import cv2
 import time
 
+
+
 m1.d1.connect()
 m1.d1.streamon()
 print(m1.d1.get_battery())

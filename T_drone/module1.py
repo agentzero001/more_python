@@ -5,7 +5,8 @@ import cv2
 
 
 
-global img
+global d1
+
 d1 = tello.Tello()
 
 
@@ -25,7 +26,6 @@ def getKey(kname):
     return pressed
 
 def set_control():
-    a = 0
     ticks = 10
     up_down, left_right, fwards_bwards, turn = 0, 0, 0, 0
     
@@ -44,9 +44,9 @@ def set_control():
     if   getKey('c'): d1.land()
     elif getKey('v'): d1.takeoff()
     
-    if getKey('p'):
-        cv2.imwrite('Resources/Unages/picture{}'.format(time.time()),img)
-        time.sleep(.2)  
+    # if getKey('p'):
+    #     cv2.imwrite('Resources/Unages/picture{}'.format(time.time()),Surveilance.img)
+    #     time.sleep(.2)  
 
         
            
