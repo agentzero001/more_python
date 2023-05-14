@@ -6,15 +6,26 @@ import cv2
 
 
 global d1
-
 d1 = tello.Tello()
+
+w_size = (360, 240)
 
 
             
 pg.init()
-pg.display.set_mode((200, 200))
+screen = pg.display.set_mode(w_size)
+
 
             
+count = 0
+
+def increment():
+    global count
+    count += 1
+    return count
+
+
+
 def getKey(kname):
     pressed = False
     for eve in pg.event.get(): pass
@@ -25,8 +36,9 @@ def getKey(kname):
     pg.display.update()
     return pressed
 
-def set_control():
-    ticks = 10
+def set_control(img):
+
+    ticks = 50
     up_down, left_right, fwards_bwards, turn = 0, 0, 0, 0
     
     if   getKey('UP'):   up_down =  ticks
@@ -44,9 +56,9 @@ def set_control():
     if   getKey('c'): d1.land()
     elif getKey('v'): d1.takeoff()
     
-    # if getKey('p'):
-    #     cv2.imwrite('Resources/Unages/picture{}'.format(time.time()),Surveilance.img)
-    #     time.sleep(.2)  
+    if getKey('p'):
+        cv2.imwrite('Resources/Images/{}.jpg'.format(increment()), img)
+        time.sleep(.2)  
 
         
            
