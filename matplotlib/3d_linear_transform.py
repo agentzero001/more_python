@@ -31,6 +31,6 @@ def _3d_lin_trans(M, xyzlim=50):
     ax.set_zlabel('z')
     plt.show()
     
-M1 = _3d_TM(2,0,0,0,2,0,0,0,2)
+M1 = _3d_TM(1,0,1,0,1,0,0,0,1)
 
 _3d_lin_trans(M1)

@@ -1,10 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-_2d_TM = lambda a,b,c,d: np.array([[a,b],[c,d]])
+_2d_TM = lambda a,b,c,d: np.array([[a,b],
+                                   [c,d]])
 
 def _2d_lin_trans(M,xylim=50):
-    
     
     x = np.arange(-40, 41, 4)
     y = np.arange(-40, 41, 4)
@@ -29,7 +29,7 @@ def _2d_lin_trans(M,xylim=50):
     plt.show()    
 
 
-TM = _2d_TM(1,2,2,1)
+TM = _2d_TM(1,1,0,1)
 
 _2d_lin_trans(TM,xylim=100)
 
