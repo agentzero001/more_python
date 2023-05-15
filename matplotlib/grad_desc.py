@@ -21,8 +21,7 @@ y = func(x2)
 curr_pos = (50, func(50))
 l_rate = .003
 
-for i in range(1000):
-    
+for i in range(1000):    
 
     new_x = curr_pos[0] - l_rate * der_func(curr_pos[0])
     new_y = func(new_x)
