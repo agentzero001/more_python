@@ -1,40 +1,35 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 plt.rcParams['figure.facecolor'] = '0.3'
-plt.axes().set_facecolor('black')
 
+
+#sin_ = lambda x: np.sin(x)
+#cos_ = lambda x: np.cos(x)
+#y_sin = sin_(x)
+#y_cos = cos_(x)
+#x = np.linspace(0, np.pi*4, 1000)
 
 
 func = lambda x: x**2
 der_func = lambda x: 2*x
 
-sin_ = lambda x: np.sin(x)
-cos_ = lambda x: np.cos(x)
 
-x = np.linspace(0, np.pi/2, 1000)
 x2 = np.arange(-100,100,.1)
-y = func(x)
-y_sin = sin_(x)
-y_cos = cos_(x)
+y = func(x2)
 
 
+curr_pos = (50, func(50))
+l_rate = .003
 
-#cur_pos = (50, func(50))
-l_rate = .1
-
-# for i in range(1000):
-#     new_x = cur_pos[0] - l_rate * der_func(cur_pos[0])
+for i in range(1000):
     
-  
 
-
-
-
-plt.plot(x,y_cos, c='red',zorder=1)
-plt.plot(x,y_sin, c='green',zorder=1)
-
-#plt.scatter(cur_pos[0], cur_pos[1],zorder=2)
-
-
-plt.show()
+    new_x = curr_pos[0] - l_rate * der_func(curr_pos[0])
+    new_y = func(new_x)
+    curr_pos= (new_x, new_y)    
+    
+    plt.axes().set_facecolor('black')
+    plt.plot(x2, y, c='green',zorder=1)
+    plt.scatter(curr_pos[0], curr_pos[1],zorder=2,color='red')
+    plt.pause(.001)
+    plt.clf()
