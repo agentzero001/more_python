@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
+plt.rcParams['figure.facecolor'] = '0.3'
 
 
 _2d_TM = lambda a,b,c,d: np.array([[a,b],
@@ -26,12 +27,14 @@ def _2d_lin_trans(M,xylim=50):
         line, = plt.plot([v[0, i], v_t[0, i]], [v[1, i], v_t[1, i]], c='green', linewidth=.5, zorder=1)
         lines.append(line)
     
+    
+    plt.axis('equal')
     plt.axhline(y=0, color='black',zorder=0)
     plt.axvline(x=0, color='black',zorder=0)
     plt.xlim(-xylim, xylim)
     plt.ylim(-xylim, xylim)
     plt.grid(alpha=.2)
-    plt.axis('equal')
+    
     
 
     def update(frame):
@@ -41,11 +44,13 @@ def _2d_lin_trans(M,xylim=50):
             for i, line in enumerate(lines):
                 line.set_data([v[0, i], new_v_t[0, i]], [v[1, i], new_v_t[1, i]])
 
-    anim = FuncAnimation(fig, update, frames=200, interval=50, repeat=True)  
+    anim = FuncAnimation(fig, update, frames=200, interval=50, repeat=True)
+    anim.save('animation2.gif', writer='pillow') 
     plt.show()
 
 
 TM = _2d_TM(1, 10, -2, 1)
 
-_2d_lin_trans(TM, xylim=200)
+_2d_lin_trans(TM, xylim=100)
+
 
