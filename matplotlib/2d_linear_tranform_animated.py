@@ -46,10 +46,10 @@ def _2d_lin_trans(M,xylim=50):
 
     anim = FuncAnimation(fig, update, frames=200, interval=50, repeat=True)
     anim.save('animation2.gif', writer='pillow') 
-    plt.show()
+    #plt.show()
 
 
-TM = _2d_TM(1, 10, -2, 1)
+TM = _2d_TM(1, 10, -5, 1)
 
 _2d_lin_trans(TM, xylim=100)
 
