@@ -29,7 +29,3 @@ while True:
     draw_points()
     cv2.imshow('matrix', img_)
     cv2.waitKey(1)
-    
-    
-    
-        
