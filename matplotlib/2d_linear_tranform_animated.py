@@ -7,7 +7,7 @@ plt.rcParams['figure.facecolor'] = '0.3'
 _2d_TM = lambda a,b,c,d: np.array([[a,b],
                                    [c,d]])
 
-def _2d_lin_trans(M,xylim=50):
+def _2d_lin_trans(M,xylim=500):
     
     x = np.arange(-40, 41, 4)
     y = np.arange(-40, 41, 4)
@@ -34,6 +34,7 @@ def _2d_lin_trans(M,xylim=50):
     plt.xlim(-xylim, xylim)
     plt.ylim(-xylim, xylim)
     plt.grid(alpha=.2)
+   
     
     
 
@@ -45,11 +46,11 @@ def _2d_lin_trans(M,xylim=50):
                 line.set_data([v[0, i], new_v_t[0, i]], [v[1, i], new_v_t[1, i]])
 
     anim = FuncAnimation(fig, update, frames=200, interval=50, repeat=True)
-    anim.save('animation2.gif', writer='pillow') 
-    #plt.show()
+    #anim.save('animation2.gif', writer='pillow') 
+    plt.show()
 
 
-TM = _2d_TM(1, 10, -5, 1)
+TM = _2d_TM(200, 0, 0, 200)
 
 _2d_lin_trans(TM, xylim=100)
 
