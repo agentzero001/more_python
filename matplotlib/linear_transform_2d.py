@@ -31,7 +31,7 @@ def _2d_lin_trans(M,xylim=50):
     plt.show()    
 
 
-TM = _2d_TM(1,-2,-2,1)
+TM = _2d_TM(0,-1,1,0)
 
 _2d_lin_trans(TM,xylim=400)
 
