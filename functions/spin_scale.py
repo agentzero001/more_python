@@ -41,7 +41,6 @@ translationM = lambda vx, vy: np.array([[1, 0, vx],
                                         [0, 0, 1]])
 
 
-
 rotateM = lambda cX, cY, angle: ((translationM(cX, cY) @ originRotM(angle)) @ translationM(-cX, -cY))
 
 scaleM = lambda cX,cY, scaleX, scaleY: ((translationM(cX, cY) @ originscaleM(scaleX, scaleY)) @ translationM(-cX, -cY))
