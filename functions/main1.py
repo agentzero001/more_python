@@ -13,11 +13,12 @@ m1.rectangle(C, *rect)
 
 
 f = lambda scalex, scaley: m1.transformation(m1.scaleM(30, 30, scalex, scaley))
+f2 = lambda mx, my: m1.transformation(m1.translationM(mx, my))
 
-
-def recImg(scale):
-    C = np.full((60,60), 0, 'int')
-    m1.rectangle(C, *list(map(f(scale, scale), rect)))
+def recImg(mx, my):
+    C = np.full((100,100), 0, 'int')
+    #m1.rectangle(C, *list(map(f(scale, scale), rect)))
+    m1.rectangle(C, *list(map(f2(mx,my), rect)))    
     return C.copy()
 
 
@@ -31,7 +32,11 @@ def recImg(scale):
 #     return C.copy()
 
 steps = 100
-images = [recImg(i/100) for i in range(steps)]
+images = [recImg(i, i) for i in range(steps)]
+
+
+for i in range(steps):
+    images.append()
 
 
 
