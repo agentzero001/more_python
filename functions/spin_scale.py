@@ -28,6 +28,17 @@ def rectangle(arr, a, b, c):
     line__(arr, *c, *d)
     line__(arr, *d, *a)
     
+
+
+
+def hexagon(arr, a, b, c, d, e, f):
+    line__(arr, *a, *b)
+    line__(arr, *b, *c)
+    line__(arr, *c, *d)
+    line__(arr, *d, *e)
+    line__(arr, *e, *f)
+    line__(arr, *f, *a)
+    
 originRotM = lambda angle: np.array([[np.cos(angle), -np.sin(angle), 0],
                                      [np.sin(angle),  np.cos(angle), 0],
                                      [0, 0, 1]])
@@ -44,5 +55,7 @@ translationM = lambda vx, vy: np.array([[1, 0, vx],
 rotateM = lambda cX, cY, angle: ((translationM(cX, cY) @ originRotM(angle)) @ translationM(-cX, -cY))
 
 scaleM = lambda cX,cY, scaleX, scaleY: ((translationM(cX, cY) @ originscaleM(scaleX, scaleY)) @ translationM(-cX, -cY))
+
+
 
 transformation = lambda M: lambda vec: np.round(M @ [*vec, 1]).astype('int')[:2]

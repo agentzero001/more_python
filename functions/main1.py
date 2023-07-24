@@ -3,41 +3,38 @@ import numpy as np
 import matplotlib.pyplot as plt
 plt.rcParams['figure.facecolor'] = '0.2'
 
+f = lambda scalex, scaley: m1.transformation(m1.scaleM(250, 250, scalex, scaley))
+f2 = lambda mx, my: m1.transformation(m1.translationM(mx, my))
+f3 = lambda angle: m1.transformation(m1.rotateM(200,200, angle)) 
+f4 = lambda angle: m1.transformation(m1.rotateM(250, 250, angle))
 
-C = np.full((100,100), 0, 'int')
-rect = [(20, 15), (30, 15), (30, 40)]
-m1.rectangle(C, *rect)
+C = np.full((500,500), 0, 'int')
+rect = [(40,40), (260,40), (260, 260)]
+#hex = [(20, 80), (30, 70), (50, 70), (60, 80), (50, 90), (30, 90)]
+#hex2 = m1.hexagon(C, *list(map(f3(np.pi), hex)))
+#print(hex2)
+
+
+#m1.rectangle(C, *rect)
 
 # plt.matshow(C, origin='lower', cmap='gray')
 # plt.show()
 
 
-f = lambda scalex, scaley: m1.transformation(m1.scaleM(30, 30, scalex, scaley))
-f2 = lambda mx, my: m1.transformation(m1.translationM(mx, my))
-
-def recImg(mx, my):
-    C = np.full((100,100), 0, 'int')
+def recImg(mx, my, angle, scalex = .5, scaley = .5):
+    C = np.full((500,500), 0, 'int')
     #m1.rectangle(C, *list(map(f(scale, scale), rect)))
-    m1.rectangle(C, *list(map(f2(mx,my), rect)))    
+    #m1.rectangle(C, *list(map(f2(mx,my), rect)))
+    #m1.rectangle(C, *list(map(f3(angle), rect)))
+    m1.rectangle(C, *list(map(f(scalex, scaley), map(f4(angle), rect))))
+    #m1.hexagon(C, *list(map(f3(np.pi/2), map(f2(mx,my), hex))))    
     return C.copy()
 
 
 
 
-# def recImg(angle, scale):
-#     C = np.full((60,60), 0, 'int')
-#     m1.rectangle(C, *list(map(m1.transformation(m1.scaleM(30, 30, scale, scale)), 
-#                             map(m1.transformation(m1.rotateM(30, 30, angle)),
-#                                 rect))))
-#     return C.copy()
-
 steps = 100
-images = [recImg(i, i) for i in range(steps)]
-
-
-for i in range(steps):
-    images.append()
-
+images = [recImg(i,20,np.pi *i /steps) for i in range(steps)]
 
 
 from PIL import Image

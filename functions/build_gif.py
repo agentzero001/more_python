@@ -23,9 +23,9 @@ def recImg(angle, scalex, scaley, scx2 = .1, scy2 = .1):
                             map(m1.transformation(m1.rotateM(150, 150, angle+.5)),
                                 rect))))
     
-    m1.rectangle(C, *list(map(m1.transformation(m1.scaleM(200, 200, scx2, scy2)), 
-                            map(m1.transformation(m1.rotateM(200, 200, angle)),
-                                rect))))
+    # m1.rectangle(C, *list(map(m1.transformation(m1.scaleM(200, 200, scx2, scy2)), 
+    #                         map(m1.transformation(m1.rotateM(200, 200, angle)),
+    #                             rect))))
     
 
     
