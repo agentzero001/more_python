@@ -12,9 +12,7 @@ rect2 = [(30,30), (220,30), (220, 220)]
 def recImg(angle, scalex, scaley, scx2 = .1, scy2 = .1):
     C = np.full((500,500), 0, 'int')
     
-    m1.rectangle(C, *list(map(m1.transformation(m1.scaleM(150, 150, scalex, scaley)), 
-                            map(m1.transformation(m1.rotateM(150, 150, angle)),
-                                rect))))
+    m1.rectangle(C, *list(map(m1.transformation(m1.scaleM(150, 150, scalex, scaley)), map(m1.transformation(m1.rotateM(150, 150, angle)), rect))))
     
     
     m1.rectangle(C, *list(map(m1.transformation(m1.scaleM(150, 150, scalex, scaley)), 
