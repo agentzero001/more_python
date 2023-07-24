@@ -20,7 +20,7 @@ def recImg(angle, scale):
     return C.copy()
 
 steps = 100
-images = [recImg(0.5 * np.pi * i/steps, 1) for i in range(steps)]
+images = [recImg(np.pi*2 * i/steps, 1) for i in range(steps)]
 
 
 
@@ -32,4 +32,4 @@ for frame in images:
     image = Image.fromarray(frame)  
     image_sequence.append(image)
 
-image_sequence[0].save('animation1.gif', save_all=True, append_images=image_sequence[1:], duration=100, loop=0)
+image_sequence[0].save('animation1.gif', save_all=True, append_images=image_sequence[1:], duration=20, loop=0)
