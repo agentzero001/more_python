@@ -12,16 +12,18 @@ rect2 = [(30,30), (220,30), (220, 220)]
 def recImg(angle, scalex, scaley, scx2 = .1, scy2 = .1):
     C = np.full((500,500), 0, 'int')
     
-    m1.rectangle(C, *list(map(m1.transformation(m1.scaleM(150, 150, scalex, scaley)), map(m1.transformation(m1.rotateM(150, 150, angle)), rect))))
+    m1.rectangle(C, *list(map(m1.transformation(m1.scaleM(150, 150, scalex, scaley)),
+                          map(m1.transformation(m1.rotateM(150, 150, angle)),
+                          rect))))
     
     
     m1.rectangle(C, *list(map(m1.transformation(m1.scaleM(150, 150, scalex, scaley)), 
-                            map(m1.transformation(m1.rotateM(150, 150, angle+1)),
-                                rect))))
+                          map(m1.transformation(m1.rotateM(150, 150, angle+1)),
+                          rect))))
     
     m1.rectangle(C, *list(map(m1.transformation(m1.scaleM(150, 150, scalex, scaley)), 
-                            map(m1.transformation(m1.rotateM(150, 150, angle+.5)),
-                                rect))))
+                          map(m1.transformation(m1.rotateM(150, 150, angle+.5)),
+                          rect))))
     
     # m1.rectangle(C, *list(map(m1.transformation(m1.scaleM(200, 200, scx2, scy2)), 
     #                         map(m1.transformation(m1.rotateM(200, 200, angle)),
@@ -32,7 +34,7 @@ def recImg(angle, scalex, scaley, scx2 = .1, scy2 = .1):
     return C.copy()
 
 steps = 200
-images = [recImg(4*np.pi * i/steps, .4*i/steps, .8*i/steps, i /150) for i in range(steps)]
+images = [recImg(4*np.pi * i/steps, .4*i/steps, .8*i/steps, i/150) for i in range(steps)]
 images += [recImg(4*np.pi * i/steps, .4, .8, i /150) for i in range(steps)]
 
 images += list(reversed(images[:200]))
