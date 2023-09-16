@@ -116,4 +116,4 @@ def create_poly(L):
 def interval2(f, a, b):
     return (list(range(a, b)), [f(i) for i in range(a,b)])
 
-interval = lambda f, a, b: (list(range(a, b)), [f(i) for i in range(a, b)])        
+interval = lambda f, a, b: (list(range(a, b)), [f(i) for i in range(a, b)])
