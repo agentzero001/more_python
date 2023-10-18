@@ -1,7 +1,7 @@
 import pygame as pg
 #print(pg.__version__)
 
-WIDTH, HEIGHT = 300, 300
+WIDTH, HEIGHT = 600, 600
 LINE_COLOR = (80, 80, 80)
 LINE_WIDTH = 5
 GRID_SIZE = WIDTH // 3
@@ -16,15 +16,18 @@ game_over = False
 
 pg.init()
 
-screen = pg.display.set_mode((600, 600))
+screen = pg.display.set_mode((WIDTH, HEIGHT))
 pg.display.set_caption("Tic-Tac-Toe")
 
 def draw_board():
-    # pg.draw.line(screen, LINE_COLOR, (200,200), (200,400), LINE_WIDTH)
-    # pg.draw.line(screen, LINE_COLOR, (400,200), (400,400), LINE_WIDTH)
+    screen.fill((20, 20, 20))
     
-    # pg.draw.line(screen, LINE_COLOR, (200, 200), (400,200), LINE_WIDTH)
-    # pg.draw.line(screen, LINE_COLOR, (400,400), (200,400), LINE_WIDTH)
+    # for x in range(1,3):
+        
+    #     pg.draw.line(screen, LINE_COLOR, (50, x*100), (WIDTH - 50, x*100), LINE_WIDTH)
+    #     pg.draw.line(screen, LINE_COLOR, (400,200), (400,400), LINE_WIDTH)
+        
+        
 
     pg.draw.line(screen, LINE_COLOR, (200, 50), (200, 550), LINE_WIDTH)
     pg.draw.line(screen, LINE_COLOR, (400, 50), (400, 550), LINE_WIDTH)
@@ -39,7 +42,7 @@ while running:
         if event.type == pg.QUIT:
             running = False
     
-    screen.fill((20, 20, 20))
+    
     draw_board()
         
     pg.display.update()
