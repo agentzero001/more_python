@@ -22,27 +22,36 @@ pg.display.set_caption("Tic-Tac-Toe")
 def draw_board():
     screen.fill((20, 20, 20))
     
-    # for x in range(1,3):
+    for x in range(1,3):
         
-    #     pg.draw.line(screen, LINE_COLOR, (50, x*100), (WIDTH - 50, x*100), LINE_WIDTH)
-    #     pg.draw.line(screen, LINE_COLOR, (400,200), (400,400), LINE_WIDTH)
+        pg.draw.line(screen, LINE_COLOR, (50, x*200), (WIDTH - 50, x*200), LINE_WIDTH)
+        pg.draw.line(screen, LINE_COLOR, (x*200, 50), (x*200, WIDTH - 50), LINE_WIDTH)
         
         
 
-    pg.draw.line(screen, LINE_COLOR, (200, 50), (200, 550), LINE_WIDTH)
-    pg.draw.line(screen, LINE_COLOR, (400, 50), (400, 550), LINE_WIDTH)
+    # pg.draw.line(screen, LINE_COLOR, (200, 50), (200, 550), LINE_WIDTH)
+    # pg.draw.line(screen, LINE_COLOR, (400, 50), (400, 550), LINE_WIDTH)
      
-    pg.draw.line(screen, LINE_COLOR, (50, 200), (550, 200), LINE_WIDTH)
-    pg.draw.line(screen, LINE_COLOR, (50, 400), (550, 400), LINE_WIDTH)
+    # pg.draw.line(screen, LINE_COLOR, (50, 200), (550, 200), LINE_WIDTH)
+    # pg.draw.line(screen, LINE_COLOR, (50, 400), (550, 400), LINE_WIDTH)
 
 
 running = True
 while running:
     for event in pg.event.get():
+        
         if event.type == pg.QUIT:
             running = False
+    
+        if event.type == pg.MOUSEBUTTONDOWN:
+            x, y = event.pos
+            col = x // (WIDTH // GRID_SIZE)
+            row = y // (HEIGHT // GRID_SIZE)
+            
+    
     
     
     draw_board()
         
     pg.display.update()
+    
