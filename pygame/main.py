@@ -4,12 +4,13 @@ import pygame as pg
 WIDTH, HEIGHT = 600, 600
 LINE_COLOR = (80, 80, 80)
 LINE_WIDTH = 5
-GRID_SIZE = WIDTH // 3
-X_COLOR = (255, 0, 0)
-O_COLOR = (0, 0, 255)
+GRID_SIZE = 3
+X_COLOR = (90, 90, 90)
+O_COLOR = (90, 90, 90)
 
 
 board = [['' for _ in range(3)] for _ in range(3)]
+board[2][2] = 'O'
 turn = 'X'
 game_over = False
 
@@ -34,6 +35,25 @@ def draw_board():
      
     # pg.draw.line(screen, LINE_COLOR, (50, 200), (550, 200), LINE_WIDTH)
     # pg.draw.line(screen, LINE_COLOR, (50, 400), (550, 400), LINE_WIDTH)
+    
+    
+    
+CIRCLE_WIDTH = 15
+CIRCLE_RADIUS = 60
+
+    
+def draw_XO():
+    for row in range(GRID_SIZE):
+        for col in range(GRID_SIZE):
+            if board[row][col] == 'X':
+                x = col * WIDTH // GRID_SIZE + WIDTH // (2 * GRID_SIZE)
+                y = row * HEIGHT // GRID_SIZE + HEIGHT // (2 * GRID_SIZE)
+                pg.draw.line(screen, X_COLOR, (x - CIRCLE_RADIUS, y - CIRCLE_RADIUS), (x + CIRCLE_RADIUS, y + CIRCLE_RADIUS), CIRCLE_WIDTH)
+                pg.draw.line(screen, X_COLOR, (x - CIRCLE_RADIUS, y + CIRCLE_RADIUS), (x + CIRCLE_RADIUS, y - CIRCLE_RADIUS), CIRCLE_WIDTH)
+            elif board[row][col] == 'O':
+                x = col * WIDTH // GRID_SIZE + WIDTH // (2 * GRID_SIZE)
+                y = row * HEIGHT // GRID_SIZE + HEIGHT // (2 * GRID_SIZE)
+                pg.draw.circle(screen, O_COLOR, (x, y), CIRCLE_RADIUS, CIRCLE_WIDTH)
 
 
 running = True
@@ -52,6 +72,7 @@ while running:
     
     
     draw_board()
+    draw_XO()
         
     pg.display.update()
     
