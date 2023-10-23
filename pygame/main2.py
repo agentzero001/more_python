@@ -7,7 +7,7 @@ pygame.init()
 # Constants
 WIDTH, HEIGHT = 300, 300
 LINE_WIDTH = 15
-WHITE = (255, 255, 255)
+WHITE = (50, 50, 50)
 LINE_COLOR = (0, 0, 0)
 CIRCLE_COLOR = (239, 47, 47)
 CIRCLE_RADIUS = 60
