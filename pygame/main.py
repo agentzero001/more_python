@@ -61,7 +61,7 @@ def check_win(player):
             return True
 
     # Check diagonals
-    if all(board[i][i] == player for i in range(GRID_SIZE)) or all(grid[i][GRID_SIZE - i - 1] == player for i in range(GRID_SIZE)):
+    if all(board[i][i] == player for i in range(GRID_SIZE)) or all(board[i][GRID_SIZE - i - 1] == player for i in range(GRID_SIZE)):
         return True
 
     return False
