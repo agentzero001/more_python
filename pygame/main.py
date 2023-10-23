@@ -27,15 +27,7 @@ def draw_board():
         
         pg.draw.line(screen, LINE_COLOR, (50, x*200), (WIDTH - 50, x*200), LINE_WIDTH)
         pg.draw.line(screen, LINE_COLOR, (x*200, 50), (x*200, WIDTH - 50), LINE_WIDTH)
-        
-        
-
-    # pg.draw.line(screen, LINE_COLOR, (200, 50), (200, 550), LINE_WIDTH)
-    # pg.draw.line(screen, LINE_COLOR, (400, 50), (400, 550), LINE_WIDTH)
-     
-    # pg.draw.line(screen, LINE_COLOR, (50, 200), (550, 200), LINE_WIDTH)
-    # pg.draw.line(screen, LINE_COLOR, (50, 400), (550, 400), LINE_WIDTH)
-    
+ 
     
     
 CIRCLE_WIDTH = 15
@@ -55,6 +47,24 @@ def draw_XO():
                 y = row * HEIGHT // GRID_SIZE + HEIGHT // (2 * GRID_SIZE)
                 pg.draw.circle(screen, O_COLOR, (x, y), CIRCLE_RADIUS, CIRCLE_WIDTH)
 
+
+
+def check_win(player):
+    # Check rows
+    for row in range(GRID_SIZE):
+        if all(board[row][col] == player for col in range(GRID_SIZE)):
+            return True
+
+    # Check columns
+    for col in range(GRID_SIZE):
+        if all(board[row][col] == player for row in range(GRID_SIZE)):
+            return True
+
+    # Check diagonals
+    if all(board[i][i] == player for i in range(GRID_SIZE)) or all(grid[i][GRID_SIZE - i - 1] == player for i in range(GRID_SIZE)):
+        return True
+
+    return False
 
 running = True
 while running:
