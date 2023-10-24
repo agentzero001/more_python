@@ -75,7 +75,7 @@ while not game_over:
             pygame.quit()
             sys.exit()
 
-        if event.type == pygame.MOUSEBUTTONDOWN and not game_over:
+        if event. type == pygame.MOUSEBUTTONDOWN and not game_over:
             x, y = event.pos
             col = x // (WIDTH // GRID_SIZE)
             row = y // (HEIGHT // GRID_SIZE)
