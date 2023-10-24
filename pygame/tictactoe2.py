@@ -3,25 +3,22 @@ import sys
 from random import randint
 
 class Tictactoe:
-    def __init__(self, game, W_SIZE, screen):
-        self.LINE_COLOR = (80, 80, 80)
-        self.W_SIZE = W_SIZE
-        self.screen = screen
+    def __init__(self, game):
         pass
     
     def run(self):
+        pass
         
-        for x in range(1,3):
-            pg.draw.line(self.screen, self.LINE_COLOR, (50, x*200), (self.W_SIZE - 50, x*200), 5)
-            pg.draw.line(self.screen, self.LINE_COLOR, (x*200, 50), (x*200, self.W_SIZE - 50), 5)
-   
-            
+
+
+
+
 class Game:
     def __init__(self, W_SIZE=600):
         pg.init()
         self.screen = pg.display.set_mode([W_SIZE] * 2)
         self.clock = pg.time.Clock()
-        self.tic_tac_toe = Tictactoe(self, W_SIZE, self.screen)
+        self.tic_tac_toe = Tictactoe(self)
         
     def check_events(self):
         for event in pg.event.get():

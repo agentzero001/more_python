@@ -75,14 +75,14 @@ while not game_over:
             pygame.quit()
             sys.exit()
 
-        if event. type == pygame.MOUSEBUTTONDOWN and not game_over:
+        if event.type == pygame.MOUSEBUTTONDOWN and not game_over:
             x, y = event.pos
             col = x // (WIDTH // GRID_SIZE)
             row = y // (HEIGHT // GRID_SIZE)
 
             if grid[row][col] == '':
                 grid[row][col] = player_turn
-
+                                
                 if check_win(player_turn):
                     game_over = True
                 elif check_tie():

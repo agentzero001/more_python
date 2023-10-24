@@ -6,9 +6,9 @@ import pandas as pd
 
 class Calculus:
     def __init__(self,L):
-        create_symfunc = lambda coeffs: sum(coeffs[i]*self.x**i for i in range(len(coeffs)))
+        #create_symfunc = lambda coeffs: sum(coeffs[i]*self.x**i for i in range(len(coeffs)))
         self.x = sp.symbols('x')
-        self.sym_func = create_symfunc(L)
+        self.sym_func = sum(L[i]*self.x**i for i in range(len(L)))
         self.sym_dfunc = sp.diff(self.sym_func, self.x)
         self.sym_ifunc = sp.integrate(self.sym_func, self.x)
         self.func = sp.lambdify(self.x, self.sym_func, 'numpy')
@@ -50,7 +50,7 @@ class Calculus:
         else:
             return sp.diff(self.sym_func, self.x)
     
-    def show_curve(self, coords=[-1, 1, -1, 4],size=(3,2)): #yes I really added markers to my lines lol
+    def show_curve(self, coords=[-1, 1, -1, 4],size=(3,2)): 
         xticks = list(range(coords[0]-1,coords[1]+1, 1))
         yticks = list(range(coords[2]-1,coords[3]+1, 1))
         y_ticks = len(xticks)

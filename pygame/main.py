@@ -10,7 +10,7 @@ O_COLOR = (90, 90, 90)
 
 
 board = [['' for _ in range(3)] for _ in range(3)]
-board[2][2] = 'O'
+
 turn = 'X'
 game_over = False
 
@@ -66,7 +66,10 @@ def check_win(player):
 
     return False
 
+
+player_turn = 'X'
 running = True
+
 while running:
     for event in pg.event.get():
         
@@ -75,10 +78,14 @@ while running:
     
         if event.type == pg.MOUSEBUTTONDOWN:
             x, y = event.pos
-            col = x // (WIDTH // GRID_SIZE)
+            col = x // (WIDTH // GRID_SIZE) # e.g. 590 // 200 = 2
             row = y // (HEIGHT // GRID_SIZE)
             
-    
+            if board[row][col] == '':
+                board[row][col] = player_turn
+            
+            
+                player_turn = 'O' if player_turn == 'X' else 'X'
     
     
     draw_board()
