@@ -23,12 +23,12 @@ class Tictactoe:
             if all(self.board[row][col] == player for col in range(self.GRID_SIZE)):
                 return True
 
-        # Check columns
+        
         for col in range(self.GRID_SIZE):
             if all(self.board[row][col] == player for row in range(self.GRID_SIZE)):
                 return True
 
-        # Check diagonals
+        
         if (all(self.board[i][i] == player for i in range(self.GRID_SIZE)) or 
             all(self.board[i][self.GRID_SIZE - i - 1] == player for i in range(self.GRID_SIZE))):
             return True
