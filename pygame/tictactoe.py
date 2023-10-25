@@ -1,26 +1,65 @@
 import pygame as pg
 import sys
-from random import randint
+
+vec2 = pg.math.Vector2
 
 class Tictactoe:
+        
     def __init__(self, game, W_SIZE, screen):
         self.LINE_COLOR = (80, 80, 80)
         self.W_SIZE = W_SIZE
         self.screen = screen
         self.board = [['' for i in range(3)] for j in range(3)]
-        self.GREY = (80,80,80)
+        self.GREY = (80, 80, 80)
         self.OBJ_SIZE = 60
         self.OBJ_WIDTH = 15
         self.GRID_SIZE = 3
-       
+        self.CELL_SIZE = self.W_SIZE // 3
+        self.player_turn = 'X'
+        self.game_over = False
+        
+    def check_win(self, player):
+        for row in range(self.GRID_SIZE):
+            if all(self.board[row][col] == player for col in range(self.GRID_SIZE)):
+                return True
+
+        # Check columns
+        for col in range(self.GRID_SIZE):
+            if all(self.board[row][col] == player for row in range(self.GRID_SIZE)):
+                return True
+
+        # Check diagonals
+        if (all(self.board[i][i] == player for i in range(self.GRID_SIZE)) or 
+            all(self.board[i][self.GRID_SIZE - i - 1] == player for i in range(self.GRID_SIZE))):
+            return True
+
+        return False    
+    
+         
+    def draw_XO(self):
+        
+        current_cell = vec2(pg.mouse.get_pos()) // self.CELL_SIZE
+        if self.board[int(current_cell[1])][int(current_cell[0])] == '':
+            self.board[int(current_cell[1])][int(current_cell[0])] = self.player_turn
+            
+            
+        if self.check_win(self.player_turn):
+            self.game_over = True
+            
+        if self.game_over:
+            print('Player {} win'.format(self.player_turn))
+            
+        self.player_turn = 'O' if self.player_turn == 'X' else 'X'
+        print(self.board)
+        
+        
     
     def run(self):
-        self.board[0][0] = 'O'
         
         for x in range(1,3):
             pg.draw.line(self.screen, self.LINE_COLOR, (50, x*200), (self.W_SIZE - 50, x*200), 5)
             pg.draw.line(self.screen, self.LINE_COLOR, (x*200, 50), (x*200, self.W_SIZE - 50), 5)
-            
+               
         for row in range(self.GRID_SIZE):
             for col in range(self.GRID_SIZE):
                 if self.board[row][col] == 'X':
@@ -46,17 +85,20 @@ class Game:
             if event.type == pg.QUIT:
                 pg.quit()
                 sys.exit()
+            if event.type == pg.MOUSEBUTTONDOWN:
+                self.tic_tac_toe.draw_XO()
     
     def run(self):
         while True:
             self.screen.fill((20, 20, 20))
             self.tic_tac_toe.run()
+            
             self.check_events()
             pg.display.update()
             self.clock.tick(60)
 
-
 if __name__ == '__main__':
     game = Game()
     game.run()
+    
     

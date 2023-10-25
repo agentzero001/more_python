@@ -61,7 +61,8 @@ def check_win(player):
             return True
 
     # Check diagonals
-    if all(board[i][i] == player for i in range(GRID_SIZE)) or all(board[i][GRID_SIZE - i - 1] == player for i in range(GRID_SIZE)):
+    if (all(board[i][i] == player for i in range(GRID_SIZE)) or 
+        all(board[i][GRID_SIZE - i - 1] == player for i in range(GRID_SIZE))):
         return True
 
     return False
@@ -77,6 +78,7 @@ while running:
             running = False
     
         if event.type == pg.MOUSEBUTTONDOWN:
+            print(pg.mouse.get_pos())
             x, y = event.pos
             col = x // (WIDTH // GRID_SIZE) # e.g. 590 // 200 = 2
             row = y // (HEIGHT // GRID_SIZE)
@@ -92,4 +94,6 @@ while running:
     draw_XO()
         
     pg.display.update()
-    
+
+
+pg.math.Vector2()
