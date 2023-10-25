@@ -47,7 +47,10 @@ class Tictactoe:
             self.game_over = True
             
         if self.game_over:
+            self.screen.fill((110,110,110))
+            pg.draw.line(self.screen, self.GREY, (300,0), (300,600), self.OBJ_WIDTH)
             print('Player {} win'.format(self.player_turn))
+            
             
         self.player_turn = 'O' if self.player_turn == 'X' else 'X'
         print(self.board)
@@ -65,8 +68,16 @@ class Tictactoe:
                 if self.board[row][col] == 'X':
                     x = col * self.W_SIZE // self.GRID_SIZE + self.W_SIZE // (2 * self.GRID_SIZE)
                     y = row * self.W_SIZE // self.GRID_SIZE + self.W_SIZE // (2 * self.GRID_SIZE)
-                    pg.draw.line(self.screen, self.GREY, (x - self.OBJ_SIZE, y - self.OBJ_SIZE), (x + self.OBJ_SIZE, y + self.OBJ_SIZE), self.OBJ_WIDTH)
-                    pg.draw.line(self.screen, self.GREY, (x - self.OBJ_SIZE, y + self.OBJ_SIZE), (x + self.OBJ_SIZE, y - self.OBJ_SIZE), self.OBJ_WIDTH)
+                    pg.draw.line(self.screen,
+                                 self.GREY, 
+                                 (x - self.OBJ_SIZE, y - self.OBJ_SIZE), 
+                                 (x + self.OBJ_SIZE, y + self.OBJ_SIZE), 
+                                 self.OBJ_WIDTH)
+                    pg.draw.line(self.screen, 
+                                 self.GREY, 
+                                 (x - self.OBJ_SIZE, y + self.OBJ_SIZE), 
+                                 (x + self.OBJ_SIZE, y - self.OBJ_SIZE), 
+                                 self.OBJ_WIDTH)
                 elif self.board[row][col] == 'O':
                     x = col * self.W_SIZE // self.GRID_SIZE + self.W_SIZE // (2 * self.GRID_SIZE)
                     y = row * self.W_SIZE // self.GRID_SIZE + self.W_SIZE // (2 * self.GRID_SIZE)
@@ -89,10 +100,10 @@ class Game:
                 self.tic_tac_toe.draw_XO()
     
     def run(self):
-        while True:
-            self.screen.fill((20, 20, 20))
+        
+        self.screen.fill((20, 20, 20))
+        while True:            
             self.tic_tac_toe.run()
-            
             self.check_events()
             pg.display.update()
             self.clock.tick(60)
