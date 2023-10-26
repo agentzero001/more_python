@@ -1,7 +1,6 @@
 import pygame as pg
 from game_objects import *
 
-W_SIZE = 600
 
 class Game:
     def __init__(self, W_SIZE=600):
@@ -24,6 +23,9 @@ class Game:
     def run(self):
         pass
         
+if __name__ == '__main__':
+    game = Game()
+    
         
         
         
@@ -38,4 +40,5 @@ class Game:
         
 if __name__ == '__main__':
     game = Game()
+    game.run()
     game.run()
