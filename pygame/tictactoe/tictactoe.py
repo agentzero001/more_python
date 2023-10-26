@@ -29,7 +29,6 @@ class Tictactoe:
             if all(self.board[row][col] == player for row in range(self.GRID_SIZE)):
                 return (True, 'v', col) 
 
-        
         if all(self.board[i][i] == player for i in range(self.GRID_SIZE)):             
             return (True, 'd1', None)
             
@@ -44,8 +43,7 @@ class Tictactoe:
         
         current_cell = vec2(pg.mouse.get_pos()) // self.CELL_SIZE
         if self.board[int(current_cell[1])][int(current_cell[0])] == '':
-            self.board[int(current_cell[1])][int(current_cell[0])] = self.player_turn
-            
+            self.board[int(current_cell[1])][int(current_cell[0])] = self.player_turn            
             
         if self.check_win(self.player_turn)[0]:
             line_orientation = self.check_win(self.player_turn)[1]
@@ -80,15 +78,12 @@ class Tictactoe:
                             (self.W_SIZE, 0),
                             (0, self.W_SIZE),
                             20)
-            
-                         
-            #print('Player {} win'.format(self.player_turn))
-            
+                                         
+            print('Player {} win'.format(self.player_turn))          
             
         self.player_turn = 'O' if self.player_turn == 'X' else 'X'
         print(self.board)
-        
-        
+                
     
     def run(self):
         
