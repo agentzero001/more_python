@@ -17,23 +17,27 @@ class Tictactoe:
         self.CELL_SIZE = self.W_SIZE // 3
         self.player_turn = 'X'
         self.game_over = False
+    
         
     def check_win(self, player):
-        for row in range(self.GRID_SIZE):
-            if all(self.board[row][col] == player for col in range(self.GRID_SIZE)):
-                return True
+        for i in range(self.GRID_SIZE):
+            if all(self.board[i][j] == player for j in range(self.GRID_SIZE)):
+                return (True, 'h', i) 
 
         
         for col in range(self.GRID_SIZE):
             if all(self.board[row][col] == player for row in range(self.GRID_SIZE)):
-                return True
+                return (True, 'v', col) 
 
         
-        if (all(self.board[i][i] == player for i in range(self.GRID_SIZE)) or 
-            all(self.board[i][self.GRID_SIZE - i - 1] == player for i in range(self.GRID_SIZE))):
-            return True
+        if all(self.board[i][i] == player for i in range(self.GRID_SIZE)):             
+            return (True, 'd1', None)
+            
+        if all(self.board[i][3 - i - 1] == player for i in range(self.GRID_SIZE)):
+            return (True, 'd2', None)
+             
 
-        return False    
+        return (False, None, None)    
     
          
     def draw_XO(self):
@@ -43,13 +47,42 @@ class Tictactoe:
             self.board[int(current_cell[1])][int(current_cell[0])] = self.player_turn
             
             
-        if self.check_win(self.player_turn):
+        if self.check_win(self.player_turn)[0]:
+            line_orientation = self.check_win(self.player_turn)[1]
+            a = self.check_win(self.player_turn)[2]
             self.game_over = True
             
         if self.game_over:
             self.screen.fill((110,110,110))
-            pg.draw.line(self.screen, self.GREY, (300,0), (300,600), self.OBJ_WIDTH)
-            print('Player {} win'.format(self.player_turn))
+            if line_orientation == 'h':
+               pg.draw.line(self.screen,
+                            (0, 0, 0), 
+                            (0, 100 + self.W_SIZE // 3 * a ),
+                            (self.W_SIZE, 100 + self.W_SIZE // 3 * a),
+                            20)
+            if line_orientation == 'v':
+                pg.draw.line(self.screen,
+                            (0, 0, 0), 
+                            (100 + self.W_SIZE // 3 * a, 0 ),
+                            (100 + self.W_SIZE // 3 * a, self.W_SIZE),
+                            20)
+                
+            if line_orientation == 'd1':
+                pg.draw.line(self.screen,
+                            (0, 0, 0), 
+                            (0, 0),
+                            (self.W_SIZE, self.W_SIZE),
+                            20)
+                
+            if line_orientation == 'd2':
+                pg.draw.line(self.screen,
+                            (0, 0, 0), 
+                            (self.W_SIZE, 0),
+                            (0, self.W_SIZE),
+                            20)
+            
+                         
+            #print('Player {} win'.format(self.player_turn))
             
             
         self.player_turn = 'O' if self.player_turn == 'X' else 'X'
