@@ -9,6 +9,7 @@ class Game:
         self.TILE_SIZE = self.W_SIZE // 20
         self.screen = pg.display.set_mode([self.W_SIZE] * 2)
         self.clock = pg.time.Clock()
+        self.new_game()
 
     def check_events(self):
         for event in pg.event.get():
@@ -17,10 +18,13 @@ class Game:
                 sys.exit()
 
     def new_game(self):
-        pass
+        self.snake = Snake(self)
+        self.food = Food(self)
+        
 
     def update(self):
-        pass
+        pg.display.flip()
+        self.clock.tick(60)
 
     def draw_grid(self):
         tuple(pg.draw.line(self.screen,
@@ -38,14 +42,20 @@ class Game:
               for y in range(0,
                              self.W_SIZE,
                              self.TILE_SIZE))
-
+        
+        
+    def draw(self):
+        self.screen.fill('black')
+        self.draw_grid()
+        self.snake.draw()
+        #self.food.draw()
+        
+        
     def run(self):
         while True:
-            self.screen.fill((20, 20, 20))
-            self.draw_grid()
+            self.draw()
             self.check_events()
-            pg.display.update()
-            self.clock.tick(60)
+            self.update()
 
 if __name__ == '__main__':
     game = Game()
