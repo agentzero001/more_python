@@ -3,7 +3,7 @@ import sys
 from game_objects import *
 
 class Game:
-    def __init__(self, W_SIZE=1000):
+    def __init__(self, W_SIZE=800):
         pg.init()
         self.W_SIZE = W_SIZE
         self.TILE_SIZE = self.W_SIZE // 20
@@ -15,7 +15,7 @@ class Game:
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 pg.quit()
-                sys.exit()
+                #sys.exit()
 
     def new_game(self):
         self.snake = Snake(self)
