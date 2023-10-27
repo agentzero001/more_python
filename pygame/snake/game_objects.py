@@ -21,7 +21,8 @@ class Snake:
         self.move()
     
     def draw(self):
-        pg.draw.rect(self.game.screen, (120,120,120), self.rect)
+        pass
+        #pg.draw.rect(self.game.screen, (120,120,120), self.rect)
           
                 
 class Food:
