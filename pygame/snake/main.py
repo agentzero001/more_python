@@ -3,7 +3,7 @@ import sys
 from game_objects import *
 
 class Game:
-    def __init__(self, W_SIZE=800):
+    def __init__(self, W_SIZE=1000):
         pg.init()
         self.W_SIZE = W_SIZE
         self.TILE_SIZE = self.W_SIZE // 20
@@ -20,8 +20,7 @@ class Game:
     def new_game(self):
         self.snake = Snake(self)
         self.food = Food(self)
-        
-
+    
     def update(self):
         pg.display.flip()
         self.clock.tick(60)
@@ -48,6 +47,7 @@ class Game:
         self.screen.fill('black')
         self.draw_grid()
         self.snake.draw()
+        self.snake.update()
         #self.food.draw()
         
         
