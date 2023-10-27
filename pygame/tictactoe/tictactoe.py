@@ -35,7 +35,6 @@ class Tictactoe:
         if all(self.board[i][3 - i - 1] == player for i in range(self.GRID_SIZE)):
             return (True, 'd2', None)
              
-
         return (False, None, None)    
     
          

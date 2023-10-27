@@ -10,15 +10,12 @@ class Tictactoe:
         pass
         
 
-
-
-
 class Game:
     def __init__(self, W_SIZE=600):
         pg.init()
         self.screen = pg.display.set_mode([W_SIZE] * 2)
         self.clock = pg.time.Clock()
-        self.tic_tac_toe = Tictactoe(self)
+        #self.tic_tac_toe = Tictactoe(self)
         
     def check_events(self):
         for event in pg.event.get():
@@ -29,7 +26,7 @@ class Game:
     def run(self):
         while True:
             self.screen.fill((20, 20, 20))
-            self.tic_tac_toe.run()
+            #self.tic_tac_toe.run()
             self.check_events()
             pg.display.update()
             self.clock.tick(60)
