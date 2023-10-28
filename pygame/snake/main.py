@@ -10,12 +10,16 @@ class Game:
         self.screen = pg.display.set_mode([self.W_SIZE] * 2)
         self.clock = pg.time.Clock()
         self.new_game()
+        
+        
 
     def check_events(self):
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 pg.quit()
                 #sys.exit()
+                
+            self.snake.control(event)
 
     def new_game(self):
         self.snake = Snake(self)

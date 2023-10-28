@@ -10,7 +10,9 @@ class Snake:
         self.size = game.TILE_SIZE
         self.rect = pg.rect.Rect([0, 0, game.TILE_SIZE - 2, game.TILE_SIZE - 2])
         self.rect.center = self.get_random_pos()
-        self.direction = vec2(10,10)
+        self.direction = vec2(0, 0)
+        self.step_delay = 200
+        self.time = 0
         
     get_random_pos = lambda self: [randrange(self.size // 2 ,
                                              self.game.W_SIZE - self.size // 2,
@@ -19,9 +21,36 @@ class Snake:
                                              self.game.W_SIZE - self.size // 2,
                                              self.size)] 
     
+    
+    def control(self, event):
+        if event.type == pg.KEYDOWN:
+            if event.key == pg.K_w:
+                self.direction = vec2(0, -self.size)
+                
+            if event.key == pg.K_s:
+                self.direction = vec2(0, -self.size)
+                
+            if event.key == pg.K_a:
+                self.direction = vec2(0, -self.size)
+                
+            if event.key == pg.K_d:
+                self.direction = vec2(0, -self.size)
+
+
+
+
+    
+    def delta_time(self):
+        time_now = pg.time.get_ticks()
+        if time_now - self.time > self.step_delay:
+            self.time = time_now
+            return True
+        return False
+    
+    
     def move(self):
-        pass
-        #self.rect.move_ip(self.direction)
+        if self.delta_time():
+            self.rect.move_ip(self.direction)
     
     def update(self):
         self.move()
