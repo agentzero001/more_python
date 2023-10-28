@@ -21,32 +21,27 @@ class Snake:
                                              self.game.W_SIZE - self.size // 2,
                                              self.size)] 
     
-    
     def control(self, event):
         if event.type == pg.KEYDOWN:
+            #print(event)
             if event.key == pg.K_w:
                 self.direction = vec2(0, -self.size)
                 
             if event.key == pg.K_s:
-                self.direction = vec2(0, -self.size)
+                self.direction = vec2(0, self.size)
                 
             if event.key == pg.K_a:
-                self.direction = vec2(0, -self.size)
+                self.direction = vec2(-self.size, 0)
                 
             if event.key == pg.K_d:
-                self.direction = vec2(0, -self.size)
-
-
-
-
+                self.direction = vec2(self.size, 0)
     
     def delta_time(self):
         time_now = pg.time.get_ticks()
         if time_now - self.time > self.step_delay:
             self.time = time_now
             return True
-        return False
-    
+        return False   
     
     def move(self):
         if self.delta_time():

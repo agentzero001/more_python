@@ -11,14 +11,11 @@ class Game:
         self.clock = pg.time.Clock()
         self.new_game()
         
-        
-
     def check_events(self):
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 pg.quit()
-                #sys.exit()
-                
+                #sys.exit()  
             self.snake.control(event)
 
     def new_game(self):
