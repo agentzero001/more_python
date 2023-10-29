@@ -49,7 +49,7 @@ class Game:
         self.draw_grid()
         self.snake.draw()
         self.snake.update()
-        #self.food.draw()
+        self.food.draw()
         
         
     def run(self):

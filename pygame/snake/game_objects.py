@@ -26,13 +26,10 @@ class Snake:
             #print(event)
             if event.key == pg.K_w:
                 self.direction = vec2(0, -self.size)
-                
             if event.key == pg.K_s:
-                self.direction = vec2(0, self.size)
-                
+                self.direction = vec2(0, self.size)    
             if event.key == pg.K_a:
-                self.direction = vec2(-self.size, 0)
-                
+                self.direction = vec2(-self.size, 0)                
             if event.key == pg.K_d:
                 self.direction = vec2(self.size, 0)
     
@@ -57,9 +54,12 @@ class Snake:
 class Food:
     
     def __init__(self, game):
-        pass
+        self.game = game
+        self.size = game.TILE_SIZE
+        self.rect = pg.rect.Rect([0, 0, game.TILE_SIZE - 2, game.TILE_SIZE - 2])
+        self.rect.center = self.game.snake.get_random_pos()
+        
     
     def draw(self):
-        pass
-        #pg.draw.rect(self.game.screen, 'green', self.rect)
+        pg.draw.rect(self.game.screen, 'red', self.rect)
         
