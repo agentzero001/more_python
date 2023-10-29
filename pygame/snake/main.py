@@ -6,7 +6,7 @@ class Game:
     def __init__(self, W_SIZE=800):
         pg.init()
         self.W_SIZE = W_SIZE
-        self.TILE_SIZE = self.W_SIZE // 20
+        self.TILE_SIZE = self.W_SIZE // 10
         self.screen = pg.display.set_mode([self.W_SIZE] * 2)
         self.clock = pg.time.Clock()
         self.new_game()
@@ -28,7 +28,7 @@ class Game:
 
     def draw_grid(self):
         tuple(pg.draw.line(self.screen,
-                           (50,) * 3,
+                           (40,) * 3,
                            (x, 0),
                            (x, self.W_SIZE))
               for x in range(0,
@@ -36,7 +36,7 @@ class Game:
                              self.TILE_SIZE))
         
         tuple(pg.draw.line(self.screen,
-                           (50,) * 3,
+                           (40,) * 3,
                            (0, y),
                            (self.W_SIZE, y))
               for y in range(0,
