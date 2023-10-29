@@ -36,19 +36,23 @@ class Snake:
     
     def control(self, event):
         if event.type == pg.KEYDOWN:
-            #print(event)
+                        
             if event.key == pg.K_w and self.directions[pg.K_w]:
                 self.direction = vec2(0, -self.size)
                 self.directions = {pg.K_w: 1, pg.K_s: 0, pg.K_d: 1, pg.K_a: 1}
+                
             if event.key == pg.K_s and self.directions[pg.K_s]:
                 self.direction = vec2(0, self.size)
-                self.directions = {pg.K_w: 0, pg.K_s: 1, pg.K_d: 1, pg.K_a: 1}    
+                self.directions = {pg.K_w: 0, pg.K_s: 1, pg.K_d: 1, pg.K_a: 1}
+                    
             if event.key == pg.K_a and self.directions[pg.K_a]:
                 self.direction = vec2(-self.size, 0)               
-                self.directions = {pg.K_w: 1, pg.K_s: 1, pg.K_d: 0, pg.K_a: 1} 
+                self.directions = {pg.K_w: 1, pg.K_s: 1, pg.K_d: 0, pg.K_a: 1}
+                 
             if event.key == pg.K_d and self.directions[pg.K_d]:
                 self.direction = vec2(self.size, 0)
                 self.directions = {pg.K_w: 1, pg.K_s: 1, pg.K_d: 1, pg.K_a: 0}
+    
     
     def reposition(self):
         if self.rect.center == self.game.food.rect.center:

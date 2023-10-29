@@ -6,7 +6,7 @@ class Game:
     def __init__(self, W_SIZE=800):
         pg.init()
         self.W_SIZE = W_SIZE
-        self.TILE_SIZE = self.W_SIZE // 10
+        self.TILE_SIZE = self.W_SIZE // 20
         self.screen = pg.display.set_mode([self.W_SIZE] * 2)
         self.clock = pg.time.Clock()
         self.new_game()
