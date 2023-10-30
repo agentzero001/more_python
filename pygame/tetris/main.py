@@ -15,11 +15,9 @@ class App:
     def new_game(self):
         pass
     
-    
     def update(self):
         self.clock.tick(FPS)
     
-
     def check_events(self):
         for event in pg.event.get():
             if (event.type == pg.QUIT 
@@ -31,8 +29,6 @@ class App:
             self.screen.fill(FIELD_COLOR)
             self.tetris.draw()
             pg.display.flip()
-
-
 
     def run(self):
             while True:
