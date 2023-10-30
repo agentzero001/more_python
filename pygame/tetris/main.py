@@ -2,7 +2,7 @@ import pygame as pg
 from tetris import Tetris
 from settings import *
 
-
+print(TETROMINOES)
 class App:
     def __init__(self):
         pg.init()
