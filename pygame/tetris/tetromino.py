@@ -1,4 +1,4 @@
-from pygame.sprite import _Group
+from pygame.sprite import Group
 from settings import * 
 
 class Block(pg.sprite.Sprite):
@@ -12,13 +12,11 @@ class Block(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.topleft = pos[0] * TILE_SIZE, pos[1] * TILE_SIZE
         
-    
-
 
 class Tetromino:
     def __init__(self, tetris):
         self.tetris = tetris
-        Block(self, (4, 7))
+        Block(self, (0, 0))
         
     def update(self):
         pass
