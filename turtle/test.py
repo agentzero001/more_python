@@ -1,6 +1,6 @@
 import turtle as t
 import colorsys
-
+from PIL import Image
 
 t.speed(1000)
 
