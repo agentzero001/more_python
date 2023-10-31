@@ -1,8 +1,8 @@
 import pygame as pg
 from tetris import Tetris
 from settings import *
+import sys
 
-print(TETROMINOES)
 class App:
     def __init__(self):
         pg.init()
@@ -17,13 +17,14 @@ class App:
     
     def update(self):
         self.clock.tick(FPS)
+        self.tetris.update()
     
     def check_events(self):
         for event in pg.event.get():
             if (event.type == pg.QUIT 
             or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE)):
                 pg.quit()
-                #sys.exit()  
+                sys.exit()  
 
     def draw(self):
             self.screen.fill(FIELD_COLOR)
