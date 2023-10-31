@@ -16,8 +16,9 @@ class App:
         pass
     
     def update(self):
-        self.clock.tick(FPS)
         self.tetris.update()
+        self.clock.tick(FPS)
+        
     
     def check_events(self):
         for event in pg.event.get():
