@@ -3,6 +3,7 @@ from tetris import Tetris
 from settings import *
 import sys
 
+
 class App:
     def __init__(self):
         pg.init()
@@ -17,8 +18,7 @@ class App:
     
     def update(self):
         self.tetris.update()
-        self.clock.tick(FPS)
-        
+        self.clock.tick(FPS)   
     
     def check_events(self):
         for event in pg.event.get():

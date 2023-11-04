@@ -1,6 +1,7 @@
 from settings import * 
 from random import choice
 
+
 class Block(pg.sprite.Sprite):
     def __init__(self, tetromino, pos):
         self.tetromino = tetromino
@@ -11,13 +12,11 @@ class Block(pg.sprite.Sprite):
         self.image.fill('orange')        
         self.rect = self.image.get_rect()
         
-        
     def set_rect_pos(self):
         self.rect.topleft = self.pos * TILE_SIZE
         
     def update(self):
-        self.set_rect_pos()
-        
+        self.set_rect_pos()     
 
 class Tetromino:
     def __init__(self, tetris):

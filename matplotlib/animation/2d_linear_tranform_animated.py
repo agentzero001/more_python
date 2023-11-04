@@ -24,8 +24,8 @@ def _2d_lin_trans(M,xylim=500):
     scatter_t = plt.scatter(v_t[0, :], v_t[1, :], c='orange', zorder=2, alpha=.5)
     lines = []
     for i in range(v.shape[1]):
-        line, = plt.plot([v[0, i], v_t[0, i]], [v[1, i], v_t[1, i]], c='green', linewidth=.5, zorder=1)
-        lines.append(line)
+       line, = plt.plot([v[0, i], v_t[0, i]], [v[1, i], v_t[1, i]], c='green', linewidth=.5, zorder=1)
+       lines.append(line)
     
     
     plt.axis('equal')
@@ -49,8 +49,12 @@ def _2d_lin_trans(M,xylim=500):
     #anim.save('animation2.gif', writer='pillow') 
     plt.show()
 
+angle = np.pi / 4
 
-TM = _2d_TM(200, 0, 0, 200)
+TM = _2d_TM(np.cos(angle), -np.sin(angle),
+            np.sin(angle), np.cos(angle))
+
+
 
 _2d_lin_trans(TM, xylim=100)
 
