@@ -3,22 +3,44 @@ from settings import *
 from tetromino import Tetromino
 import math
 
+
 class Tetris:
     def __init__(self, app):
         self.app = app
         self.sprite_group = pg.sprite.Group()
+        self.field_array = self.get_field_array()
         self.tetromino = Tetromino(self)
+        
+    def store_blocks(self):
+        for block in self.tetromino.blocks:
+            x, y = int(block.pos.x), int(block.pos.y)
+            self.field_array[y][x] = block        
+        
+    def get_field_array(self):
+        return [[0 for x in range(FIELD_W)] for y in range(FIELD_H)]
+        
+    def check_tetromino_landing(self):
+        if self.tetromino.landed:
+            self.store_blocks()
+            self.tetromino = Tetromino(self)
     
+    def control(self, pressed_k):
+        if pressed_k == pg.K_LEFT:
+            self.tetromino.move('left')
+        elif pressed_k == pg.K_RIGHT:
+            self.tetromino.move('right')
+            
     def draw_grid(self):
         for x in range(FIELD_W):
            for y in range(FIELD_H):
-               pg.draw.rect(self.app.screen, 'black',
-                           (x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE), 1)
+               pg.draw.rect(self.app.screen, 'black', 
+                            (x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE), 1)
         
-    def update(self):        
-        self.tetromino.update()
+    def update(self):
+        if self.app.anim_trigger:          
+            self.tetromino.update()
+            self.check_tetromino_landing()
         self.sprite_group.update()
-         
                     
     def draw(self):
         self.draw_grid()
