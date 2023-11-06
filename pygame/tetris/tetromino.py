@@ -44,6 +44,7 @@ class Tetromino:
                 block.pos += move_direction
         elif direction == 'down':
             self.landed = True
+            #self.tetris.sprite_group.empty()            
     
     def update(self):
         self.move(direction='down')

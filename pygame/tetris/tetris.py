@@ -44,4 +44,4 @@ class Tetris:
                     
     def draw(self):
         self.draw_grid()
-        self.sprite_group.draw(self.app.screen)
+        self.sprite_group.draw(self.app.screen)    
