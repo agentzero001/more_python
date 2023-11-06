@@ -19,8 +19,6 @@ class App:
     #     self.anim_trigger = False
     #     pg.time.set_timer(self.user_event, ANIM_TIME_INTERVAL)
     
-    
-        
     def new_game(self):
         pass
     
