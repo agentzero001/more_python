@@ -1,6 +1,5 @@
 import pygame as pg
-
-vec = pg.math.Vector2
+from pygame.math import Vector2 as vec
 
 FPS = 60
 FIELD_COLOR = (30, 30, 30)
