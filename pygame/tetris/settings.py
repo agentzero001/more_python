@@ -4,7 +4,7 @@ from pygame.math import Vector2 as vec
 FPS = 60
 FIELD_COLOR = (30, 30, 30)
 
-ANIM_TIME_INTERVAL = 100
+ANIM_TIME_INTERVAL = 150
 
 TILE_SIZE = 40
 FIELD_SIZE = FIELD_W, FIELD_H = 10, 20
