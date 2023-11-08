@@ -19,14 +19,14 @@ class Tetris:
 
                 if self.field_array[y][x]:
                     self.field_array[row][x].pos = vec(x, y)
-
+                    
             if sum(map(bool, self.field_array[y])) < FIELD_W:
                 row -= 1
             else:
                 for x in range(FIELD_W):
                     self.field_array[row][x].alive = False
                     self.field_array[row][x] = 0
-            
+
     def store_blocks(self):
         for block in self.tetromino.blocks:
             x, y = int(block.pos.x), int(block.pos.y)
@@ -37,6 +37,7 @@ class Tetris:
         
     def check_tetromino_landing(self):
         if self.tetromino.landed:
+            print(self.field_array)
             self.store_blocks()
             self.tetromino = Tetromino(self)
     

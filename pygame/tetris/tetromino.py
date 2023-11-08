@@ -16,6 +16,11 @@ class Block(pg.sprite.Sprite):
                      border_radius=8)       
         self.rect = self.image.get_rect()
         
+    def __repr__(self):
+        return 'Block'
+        
+        
+        
     def is_alive(self):
         if not self.alive:
             self.kill()
@@ -45,6 +50,7 @@ class Tetromino:
         self.shape = choice(list(TETROMINOES.keys()))
         self.blocks = [Block(self, pos) for pos in TETROMINOES[self.shape]]
         self.landed = False
+        print(self.blocks[0].__repr__)
         
     def rotate(self):
         pivot_pos = self.blocks[0].pos
