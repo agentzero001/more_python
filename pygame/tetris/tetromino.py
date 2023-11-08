@@ -9,7 +9,7 @@ class Block(pg.sprite.Sprite):
         
         super().__init__(tetromino.tetris.sprite_group)
         self.image = pg.Surface([TILE_SIZE, TILE_SIZE])
-        self.image.fill((60,60,60))        
+        pg.draw.rect(self.image, (84, 28, 135), (1, 1, TILE_SIZE - 2, TILE_SIZE - 2), border_radius=8)       
         self.rect = self.image.get_rect()
         
     def rotate(self, pivot_pos):
