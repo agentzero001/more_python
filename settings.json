@@ -1,5 +1,5 @@
 {
-   "editor.fontSize":18,
+   "editor.fontSize":20,
    "terminal.integrated.fontSize":15,
    "terminal.integrated.fontFamily":"Courier New",
    "editor.fontFamily":"Consolas",
@@ -60,6 +60,5 @@
    "[python]":{
       "editor.formatOnType":true
    },
-  "workbench.editor.empty.hint": "hidden",
-  "window.zoomLevel": 1
+"workbench.editor.empty.hint": "hidden"
 }
