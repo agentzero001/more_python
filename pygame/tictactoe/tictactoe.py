@@ -4,7 +4,7 @@ import sys
 vec2 = pg.math.Vector2
 
 class Tictactoe:
-        
+    
     def __init__(self, game, W_SIZE, screen):
         self.LINE_COLOR = (80, 80, 80)
         self.W_SIZE = W_SIZE
@@ -18,13 +18,11 @@ class Tictactoe:
         self.player_turn = 'X'
         self.game_over = False
     
-        
     def check_win(self, player):
         for i in range(self.GRID_SIZE):
             if all(self.board[i][j] == player for j in range(self.GRID_SIZE)):
                 return (True, 'h', i) 
 
-        
         for col in range(self.GRID_SIZE):
             if all(self.board[row][col] == player for row in range(self.GRID_SIZE)):
                 return (True, 'v', col) 
@@ -34,10 +32,9 @@ class Tictactoe:
             
         if all(self.board[i][3 - i - 1] == player for i in range(self.GRID_SIZE)):
             return (True, 'd2', None)
-             
+                 
         return (False, None, None)    
-    
-         
+        
     def draw_XO(self):
         
         current_cell = vec2(pg.mouse.get_pos()) // self.CELL_SIZE
@@ -85,7 +82,6 @@ class Tictactoe:
                 
     
     def run(self):
-        
         for x in range(1,3):
             pg.draw.line(self.screen, self.LINE_COLOR, (50, x*200), (self.W_SIZE - 50, x*200), 5)
             pg.draw.line(self.screen, self.LINE_COLOR, (x*200, 50), (x*200, self.W_SIZE - 50), 5)
@@ -127,7 +123,6 @@ class Game:
                 self.tic_tac_toe.draw_XO()
     
     def run(self):
-        
         self.screen.fill((20, 20, 20))
         while True:            
             self.tic_tac_toe.run()
