@@ -43,14 +43,12 @@ class Game:
                              self.W_SIZE,
                              self.TILE_SIZE))
         
-        
     def draw(self):
         self.screen.fill('black')
         self.draw_grid()
         self.snake.draw()
         self.snake.update()
         self.food.draw()
-        
         
     def run(self):
         while True:

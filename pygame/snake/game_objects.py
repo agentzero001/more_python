@@ -4,7 +4,6 @@ from random import randrange
 vec2 = pg.math.Vector2
 
 class Snake:
-    
     def __init__(self, game):
         self.game = game
         self.size = game.TILE_SIZE
@@ -59,7 +58,6 @@ class Snake:
             self.game.food.rect.center = self.get_random_pos()
             self.length += 1
             
-    
     def delta_time(self):
         time_now = pg.time.get_ticks()
         if time_now - self.time > self.step_delay:
