@@ -14,21 +14,30 @@ draw_options = pymunk.pygame_util.DrawOptions(surface)
 space = pymunk.Space()
 space.gravity = 0, 2000
 
-ball_mass = 1
-ball_radius = 60
 
-ball_moment = pymunk.moment_for_circle(ball_mass, 0, ball_radius)
-ball_body = pymunk.Body(ball_mass, ball_moment)
-ball_body.position = WIDTH // 2, 0
-ball_shape = pymunk.Circle(ball_body, ball_radius)
-space.add(ball_body, ball_shape)
 
+def create_ball(space, pos):
+    ball_mass = 1
+    ball_radius = 60
+    ball_moment = pymunk.moment_for_circle(ball_mass, 0, ball_radius)
+    ball_body = pymunk.Body(ball_mass, ball_moment)
+    ball_body.position = pos
+    ball_shape = pymunk.Circle(ball_body, ball_radius)
+    ball_shape.elasticity = .8
+    space.add(ball_body, ball_shape)
+
+segment_shape = pymunk.Segment(space.static_body, (0, HEIGHT), (WIDTH, HEIGHT), 20)
+segment_shape.elasticity = .8
+space.add(segment_shape)
 while True:
     surface.fill(pg.Color('black'))
     
     for i in pg.event.get():
         if i.type == pg.QUIT:
             exit()
+        if i.type == pg.MOUSEBUTTONDOWN:
+            if i.button == 1:
+                create_ball(space, i.pos)
                     
     space.step(1 / FPS)
     space.debug_draw(draw_options)
