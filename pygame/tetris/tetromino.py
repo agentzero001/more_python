@@ -17,9 +17,7 @@ class Block(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         
     def __repr__(self):
-        return 'Block'
-        
-        
+        return 'Block'        
         
     def is_alive(self):
         if not self.alive:
