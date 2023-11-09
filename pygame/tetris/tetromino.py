@@ -50,7 +50,7 @@ class Tetromino:
         self.shape = choice(list(TETROMINOES.keys()))
         self.blocks = [Block(self, pos) for pos in TETROMINOES[self.shape]]
         self.landed = False
-        print(self.blocks[0].__repr__)
+        print(self.blocks[0].__repr__())
         
     def rotate(self):
         pivot_pos = self.blocks[0].pos
