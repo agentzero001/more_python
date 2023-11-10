@@ -14,8 +14,6 @@ draw_options = pymunk.pygame_util.DrawOptions(surface)
 space = pymunk.Space()
 space.gravity = 0, 2000
 
-
-
 def create_ball(space, pos):
     ball_mass = 1
     ball_radius = 60
