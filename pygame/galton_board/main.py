@@ -3,7 +3,7 @@ import pygame as pg
 pymunk.pygame_util.positive_y_is_up = False
 
 
-RES = WIDTH, HEIGHT = 1200, 1000
+RES = WIDTH, HEIGHT = 1200, 980
 FPS = 60
 
 pg.init()
@@ -16,16 +16,18 @@ space.gravity = 0, 2000
 
 def create_ball(space, pos):
     ball_mass = 1
-    ball_radius = 60
+    ball_radius = 40
     ball_moment = pymunk.moment_for_circle(ball_mass, 0, ball_radius)
     ball_body = pymunk.Body(ball_mass, ball_moment)
     ball_body.position = pos
     ball_shape = pymunk.Circle(ball_body, ball_radius)
-    ball_shape.elasticity = .8
+    ball_shape.elasticity = 1
+    ball_shape.friction = 1
     space.add(ball_body, ball_shape)
 
 segment_shape = pymunk.Segment(space.static_body, (0, HEIGHT), (WIDTH, HEIGHT), 20)
-segment_shape.elasticity = .8
+segment_shape.elasticity = 1
+segment_shape.friction = 1
 space.add(segment_shape)
 while True:
     surface.fill(pg.Color('black'))
