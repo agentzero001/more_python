@@ -52,7 +52,7 @@ class PerceptronEstimator(BaseEstimator, ClassifierMixin):
         plt.figure(fignr,figsize=(5,5),facecolor='.2')
         plt.axes().set_facecolor('.2')    
         plt.plot(self.errors,color='black')
-        #plt.style.use('seaborn-whitegrid')     
+        plt.style.use('dark_background')     
         plt.xlabel('Iteration')
         plt.ylabel(r"$(y - \hat y)$")
         plt.show()
