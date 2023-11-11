@@ -32,6 +32,8 @@ segment_shape = pymunk.Segment(space.static_body, (0, HEIGHT - 100 ), (WIDTH, HE
 segment_shape.elasticity = 0
 segment_shape.friction = 0
 space.add(segment_shape)
+
+
 while True:
     surface.fill(pg.Color('black'))
     
