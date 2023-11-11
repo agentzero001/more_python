@@ -5,6 +5,18 @@ from sklearn.utils.validation import check_X_y, check_is_fitted, check_random_st
 from sklearn.utils.multiclass import unique_labels
 
 
+params = {
+    'figure.facecolor': '.0',
+    'axes.facecolor': '.1',
+    'axes.labelcolor': 'white',
+    'text.color': 'white',
+    'xtick.color': 'green',
+    'ytick.color': 'green',
+    'axes.edgecolor': 'purple'
+}
+plt.rcParams.update(params)
+
+
 class PerceptronEstimator(BaseEstimator, ClassifierMixin):
 
     def __init__(self, n_iterations=20, random_state=None):
@@ -49,9 +61,8 @@ class PerceptronEstimator(BaseEstimator, ClassifierMixin):
     def plot(self):                 
     
         fignr = 1
-        plt.figure(fignr,figsize=(5,5),facecolor='.2')
-        plt.axes().set_facecolor('.2')    
-        plt.plot(self.errors,color='black')
+        plt.figure(fignr,figsize=(5,5))#,facecolor='.2')   
+        plt.plot(self.errors,color='green')
         plt.style.use('dark_background')     
         plt.xlabel('Iteration')
         plt.ylabel(r"$(y - \hat y)$")
