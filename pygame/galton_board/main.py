@@ -3,7 +3,7 @@ import pygame as pg
 pymunk.pygame_util.positive_y_is_up = False
 
 
-RES = WIDTH, HEIGHT = 1200, 980
+RES = WIDTH, HEIGHT = 1200, 800
 FPS = 60
 
 click = False
@@ -29,7 +29,7 @@ def create_ball(space, pos, bigger=0):
     space.add(ball_body, ball_shape)
 
 segment_shape = pymunk.Segment(space.static_body, (0, HEIGHT - 100 ), (WIDTH, HEIGHT), 20)
-segment_shape.elasticity = 0
+segment_shape.elasticity = .5
 segment_shape.friction = 0
 space.add(segment_shape)
 
