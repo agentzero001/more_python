@@ -18,7 +18,7 @@ space = pymunk.Space()
 space.gravity = 0, 2000
 
 def create_ball(space, pos, bigger=0):
-    ball_mass = 1
+    ball_mass = 4
     ball_radius = 40 + bigger
     ball_moment = pymunk.moment_for_circle(ball_mass, 0, ball_radius)
     ball_body = pymunk.Body(ball_mass, ball_moment)
@@ -29,7 +29,7 @@ def create_ball(space, pos, bigger=0):
     space.add(ball_body, ball_shape)
 
 segment_shape = pymunk.Segment(space.static_body, (0, HEIGHT - 100 ), (WIDTH, HEIGHT), 20)
-segment_shape.elasticity = 0
+segment_shape.elasticity = 1
 segment_shape.friction = 0
 space.add(segment_shape)
 
