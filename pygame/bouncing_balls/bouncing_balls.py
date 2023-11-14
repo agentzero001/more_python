@@ -1,5 +1,6 @@
 import pymunk.pygame_util
 import pygame as pg
+from read_coords import tuples_list
 pymunk.pygame_util.positive_y_is_up = False
 
 RES = WIDTH, HEIGHT = 1200, 980
@@ -28,15 +29,12 @@ def create_ball(space, pos, bigger=0):
     space.add(ball_body, ball_shape)
 
 def create_segment(space, begin, end): 
-    segment_shape = pymunk.Segment(space.static_body, begin, end, 40)
+    segment_shape = pymunk.Segment(space.static_body, begin, end, 10)
     segment_shape.elasticity = .5
     segment_shape.friction = .2
     space.add(segment_shape)
 
-create_segment(space, (WIDTH,HEIGHT), (WIDTH,0))
-create_segment(space, (0,HEIGHT), (WIDTH,HEIGHT))
-create_segment(space, (0,HEIGHT), (0, 0))
-create_segment(space, (0,0), (WIDTH, 0))
+[create_segment(space, i, j) for i, j in tuples_list]
 
 
 while True:

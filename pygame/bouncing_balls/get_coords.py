@@ -1,5 +1,6 @@
 import pymunk.pygame_util
 import pygame as pg
+import json
 pymunk.pygame_util.positive_y_is_up = False
 
 RES = WIDTH, HEIGHT = 1200, 980
@@ -34,30 +35,31 @@ def create_segment(space, begin, end):
     space.add(segment_shape)
 
 
+coord_pairs = []
+
 while True:
     surface.fill(pg.Color('black'))
     
     for i in pg.event.get():
         if i.type == pg.QUIT:
+            with open('data.json', 'w') as jsonfile:
+                json.dump(coord_pairs, jsonfile)
+                print(coord_pairs)
             exit()
         if i.type == pg.MOUSEBUTTONDOWN:
             coord_1 = pg.mouse.get_pos()
             click = True
         if i.type == pg.MOUSEBUTTONUP:
                 coord_2 = pg.mouse.get_pos()
-                #create_segment(space, coord_1, coord_2)
+                create_segment(space, coord_1, coord_2)
                 click = False
-                a = 0        
-                
-                with open('coords.csv', 'a') as file:
-                    file.write(f"(({coord_1[0]},{coord_1[1]}), ({coord_2[0]},{coord_2[1]})), ")
-        
-    if click:
-        a += 2
-        print(a)        
-                    
+                a = 0
+                coord_pairs.append((coord_1,coord_2))        
+                                
     space.step(1 / FPS)
     space.debug_draw(draw_options)
     pg.display.flip()
     clock.tick(FPS)
     
+    
+
