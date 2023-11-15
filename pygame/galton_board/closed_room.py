@@ -1,7 +1,5 @@
-   
 import pymunk.pygame_util
 import pygame as pg
-from random import randrange
 pymunk.pygame_util.positive_y_is_up = False
 
 RES = WIDTH, HEIGHT = 1200, 980
@@ -27,7 +25,6 @@ def create_ball(space, pos, bigger=0):
     ball_shape = pymunk.Circle(ball_body, ball_radius)
     ball_shape.elasticity = 1.2
     ball_shape.friction = 1
-    ball_shape.color = (94, 59, 12, 10)
     space.add(ball_body, ball_shape)
 
 def create_segment(space, begin, end): 
@@ -35,17 +32,6 @@ def create_segment(space, begin, end):
     segment_shape.elasticity = .5
     segment_shape.friction = .2
     space.add(segment_shape)
-    
-box_mass, box_size = 1, (160, 140)
-box_moment = pymunk.moment_for_box(box_mass, box_size)
-box_body = pymunk.Body(box_mass, box_moment)
-box_body.position = WIDTH // 2, HEIGHT - 600
-box_shape = pymunk.Poly.create_box(box_body, box_size)
-box_shape.elasticity = .5
-box_shape.friction = 1.0
-box_shape.color = [randrange(256) for i in range(3)] + [100]
-print([randrange(256) for i in range(4)])
-space.add(box_body, box_shape)
 
 create_segment(space, (WIDTH,HEIGHT), (WIDTH,0))
 create_segment(space, (0,HEIGHT), (WIDTH,HEIGHT))
@@ -68,6 +54,7 @@ while True:
                 a = 0
     if click:
         a += 2
+        print(a)        
                     
     space.step(1 / FPS)
     space.debug_draw(draw_options)
