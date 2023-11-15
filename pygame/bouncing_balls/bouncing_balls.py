@@ -52,7 +52,7 @@ while True:
                 a = 0
     if click:
         a += 2
-        print(a)        
+        #print(a)        
                     
     space.step(1 / FPS)
     space.debug_draw(draw_options)
