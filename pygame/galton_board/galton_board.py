@@ -1,10 +1,8 @@
-   
 import pymunk.pygame_util
 import pygame as pg
-from random import randrange
 pymunk.pygame_util.positive_y_is_up = False
 
-RES = WIDTH, HEIGHT = 1200, 980
+RES = WIDTH, HEIGHT = 1200, 900
 FPS = 60
 
 click = False
@@ -18,40 +16,43 @@ draw_options = pymunk.pygame_util.DrawOptions(surface)
 space = pymunk.Space()
 space.gravity = 0, 2000
 
-def create_ball(space, pos, bigger=0):
-    ball_mass = 10 + bigger
-    ball_radius = 20 + bigger
+ball_mass, ball_radius = 1, 7
+segment_thickness = 6
+
+a, b, c, d = 10, 100, 18, 40
+x1, x2, x3, x4 = a, WIDTH // 2 - c, WIDTH // 2 + c, WIDTH - a
+y1, y2, y3, y4, y5 = b, HEIGHT // 4 - d, HEIGHT // 4, HEIGHT // 2 - 1.5 * b, HEIGHT - 4 * b
+L1, L2, L3, L4 = (x1, -100), (x1, y1), (x2, y2), (x2, y3)
+R1, R2, R3, R4 = (x4, -100), (x4, y1), (x3, y2), (x3, y3)
+B1, B2 = (0, HEIGHT), (WIDTH, HEIGHT)
+
+
+def create_ball(space, pos, mass, radius):
+    ball_mass = mass
+    ball_radius = radius
     ball_moment = pymunk.moment_for_circle(ball_mass, 0, ball_radius)
     ball_body = pymunk.Body(ball_mass, ball_moment)
     ball_body.position = pos
     ball_shape = pymunk.Circle(ball_body, ball_radius)
-    ball_shape.elasticity = 1.2
-    ball_shape.friction = 1
-    ball_shape.color = (94, 59, 12, 10)
+    ball_shape.elasticity = .1
+    ball_shape.friction = .1
     space.add(ball_body, ball_shape)
 
-def create_segment(space, begin, end): 
-    segment_shape = pymunk.Segment(space.static_body, begin, end, 40)
-    segment_shape.elasticity = .5
-    segment_shape.friction = .2
+def create_segment(begin, end, thickness, space, color): 
+    segment_shape = pymunk.Segment(space.static_body, begin, end, thickness)
+    segment_shape.color = pg.color.THECOLORS[color]
     space.add(segment_shape)
     
-box_mass, box_size = 1, (160, 140)
-box_moment = pymunk.moment_for_box(box_mass, box_size)
-box_body = pymunk.Body(box_mass, box_moment)
-box_body.position = WIDTH // 2, HEIGHT - 600
-box_shape = pymunk.Poly.create_box(box_body, box_size)
-box_shape.elasticity = .5
-box_shape.friction = 1.0
-box_shape.color = [randrange(256) for i in range(3)] + [100]
-print([randrange(256) for i in range(4)])
-space.add(box_body, box_shape)
+    
+def create_peg():
+    
+    pass
 
-create_segment(space, (WIDTH,HEIGHT), (WIDTH,0))
-create_segment(space, (0,HEIGHT), (WIDTH,HEIGHT))
-create_segment(space, (0,HEIGHT), (0, 0))
-create_segment(space, (0,0), (WIDTH, 0))
+platforms = (L1, L2), (L2, L3), (L3, L4), (R1, R2), (R2, R3), (R3, R4)
+for platform in platforms:
+    create_segment(*platform, segment_thickness, space, 'darkolivegreen')
 
+create_segment((0,HEIGHT), (WIDTH,HEIGHT), 20, space, 'darkolivegreen')
 
 while True:
     surface.fill(pg.Color('black'))
@@ -63,11 +64,9 @@ while True:
             if i.button == 1:
                 click = True
         if i.type == pg.MOUSEBUTTONUP:
-                create_ball(space, i.pos, bigger=a)
+                create_ball(space, i.pos, ball_mass, ball_radius)
                 click = False
-                a = 0
-    if click:
-        a += 2
+                a = 0       
                     
     space.step(1 / FPS)
     space.debug_draw(draw_options)
