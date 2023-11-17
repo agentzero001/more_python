@@ -15,7 +15,7 @@ space = pymunk.Space()
 space.gravity = 0, 6000
 
 ball_mass, ball_radius = 1, 4
-segment_thickness = 6
+segment_thickness = 5
 
 a, b, c, d = 10, 100, 18, 40
 x1, x2, x3, x4 = a, WIDTH // 2 - c, WIDTH // 2 + c, WIDTH - a
@@ -23,7 +23,6 @@ y1, y2, y3, y4, y5 = b, HEIGHT // 4 - d, HEIGHT // 4, HEIGHT // 2 - 1.5 * b, HEI
 L1, L2, L3, L4 = (x1, -100), (x1, y1), (x2, y2), (x2, y3)
 R1, R2, R3, R4 = (x4, -100), (x4, y1), (x3, y2), (x3, y3)
 B1, B2 = (0, HEIGHT), (WIDTH, HEIGHT)
-
 
 def create_ball(space):
     ball_moment = pymunk.moment_for_circle(ball_mass, 0, ball_radius)
@@ -39,7 +38,6 @@ def create_segment(begin, end, thickness, space, color):
     segment_shape = pymunk.Segment(space.static_body, begin, end, thickness)
     segment_shape.color = pg.color.THECOLORS[color]
     space.add(segment_shape)
-    
     
 def create_peg(x, y, space, color):
     circle_shape = pymunk.Circle(space.static_body, radius=10, offset=(x, y))
@@ -64,7 +62,7 @@ for platform in platforms:
 
 create_segment((0,HEIGHT), (WIDTH,HEIGHT), 20, space, 'darkolivegreen')
 
-balls = [(tuple(randrange(200) for i in range(3)), create_ball(space)) for j in range(2000)]
+balls = [(tuple(50 for i in range(3)), create_ball(space)) for j in range(2000)]
 
 while True:
     surface.fill(pg.Color('black'))
