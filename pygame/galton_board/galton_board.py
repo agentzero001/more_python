@@ -44,10 +44,15 @@ def create_segment(begin, end, thickness, space, color):
     space.add(segment_shape)
     
     
-def create_peg():
+def create_peg(x, y, space, color):
+    circle_shape = pymunk.Circle(space.static_body, radius=10, offset=(x, y))
+    circle_shape.color = pg.color.THECOLORS[color]
+    circle_shape.elasticity = 0.1
+    circle_shape.friction = 0.5
+    space.add(circle_shape)
     
-    pass
-
+create_peg(200,300, space,'tomato')
+    
 platforms = (L1, L2), (L2, L3), (L3, L4), (R1, R2), (R2, R3), (R3, R4)
 for platform in platforms:
     create_segment(*platform, segment_thickness, space, 'darkolivegreen')
