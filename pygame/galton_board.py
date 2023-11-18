@@ -3,7 +3,7 @@ import pygame as pg
 from random import randrange
 pymunk.pygame_util.positive_y_is_up = False
 
-RES = WIDTH, HEIGHT = 1200, 900
+RES = WIDTH, HEIGHT = 900, 700
 FPS = 60
 
 pg.init()
@@ -62,7 +62,7 @@ for platform in platforms:
 
 create_segment((0,HEIGHT), (WIDTH,HEIGHT), 20, space, 'darkolivegreen')
 
-balls = [(tuple(50 for i in range(3)), create_ball(space)) for j in range(2000)]
+balls = [(tuple(50 for i in range(3)), create_ball(space)) for j in range(1500)]
 
 while True:
     surface.fill(pg.Color('black'))
