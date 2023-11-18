@@ -69,15 +69,7 @@ while True:
     
     for i in pg.event.get():
         if i.type == pg.QUIT:
-            exit()
-        if i.type == pg.MOUSEBUTTONDOWN:
-            if i.button == 1:
-                click = True
-        if i.type == pg.MOUSEBUTTONUP:
-                create_ball(space, i.pos, ball_mass, ball_radius)
-                click = False
-                a = 0   
-                    
+            exit()            
                     
     space.step(1 / FPS)
     space.debug_draw(draw_options)
