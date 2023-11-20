@@ -25,6 +25,17 @@ def bfs(start, goal, graph):
 
 
 
+start = 'A'
+goal = 'B'
+visited = bfs(start, goal, graph)
+
+cur_node = goal
+print(f'\npath from {goal} to {start}: \n {goal} ', end='')
+while cur_node != start:
+    cur_node = visited[cur_node]
+    print(f'---> {cur_node} ', end='')
+
+
         
 
 
