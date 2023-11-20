@@ -26,7 +26,7 @@ def bfs(start, goal, graph):
 
 
 start = 'A'
-goal = 'B'
+goal = 'M'
 visited = bfs(start, goal, graph)
 
 cur_node = goal
