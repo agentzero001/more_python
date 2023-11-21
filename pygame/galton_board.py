@@ -3,7 +3,7 @@ import pygame as pg
 from random import randrange
 pymunk.pygame_util.positive_y_is_up = False
 
-RES = WIDTH, HEIGHT = 900, 700
+RES = WIDTH, HEIGHT = 1400, 1000
 FPS = 60
 
 pg.init()
