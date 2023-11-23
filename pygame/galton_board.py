@@ -40,7 +40,7 @@ def create_segment(begin, end, thickness, space, color):
     space.add(segment_shape)
     
 def create_peg(x, y, space, color):
-    circle_shape = pymunk.Circle(space.static_body, radius=10, offset=(x, y))
+    circle_shape = pymunk.Circle(space.static_body, radius=12, offset=(x, y))
     circle_shape.color = pg.color.THECOLORS[color]
     circle_shape.elasticity = 0.05
     circle_shape.friction = 0.5
@@ -74,8 +74,7 @@ while True:
     space.step(1 / FPS)
     space.debug_draw(draw_options)
     
-    [pg.draw.circle(surface, color, (int(ball.position[0]), int(ball.position[1])),
-                    ball_radius)  for color, ball in balls]
+    [pg.draw.circle(surface, color, (int(ball.position[0]), int(ball.position[1])), ball_radius)  for color, ball in balls]
     
     pg.display.flip()
     clock.tick(FPS)
