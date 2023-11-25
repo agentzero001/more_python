@@ -12,10 +12,10 @@ clock = pg.time.Clock()
 draw_options = pymunk.pygame_util.DrawOptions(surface)
 
 space = pymunk.Space()
-space.gravity = 0, 6000
+space.gravity = 0, 10000
 
-ball_mass, ball_radius = 1, 4
-segment_thickness = 5
+ball_mass, ball_radius = 1, 7
+segment_thickness = 6
 
 a, b, c, d = 10, 100, 18, 40
 x1, x2, x3, x4 = a, WIDTH // 2 - c, WIDTH // 2 + c, WIDTH - a
@@ -29,7 +29,7 @@ def create_ball(space):
     ball_body = pymunk.Body(ball_mass, ball_moment)
     ball_body.position = randrange(x1, x4), randrange(-y1, y1)
     ball_shape = pymunk.Circle(ball_body, ball_radius)
-    ball_shape.elasticity = .05
+    ball_shape.elasticity = .2
     ball_shape.friction = .1
     space.add(ball_body, ball_shape)
     return ball_body
@@ -40,9 +40,9 @@ def create_segment(begin, end, thickness, space, color):
     space.add(segment_shape)
     
 def create_peg(x, y, space, color):
-    circle_shape = pymunk.Circle(space.static_body, radius=12, offset=(x, y))
+    circle_shape = pymunk.Circle(space.static_body, radius=10, offset=(x, y))
     circle_shape.color = pg.color.THECOLORS[color]
-    circle_shape.elasticity = 0.05
+    circle_shape.elasticity = 0.1
     circle_shape.friction = 0.5
     space.add(circle_shape)
     
@@ -51,10 +51,13 @@ for i in range(10):
     peg_x = -1.5 * step if i % 2 else -step
     for j in range(WIDTH // step + 2):
         create_peg(peg_x, peg_y, space, 'grey20')
-        if i == 9:
-            create_segment((peg_x, peg_y + 50), (peg_x, HEIGHT), segment_thickness, space, 'grey10')
+        #if i == 9:
+        #    create_segment((peg_x, peg_y + 50), (peg_x, HEIGHT), segment_thickness, space, 'grey10')
         peg_x += step
     peg_y += .5 * step
+    
+for i in range(0,WIDTH, WIDTH//12):
+    create_segment((i,HEIGHT), (i, HEIGHT - HEIGHT//3),segment_thickness, space, 'grey10')
     
 platforms = (L1, L2), (L2, L3), (L3, L4), (R1, R2), (R2, R3), (R3, R4)
 for platform in platforms:
@@ -62,7 +65,7 @@ for platform in platforms:
 
 create_segment((0,HEIGHT), (WIDTH,HEIGHT), 20, space, 'darkolivegreen')
 
-balls = [(tuple(50 for i in range(3)), create_ball(space)) for j in range(1500)]
+balls = [(tuple(randrange(150) for i in range(3)), create_ball(space)) for j in range(900)]
 
 while True:
     surface.fill(pg.Color('black'))
