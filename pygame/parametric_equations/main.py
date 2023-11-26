@@ -18,6 +18,8 @@ conv_coords = lambda x, y: ((x * SCALE_FACTOR + WIDTH // 2), (-y * SCALE_FACTOR 
 
 draw_point = lambda x, y, color=(100, 100, 100), radius=2: pg.draw.circle(screen, color, conv_coords(x,y), radius)
 
+#pg.draw.aalines
+
 
 print(conv_coords(30, 30))
 
