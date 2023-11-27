@@ -27,7 +27,8 @@ a = lambda t: (100*np.sin(2*t), 100*np.cos(3*t))
 def draw_curve(f, a, b, n=200):
     t = np.linspace(a, b, n)
     c_x, c_y = f(t)
-    pg.draw.aalines(screen, GREY, False, [conv_coords(x, y) for x,y in zip(c_x, c_y)]  , 1)      
+    pg.draw.aalines(screen, GREY, False, [conv_coords(x, y) for x,y in zip(c_x, c_y)]  , 1)
+    #pg.draw.line(screen, GREY, conv_coords(-SIZE, 0), conv_coords(SIZE, 0), 1)      
 
  
 
@@ -36,8 +37,8 @@ while True:
     screen.fill((20, 20, 20))
     pg.draw.line(screen, (100,100,100), conv_coords(-SIZE, 0), conv_coords(SIZE, 0), 1)
     pg.draw.line(screen, (100,100,100), conv_coords(0, -SIZE), conv_coords(0, SIZE), 1)    
-    draw_curve(a, 0, 2*np.pi*k)
-    k+=.001
+    draw_curve(a, k*2*np.pi-.5, 2*np.pi*k)
+    k+=.002
     m_x, m_y  = pg.mouse.get_pos()
     m_x, m_y = m_x - WIDTH // 2, -(m_y - WIDTH // 2 )
     text_surface = font.render(f"Mouse Position: ({m_x}, {m_y})", True, GREY)
