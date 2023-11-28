@@ -1,6 +1,5 @@
 import sys 
 import pygame as pg
-#from pg.locals import *
  
 pg.init()
  
@@ -10,7 +9,7 @@ fpsClock = pg.time.Clock()
 res = width, height = 640, 480
 screen = pg.display.set_mode(res)
  
-# Game loop.
+
 while True:
   screen.fill((0, 0, 0))
   
