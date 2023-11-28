@@ -18,7 +18,6 @@ fpsClock = pg.time.Clock()
 screen = pg.display.set_mode(RES)
 
 conv_coords = lambda x, y: ((x + WIDTH // 2), (-y  + HEIGHT // 2))
-inv_conv_coords = lambda x, y: conv_coords(-x, y)
 draw_point = lambda x, y, color=GREY, radius=2: pg.draw.circle(screen, color, conv_coords(x,y), radius)
 
 a = lambda t: (100*np.sin(2*t), 100*np.cos(3*t))
@@ -27,10 +26,7 @@ a = lambda t: (100*np.sin(2*t), 100*np.cos(3*t))
 def draw_curve(f, a, b, n=200):
     t = np.linspace(a, b, n)
     c_x, c_y = f(t)
-    pg.draw.aalines(screen, GREY, False, [conv_coords(x, y) for x,y in zip(c_x, c_y)]  , 1)
-    #pg.draw.line(screen, GREY, conv_coords(-SIZE, 0), conv_coords(SIZE, 0), 1)      
-
- 
+    pg.draw.aalines(screen, GREY, False, [conv_coords(x, y) for x,y in zip(c_x, c_y)]  , 1) 
 
 while True:
     k %=1    
