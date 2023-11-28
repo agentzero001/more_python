@@ -3,11 +3,11 @@ import pygame as pg
  
 pg.init()
  
-fps = 60
+FPS = 60
 fpsClock = pg.time.Clock()
  
-res = width, height = 640, 480
-screen = pg.display.set_mode(res)
+RES = WIDTH, HEIGHT = 640, 480
+screen = pg.display.set_mode(RES)
  
 
 while True:
@@ -19,4 +19,4 @@ while True:
       sys.exit()
   
   pg.display.flip()
-  fpsClock.tick(fps)
+  fpsClock.tick(FPS)
