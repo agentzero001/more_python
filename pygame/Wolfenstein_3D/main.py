@@ -8,19 +8,21 @@ class Game:
         pg.init()
         self.screen = pg.display.set_mode(RES)
         self.clock = pg.time.Clock()
+        self.new_game()
         #pg.time.set_timer(TIMER_EVENT, ANIM_TIME_INTERVAL)
 
     def new_game(self):
-        pass
+        self.map1 = m.Map(self)
 
     def update(self):
+        pg.display.flip()
         self.clock.tick(FPS) 
         pg.display.set_caption(f'{self.clock.get_fps() :.1f}')
     
     def draw(self):
         self.screen.fill('black')
-        pg.display.flip() 
-
+        self.map1.draw()    
+ 
     def check_events(self):
         self.anim_trigger = False
         for event in pg.event.get():
@@ -37,8 +39,7 @@ class Game:
             self.update()
             self.draw()
             
-            
-print(TIMER_EVENT)            
+                      
 if __name__ == '__main__':
     app = Game()
     app.run()
