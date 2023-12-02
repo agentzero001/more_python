@@ -18,20 +18,37 @@ class Player:
                 
         keys = pg.key.get_pressed()
         if keys[pg.K_w]:
-            dx += speed_sin
-            dy += speed_cos
-        if keys[pg.K_s]:
-            dx += -speed_sin
-            dy += -speed_sin
+            dx += speed_cos
+            dy += speed_sin
         if keys[pg.K_d]:
+            dx += -speed_sin
+            dy += speed_cos        
+        if keys[pg.K_s]:
             dx += -speed_cos
-            dy += speed_sin      
+            dy += -speed_sin    
         if keys[pg.K_a]:
-            dx += -speed_cos
-            dy += speed_sin  
+            dx += speed_sin
+            dy += -speed_cos 
+            
+        self.x += dx
+        self.y += dy
+        
+        if keys[pg.K_LEFT]:
+            self.angle -= PLAYER_ROT_SPEED * self.game.delta_time
+        if keys[pg.K_RIGHT]:
+            self.angle += PLAYER_ROT_SPEED * self.game.delta_time
+        self.angle %=  math.tau
+        
+    def draw(self):
+        pg.draw.line(self.game.screen, (27, 79, 41), (self.x * 100, self.y * 100),
+                     (self.x * 100 + WIDTH * math.cos(self.angle),
+                      self.y * 100 + WIDTH * math.sin(self.angle)), 2)
+        pg.draw.circle(self.game.screen, (27, 79, 41), (self.x * 100, self.y * 100), 15)
+        
         
     def update(self):
-        pass
+        self.movement()
+        
         
     @property
     def pos(self):
