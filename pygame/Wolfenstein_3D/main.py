@@ -12,7 +12,6 @@ class Game:
         self.delta_time = 1
         self.new_game()
         
-
     def new_game(self):
         self.map1 = m.Map(self)
         self.player = Player(self)
@@ -20,7 +19,7 @@ class Game:
     def update(self):
         self.player.update()
         pg.display.flip()
-        self.delta_time = self.clock.tick(FPS) 
+        self.delta_time = self.clock.tick(FPS)
         pg.display.set_caption(f'{self.clock.get_fps() :.1f}')
         
     def draw(self):
@@ -42,8 +41,7 @@ class Game:
         while True:
             self.check_events()
             self.update()
-            self.draw()
-            
+            self.draw()         
                       
 if __name__ == '__main__':
     app = Game()
