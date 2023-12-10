@@ -44,6 +44,7 @@ while True:
         if event.type == pg.QUIT:
             pg.quit()
             sys.exit()
+            
     screen.blit(text_surface, (10, 10))
     pg.display.flip()
     fpsClock.tick(FPS)
