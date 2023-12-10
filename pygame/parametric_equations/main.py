@@ -11,6 +11,13 @@ FPS = 60
 GREY = (100,100,100)
 POINTS = [(-10, -10), (100, 100), (200, 200), (400, 200)]
 
+def draw_curve(f, a, b, n=200):
+    t = np.linspace(a, b, n)
+    c_x, c_y = f(t)
+    pg.draw.aalines(screen, GREY, False, [conv_coords(x, y) for x,y in zip(c_x, c_y)]  , 1) 
+
+
+
 k = 0
 
 font = pg.font.Font(None, 24)
@@ -23,10 +30,7 @@ draw_point = lambda x, y, color=GREY, radius=2: pg.draw.circle(screen, color, co
 a = lambda t: (100*np.sin(2*t), 100*np.cos(3*t))
 
 
-def draw_curve(f, a, b, n=200):
-    t = np.linspace(a, b, n)
-    c_x, c_y = f(t)
-    pg.draw.aalines(screen, GREY, False, [conv_coords(x, y) for x,y in zip(c_x, c_y)]  , 1) 
+
 
 while True:
     k %=1    
@@ -38,7 +42,9 @@ while True:
     m_x, m_y  = pg.mouse.get_pos()
     m_x, m_y = m_x - WIDTH // 2, -(m_y - WIDTH // 2 )
     text_surface = font.render(f"Mouse Position: ({m_x}, {m_y})", True, GREY)
-
+    
+    pg.draw.rect(screen, 'White', (*conv_coords(100,100), 100, 100), 2)
+    
   
     for event in pg.event.get():
         if event.type == pg.QUIT:

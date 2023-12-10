@@ -1,25 +1,32 @@
 import sys 
 import pygame as pg
 from settings import *
+from player import *
+import map_ as m
 
 class Game:
     def __init__(self):
         pg.init()
         self.screen = pg.display.set_mode(RES)
         self.clock = pg.time.Clock()
-        pg.time.set_timer(TIMER_EVENT, ANIM_TIME_INTERVAL)
+        self.delta_time = 1
+        self.new_game()
+        
+    def new_game(self):
+        self.map1 = m.Map(self)
+        self.player = Player(self)
 
     def update(self):
-        self.clock.tick(FPS) 
+        self.player.update()
+        pg.display.flip()
+        self.delta_time = self.clock.tick(FPS)
         pg.display.set_caption(f'{self.clock.get_fps() :.1f}')
-         
-    def new_game(self):
-        pass
-    
+        
     def draw(self):
-        self.screen.fill('Black')
-        pg.display.flip() 
-
+        self.screen.fill('black')
+        self.map1.draw()   
+        self.player.draw() 
+ 
     def check_events(self):
         self.anim_trigger = False
         for event in pg.event.get():
@@ -34,10 +41,8 @@ class Game:
         while True:
             self.check_events()
             self.update()
-            self.draw()
-            
-            
-print(TIMER_EVENT)            
+            self.draw()         
+                      
 if __name__ == '__main__':
     app = Game()
     app.run()

@@ -19,4 +19,5 @@ while True:
       sys.exit()
   
   pg.display.flip()
-  fpsClock.tick(FPS)
+  value = fpsClock.tick(FPS)
+  print(value)
