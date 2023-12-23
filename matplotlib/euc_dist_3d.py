@@ -38,4 +38,4 @@ ax.set_xlim(-5, 15)
 ax.set_ylim(-5, 15)
 ax.set_zlim(-5, 15)
 
-plt.show()
+#plt.show()

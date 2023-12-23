@@ -17,3 +17,4 @@ test_dataset = datasets.MNIST(root=mnist_path, train=False, download=True)
 
 img, label = train_dataset[0]
 
+
