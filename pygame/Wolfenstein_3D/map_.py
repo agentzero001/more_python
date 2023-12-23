@@ -32,10 +32,10 @@ class Map:
 
 
 
-class Game:
-    def new_game(self):
-        self.map = Map(self)
+# class Game:
+#     def new_game(self):
+#         self.map = Map(self)
         
         
-gam1 = Game()
-gam1.new_game()
+# gam1 = Game()
+# gam1.new_game()

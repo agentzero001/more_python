@@ -2,7 +2,7 @@ import sys
 import pygame as pg
 from settings import *
 from player import *
-import map_ as m
+import map_
 
 class Game:
     def __init__(self):
@@ -13,7 +13,7 @@ class Game:
         self.new_game()
         
     def new_game(self):
-        self.map1 = m.Map(self)
+        self.map1 = map_.Map(self)
         self.player = Player(self)
 
     def update(self):
