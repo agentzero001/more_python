@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 
 _3d_TM = lambda x1,y1,z1,x2,y2,z2,x3,y3,z3: np.array([[x1,y1,z1],[x2,y2,z2],[x3,y3,z3]])
 
+
 def _3d_lin_trans(M, xyzlim=50):
     
     x = np.arange(-20, 21, 10)
@@ -31,6 +32,8 @@ def _3d_lin_trans(M, xyzlim=50):
     ax.set_zlabel('z')
     plt.show()
     
-M1 = _3d_TM(1,0,1,0,1,0,0,0,1)
+M1 = _3d_TM(1,0,1,
+            0,1,2,
+            0,0,1)
 
 _3d_lin_trans(M1)

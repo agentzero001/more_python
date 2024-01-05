@@ -54,8 +54,11 @@ angle = np.pi / 4
 TM = _2d_TM(np.cos(angle), -np.sin(angle),
             np.sin(angle), np.cos(angle))
 
+TM2 = _2d_TM(0, -1,
+             1,  0)
 
 
-_2d_lin_trans(TM, xylim=100)
+
+_2d_lin_trans(TM2, xylim=100)
 
 
