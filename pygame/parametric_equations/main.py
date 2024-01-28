@@ -43,7 +43,7 @@ while True:
     m_x, m_y = m_x - WIDTH // 2, -(m_y - WIDTH // 2 )
     text_surface = font.render(f"Mouse Position: ({m_x}, {m_y})", True, GREY)
     
-    pg.draw.rect(screen, 'White', (*conv_coords(100,100), 100, 100), 2)
+    #pg.draw.rect(screen, 'White', (*conv_coords(100,100), 100, 100), 2)
     
   
     for event in pg.event.get():
