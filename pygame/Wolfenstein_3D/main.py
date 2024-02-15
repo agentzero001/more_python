@@ -3,6 +3,7 @@ import pygame as pg
 from settings import *
 from player import *
 import map_
+ 
 
 class Game:
     def __init__(self):
@@ -11,6 +12,7 @@ class Game:
         self.clock = pg.time.Clock()
         self.delta_time = 1
         self.new_game()
+        self.count = 0
         
     def new_game(self):
         self.map1 = map_.Map(self)
@@ -41,7 +43,8 @@ class Game:
         while True:
             self.check_events()
             self.update()
-            self.draw()         
+            self.draw()
+            
                       
 if __name__ == '__main__':
     app = Game()

@@ -32,9 +32,9 @@ class Player:
             
         self.check_wall_collision(dx, dy)
         
-        if keys[pg.K_LEFT]:
+        if keys[pg.K_q]:
             self.angle -= PLAYER_ROT_SPEED * self.game.delta_time
-        if keys[pg.K_RIGHT]:
+        if keys[pg.K_e]:
             self.angle += PLAYER_ROT_SPEED * self.game.delta_time
         self.angle %=  math.tau
         
@@ -48,7 +48,7 @@ class Player:
             self.y += dy
         
     def draw(self):
-        pg.draw.line(self.game.screen, (27, 79, 41), (self.x * 100, self.y * 100),
+        pg.draw.line(self.game.screen, 'yellow', (self.x * 100, self.y * 100),
                      (self.x * 100 + WIDTH * math.cos(self.angle),
                       self.y * 100 + WIDTH * math.sin(self.angle)), 2)
         pg.draw.circle(self.game.screen, (27, 79, 41), (self.x * 100, self.y * 100), 15)
