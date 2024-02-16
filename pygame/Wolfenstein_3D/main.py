@@ -18,7 +18,7 @@ class Game:
     def overlay(self):
         text_color = (0, 0, 0)
         overlay_surface = pg.Surface((RES), pg.SRCALPHA)
-        pg.draw.rect(overlay_surface, (100, 100, 100, 200), (10, 10, 200, 500))
+        pg.draw.rect(overlay_surface, (100, 100, 100, 200), (10, 10, 300, 500))
         font = pg.font.SysFont(None, 30)
         score_text = font.render(f"map_pos: {self.player.map_pos}", True, text_color)
         level_text = font.render(f"pos: {round(self.player.pos[0], 3)}, {round(self.player.pos[1], 3)}", True, text_color)
