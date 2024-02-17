@@ -10,6 +10,8 @@ class RayCasting:
     def ray_cast(self):
         ox, oy = self.game.player.pos
         x_map, y_map = self.game.player.map_pos
+        
+        ray_angle = self.player.angle - HALF_FOV + .0001
             
     def update(self):
         self.raycast()
