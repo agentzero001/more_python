@@ -2,7 +2,9 @@ import sys
 import pygame as pg
 from settings import *
 from player import *
+from raycasting import *
 import map_
+
 
 
 class Game:
@@ -14,6 +16,7 @@ class Game:
         self.new_game()
         self.count = 0
         self.toggle_overlay = False
+        
 
     def overlay(self):
         text_color = (0, 0, 0)
@@ -38,9 +41,11 @@ class Game:
     def new_game(self):
         self.map1 = map_.Map(self)
         self.player = Player(self)
+        self.raycast = RayCasting(self)
 
     def update(self):
         self.dx, self.dy = self.player.update()
+        self.raycast.update()
         pg.display.flip()
         self.delta_time = self.clock.tick(FPS)
         pg.display.set_caption(f'{self.clock.get_fps():.1f}')
