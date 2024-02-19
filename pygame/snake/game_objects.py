@@ -16,12 +16,12 @@ class Snake:
         self.segments = []
         self.directions = {key: 1 for key in [pg.K_w, pg.K_a, pg.K_s, pg.K_d]}
         
-    get_random_pos = lambda self: [randrange(self.size // 2 ,
+    get_random_pos = lambda self: (randrange(self.size // 2 ,
                                              self.game.W_SIZE - self.size // 2,
                                              self.size), 
                                    randrange(self.size // 2 ,
                                              self.game.W_SIZE - self.size // 2,
-                                             self.size)] 
+                                             self.size))
     
     def border_collision(self):
         if self.rect.left < 0 or self.rect.right > self.game.W_SIZE:
