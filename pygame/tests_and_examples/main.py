@@ -4,13 +4,14 @@ import sys, os
 class Game:
     def __init__(self, W_SIZE=600):
         pg.init()
-        self.screen = pg.display.set_mode([W_SIZE] * 2)
+        self.screen = pg.display.set_mode((W_SIZE,) * 2)
         self.clock = pg.time.Clock()
-        self.image = self.get_scaled_image(path='src/img1.jpg', res = (200,200))
+        self.image = self.get_scaled_image(path='src\img1.jpg', res = (W_SIZE,) * 2)
         
     @staticmethod
     def get_scaled_image(path, res):
-        img = pg.image.load(path)
+        cwd = os.path.dirname(os.path.abspath(__file__))
+        img = pg.image.load(os.path.join(cwd, path))
         return pg.transform.smoothscale(img, res)
     
     def input(self, events):    
@@ -22,12 +23,12 @@ class Game:
                 print(event)
                 
     def draw(self):
-        self.screen.blit(self.image, (100, 0))
+        self.screen.blit(self.image, (0, 0))
     
     def run(self):
         while True:
             self.input(pg.event.get())
-            self.draw()
+            #self.draw()
             pg.display.update()    
     
 if __name__ == '__main__':
