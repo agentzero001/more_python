@@ -31,6 +31,9 @@ class Game:
                 pg.quit()
                 sys.exit()
                 
+            elif event.type == pg.KEYDOWN:
+                self.Player.control(event.key)
+                
     def draw(self):
         self.screen.blit(self.bg, (0, 0))
         self.all_sprites.draw(self.screen)
