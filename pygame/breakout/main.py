@@ -31,8 +31,7 @@ class Game:
                 pg.quit()
                 sys.exit()
                 
-            elif event.type == pg.KEYDOWN:
-                self.Player.control(event.key)
+            
                 
     def draw(self):
         self.screen.blit(self.bg, (0, 0))
@@ -45,7 +44,8 @@ class Game:
             last_time = time.time()
             self.input(pg.event.get())
             self.draw()
-            pg.display.update()    
+            pg.display.update()
+            self.player.update(dt)  
     
 if __name__ == '__main__':
     game = Game()

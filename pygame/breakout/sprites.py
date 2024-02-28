@@ -12,17 +12,20 @@ class Player(pg.sprite.Sprite):
         self.rect = self.image.get_rect(midbottom = (WIDTH // 2, HEIGHT - 20))
         self.direction = pg.math.Vector2()
         self.pos = pg.math.Vector2(self.rect.topleft)
+        self.speed = 300       
         
         
+    def control(self):
+        keys = pg.key.get_pressed()
+        if keys[pg.K_RIGHT]:
+            self.direction.x = 1
+        elif keys[pg.K_LEFT]:
+            self.direction.x = -1
+        else:
+            self.direction.x = 0
+
         
-    def control(self, pressed_k):
-        if pressed_k == pg.K_LEFT:
-            self.direction = MOVE_DIRECTIONS['left']
-        elif pressed_k == pg.K_RIGHT:
-            self.direction = MOVE_DIRECTIONS['right']
-            
-    def move(self, direction):
-        move_direction = MOVE_DIRECTIONS[direction]
-        
-    def update(self):
-        pass
+    def update(self, dt):
+        self.control()
+        self.pos.x += self.direction.x * self.speed * dt
+        self.rect.x = round(self.pos.x)
