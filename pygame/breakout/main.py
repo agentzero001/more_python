@@ -2,14 +2,19 @@ import pygame as pg
 import sys, os
 import time
 from settings import *
+from sprites import Player
 
 class Game:
     def __init__(self, W_SIZE=RES):
         pg.init()
         self.screen = pg.display.set_mode(RES)
         self.clock = pg.time.Clock()
-        self.bg = self.get_scaled_image(path='src/graphics/other/bg.png', res=RES)
         pg.display.set_caption('Breakout')
+        self.bg = self.get_scaled_image(path='src/graphics/other/bg.png', res=RES)
+        
+        self.all_sprites = pg.sprite.Group()
+        self.player = Player(self.all_sprites)
+        
         
     @staticmethod
     def get_scaled_image(path, res):
@@ -19,7 +24,6 @@ class Game:
         scaled_width = img.get_width() * scale_factor
         scaled_height = img.get_height() * scale_factor
         return pg.transform.smoothscale(img, (scaled_width, scaled_height))
-        
     
     def input(self, events):    
         for event in events:
@@ -29,6 +33,7 @@ class Game:
                 
     def draw(self):
         self.screen.blit(self.bg, (0, 0))
+        self.all_sprites.draw(self.screen)
     
     def run(self):
         last_time = time.time()
