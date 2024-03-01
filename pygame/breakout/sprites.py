@@ -23,9 +23,19 @@ class Player(pg.sprite.Sprite):
             self.direction.x = -1
         else:
             self.direction.x = 0
+            
+    def screen_collide(self):
+        if self.rect.right > WIDTH:
+            self.rect.right = WIDTH 
+            self.pos.x = self.rect.x
+        if self.rect.x < 0:
+            self.rect.left = 0
+            self.pos.x = self.rect.x
 
         
     def update(self, dt):
         self.control()
         self.pos.x += self.direction.x * self.speed * dt
         self.rect.x = round(self.pos.x)
+        self.screen_collide()
+        
