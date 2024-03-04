@@ -16,7 +16,6 @@ class Player(pg.sprite.Sprite):
 
     def control(self):
         keys = pg.key.get_pressed()
-        print(keys[0])
         if keys[pg.K_RIGHT]:
             self.direct.x = 1
         elif keys[pg.K_LEFT]:
