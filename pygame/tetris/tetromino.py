@@ -4,14 +4,16 @@ from random import choice
 
 class Block(pg.sprite.Sprite):
     def __init__(self, tetromino, pos):
+        super().__init__(tetromino.tetris.sprite_group)
         self.tetromino = tetromino
         self.pos = vec(pos) + INIT_POS_OFFSET
         self.alive = True
-        
-        super().__init__(tetromino.tetris.sprite_group)
         self.image = pg.Surface([TILE_SIZE, TILE_SIZE])
+        self.color = TETROMINOES[tetromino.shape][1]
+        
+        
         pg.draw.rect(self.image,
-                     (84, 28, 135),
+                     self.color,
                      (1, 1, TILE_SIZE - 2, TILE_SIZE - 2),
                      border_radius=8)       
         self.rect = self.image.get_rect()
@@ -46,7 +48,7 @@ class Tetromino:
     def __init__(self, tetris):
         self.tetris = tetris
         self.shape = choice(list(TETROMINOES.keys()))
-        self.blocks = [Block(self, pos) for pos in TETROMINOES[self.shape]]
+        self.blocks = [Block(self, pos) for pos in TETROMINOES[self.shape][0]]
         self.landed = False
         print(self.blocks[0].__repr__())
         
