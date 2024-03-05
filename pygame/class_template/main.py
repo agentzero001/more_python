@@ -11,8 +11,7 @@ class App:
         self.clock   = pg.time.Clock()
         #self.obj     = Object(self.sprites)
         self.square  = Square('crimson', 500, 300)
-        self.sprites = pg.sprite.Group(self.square)
-        
+        self.sprites = pg.sprite.Group(self.square)    
 
     def update(self):
         self.clock.tick(FPS) 
@@ -20,7 +19,6 @@ class App:
         #self.square.update()  #the sprites.update is alrdy calling the Square update method
         self.sprites.update()
         
-    
     def draw(self):
         self.screen.fill(FIELD_COLOR)
         self.sprites.draw(self.screen)
@@ -44,13 +42,13 @@ class App:
             pg.display.flip() 
             
             
-            
 class Object(pg.sprite.Sprite):
     def __init__(self, groups):
         super().__init__(groups)
         self.image = pg.Surface((50, 80))
         self.rect = self.image.get_rect(topleft=(WIDTH // 2, HEIGHT //2))
         self.image.fill('black')
+        
         
         
 class Square(pg.sprite.Sprite):
@@ -60,6 +58,7 @@ class Square(pg.sprite.Sprite):
         self.image.fill(col)
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
+        
         
     def update(self):
         self.rect.move_ip(0, 5)
