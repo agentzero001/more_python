@@ -68,14 +68,7 @@ class Menu:
         self.app.screen.fill((50,50,50))
         self.app.screen.blit(self.surface, (self.x, self.y))
         pg.display.flip()
-    
-#nobody saw that    
-    
-    
         
-    
-    
-
-                
+                        
 app = App()
 app.run()
