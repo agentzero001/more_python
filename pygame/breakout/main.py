@@ -35,6 +35,12 @@ class Game:
     def draw(self):
         self.screen.blit(self.bg, (0, 0))
         self.sprites.draw(self.screen)
+        
+    def update(self, dt):
+        self.draw()
+        pg.display.update()
+        self.player.update(dt)
+        self.ball.update(dt)
 
     def run(self):
         last_time = time.time()
@@ -42,11 +48,8 @@ class Game:
             dt = time.time() - last_time
             last_time = time.time()
             self.input(pg.event.get())
-            self.draw()
-            pg.display.update()
-            self.player.update(dt)
-            self.ball.update(dt)
-
+            self.update(dt)
+            
 
 if __name__ == '__main__':
     game = Game()
