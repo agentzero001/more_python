@@ -56,3 +56,4 @@ class Ball(pg.sprite.Sprite):
         else:
             self.rect.midbottom = self.player.rect.midtop
             self.pos = pg.math.Vector2(self.rect.topleft)
+            

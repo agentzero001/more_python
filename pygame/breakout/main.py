@@ -31,13 +31,15 @@ class Game:
             if event.type == pg.QUIT:
                 pg.quit()
                 sys.exit()
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_SPACE:
+                    self.ball.active = True
 
     def draw(self):
         self.screen.blit(self.bg, (0, 0))
         self.sprites.draw(self.screen)
         
     def update(self, dt):
-        self.draw()
         pg.display.update()
         self.player.update(dt)
         self.ball.update(dt)
@@ -49,6 +51,7 @@ class Game:
             last_time = time.time()
             self.input(pg.event.get())
             self.update(dt)
+            self.draw()
             
 
 if __name__ == '__main__':
