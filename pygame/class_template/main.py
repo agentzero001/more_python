@@ -58,7 +58,7 @@ class Square(pg.sprite.Sprite):
         self.image.fill(col)
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
-        
+                
         
     def update(self):
         self.rect.move_ip(0, 5)
