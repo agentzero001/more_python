@@ -8,13 +8,10 @@ import sc2
 
 class MyBot(BotAI):
     
-
-    
     def __init__(self):
         BotAI.__init__(self)
         self.scout = True
 
-    
     async def on_step(self, iteration: int):
         # Check if we have enough resources to train a Probe
         if self.can_afford(UnitTypeId.PROBE):
