@@ -3,36 +3,59 @@ from sc2.data import Difficulty, Race  # difficulty for bots, race for the 1 of 
 from sc2.main import run_game  # function that facilitates actually running the agents in games
 from sc2.player import Bot, Computer  #wrapper for whether or not the agent is one of your bots, or a "computer" player
 from sc2 import maps  # maps method for loading maps to play in.
-from sc2.ids.unit_typeid import UnitTypeId
+from sc2.ids.unit_typeid import UnitTypeId as ut
 import sc2
+import time
 
 class MyBot(BotAI):
     
     def __init__(self):
         BotAI.__init__(self)
-        self.scout = True
+        #self.scout = 0
 
     async def on_step(self, iteration: int):
-        # Check if we have enough resources to train a Probe
-        if self.can_afford(UnitTypeId.PROBE):
-            # Select a random Nexus
-            nexus = self.townhalls.random
-            # Train a Probe from the selected Nexus
-            await self.do(nexus.train(UnitTypeId.PROBE))
-            
-        if self.scout:    
-            scout_probe = self.workers.random
-            await self.do(scout_probe.move(self.enemy_start_locations[0]))
-            self.scout = False
-            
-        #print(self.enemy_start_locations[0])
-
+        await self.build_workers()
+        await self.distribute_workers()
+        await self.build_pylons()
+        time.sleep(1)
         
+        
+        # if not self.units(ut.NEXUS).exists:
+        #     for worker in self.workers:
+        #         await self.do(worker.attack(self.enemy_start_locations[0]))
+        #     return
+        # else:
+        #     nexus = self.units(ut.NEXUS).first
+            
+        # if self.scout == 0:    
+        #     scout_probe = self.workers.random
+        #     await self.do(scout_probe.move(self.enemy_start_locations[0]))
+        # # if scout_probe.position.distance_to(self.enemy_start_locations[0]) < 10:   
+        #     await self.do(scout_probe.move(self.enemy_start_locations[1]))
+            
+    async def build_workers(self):
+        for nexuses in self.units(ut.NEXUS).ready.noqueue:    #build and not producing
+            if self.can_afford(ut.PROBE):# and nexuses.noqueue:
+                await self.do(nexuses.train(ut.PROBE))
+        
+                    
+                
+    async def build_pylons(self):
+        if self.supply_left < 5 and not self.already_pending(ut.PYLON):
+            nexuses = self.units(ut.NEXUS).ready
+            if nexuses.exists:
+                if self.can_afford(ut.PYLON):
+                    await self.build(ut.PYLON, near=nexuses.first)
+               
+    
+        
+        
+        print(self.supply_cap)       
         # print(f"{iteration}, n_workers: {self.workers.amount}, n_idle_workers: {self.workers.idle.amount},", \
-		# 	f"minerals: {self.minerals}, gas: {self.vespene}, cannons: {self.units(UnitTypeId.PHOTONCANNON).amount}," \
-		# 	f"pylons: {self.units(UnitTypeId.PYLON).amount}, nexus: {self.units(UnitTypeId.NEXUS).amount}", \
-		# 	f"gateways: {self.units(UnitTypeId.GATEWAY).amount}, cybernetics cores: {self.units(UnitTypeId.CYBERNETICSCORE).amount}", \
-		# 	f"stargates: {self.units(UnitTypeId.STARGATE).amount}, voidrays: {self.units(UnitTypeId.VOIDRAY).amount}, supply: {self.supply_used}/{self.supply_cap}")
+		# 	f"minerals: {self.minerals}, gas: {self.vespene}, cannons: {self.units(ut.PHOTONCANNON).amount}," \
+		# 	f"pylons: {self.units(ut.PYLON).amount}, nexus: {self.units(ut.NEXUS).amount}", \
+		# 	f"gateways: {self.units(ut.GATEWAY).amount}, cybernetics cores: {self.units(ut.CYBERNETICSCORE).amount}", \
+		# 	f"stargates: {self.units(ut.STARGATE).amount}, voidrays: {self.units(ut.VOIDRAY).amount}, supply: {self.supply_used}/{self.supply_cap}")
         
         
        
