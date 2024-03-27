@@ -1,7 +1,6 @@
-from sc2.bot_ai import BotAI  # parent class we inherit from
-from sc2.data import Difficulty, Race  # difficulty for bots, race for the 1 of 3 races
-from sc2.main import run_game  # function that facilitates actually running the agents in games
-from sc2.player import Bot, Computer  #wrapper for whether or not the agent is one of your bots, or a "computer" player
+from sc2.bot_ai import BotAI  
+from sc2.data import Difficulty, Race
+from sc2.player import Bot, Computer  
 from sc2 import maps  # maps method for loading maps to play in.
 from sc2.ids.unit_typeid import UnitTypeId as ut
 import sc2
@@ -20,6 +19,9 @@ class MyBot(BotAI):
         time.sleep(1)
         
         
+    async def scout(self):
+            pass
+        
         # if not self.units(ut.NEXUS).exists:
         #     for worker in self.workers:
         #         await self.do(worker.attack(self.enemy_start_locations[0]))
@@ -37,8 +39,6 @@ class MyBot(BotAI):
         for nexuses in self.units(ut.NEXUS).ready.noqueue:    #build and not producing
             if self.can_afford(ut.PROBE):# and nexuses.noqueue:
                 await self.do(nexuses.train(ut.PROBE))
-        
-                    
                 
     async def build_pylons(self):
         if self.supply_left < 5 and not self.already_pending(ut.PYLON):
