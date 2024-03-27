@@ -16,8 +16,23 @@ class MyBot(BotAI):
         await self.build_workers()
         await self.distribute_workers()
         await self.build_pylons()
+        await self.build_assimilators()
+        
         time.sleep(1)
         
+    async def build_assimilators(self):
+        for nexus in self.units(ut.NEXUS):
+            vaspenes = self.state.vespene_geyser.closer_than(10.0, nexus)
+            for vaspene in vaspenes:
+                if not self.can_afford(ut.ASSIMILATOR):
+                    break
+                worker = self.select_build_worker(vaspene.position)
+                if worker is None:
+                    break
+                if not self.units(ut.ASSIMILATOR).closer_than(1.0, vaspene).exists:
+                    await self.do(worker.build(ut.ASSIMILATOR, vaspene))
+                
+                
         
     async def scout(self):
             pass
@@ -37,7 +52,7 @@ class MyBot(BotAI):
             
     async def build_workers(self):
         for nexuses in self.units(ut.NEXUS).ready.noqueue:    #build and not producing
-            if self.can_afford(ut.PROBE):# and nexuses.noqueue:
+            if self.can_afford(ut.PROBE):
                 await self.do(nexuses.train(ut.PROBE))
                 
     async def build_pylons(self):
