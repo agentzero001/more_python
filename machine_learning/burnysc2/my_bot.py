@@ -17,6 +17,7 @@ class MyBot(BotAI):
         await self.distribute_workers()
         await self.build_pylons()
         await self.build_assimilators()
+        await self.inform()
         
         time.sleep(1)
         
@@ -31,7 +32,10 @@ class MyBot(BotAI):
                     break
                 if not self.units(ut.ASSIMILATOR).closer_than(1.0, vaspene).exists:
                     await self.do(worker.build(ut.ASSIMILATOR, vaspene))
-                
+            
+    async def inform(self):
+        local_minerals_tags = {mineral.tag for mineral in self.state.mineral_field}
+        print(len(local_minerals_tags))
                 
         
     async def scout(self):
@@ -51,7 +55,7 @@ class MyBot(BotAI):
         #     await self.do(scout_probe.move(self.enemy_start_locations[1]))
             
     async def build_workers(self):
-        for nexuses in self.units(ut.NEXUS).ready.noqueue:    #build and not producing
+        for nexuses in self.units(ut.NEXUS).ready.idle:    #build and not producing
             if self.can_afford(ut.PROBE):
                 await self.do(nexuses.train(ut.PROBE))
                 
@@ -76,7 +80,7 @@ class MyBot(BotAI):
        
 sc2.run_game(
     sc2.maps.get("Flat48"),
-    [Bot(sc2.Race.Protoss, MyBot()), Computer(sc2.Race.Zerg, sc2.Difficulty.Hard)],
+    [Bot(sc2.Race.Protoss, MyBot()), Computer(sc2.Race.Zerg, sc2.Difficulty.Easy)],
     realtime=True,
     game_time_limit=1800
 )
