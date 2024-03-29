@@ -17,10 +17,26 @@ class MyBot(BotAI):
         await self.distribute_workers()
         await self.build_pylons()
         await self.build_assimilators()
-        await self.inform()
-        
-        time.sleep(1)
-        
+        await self.expand()
+        await self.build_offensive_force()
+
+    
+    async def build_offensive_force(self):   
+        if self.units(ut.PYLON).exists:
+            pylon = self.units(ut.PYLON).random
+            if self.units(ut.GATEWAY).ready.exists:
+                if not self.units(ut.CYBERNETICSCORE):
+                    if self.can_afford(ut.CYBERNETICSCORE) and not self.already_pending(ut.CYBERNETICSCORE):
+                        await self.build(ut.CYBERNETICSCORE, near=pylon)
+            else:
+                if self.can_afford(ut.GATEWAY) and not self.already_pending(ut.GATEWAY):
+                    await self.build(ut.GATEWAY, near=pylon)
+                    
+                        
+            
+             
+      
+      
     async def build_assimilators(self):
         for nexus in self.units(ut.NEXUS):
             vaspenes = self.state.vespene_geyser.closer_than(10.0, nexus)
@@ -33,9 +49,14 @@ class MyBot(BotAI):
                 if not self.units(ut.ASSIMILATOR).closer_than(1.0, vaspene).exists:
                     await self.do(worker.build(ut.ASSIMILATOR, vaspene))
             
-    async def inform(self):
-        local_minerals_tags = {mineral.tag for mineral in self.state.mineral_field}
-        print(len(local_minerals_tags))
+    async def expand(self):
+        if self.units(ut.NEXUS).amount < 3 and self.can_afford(ut.NEXUS):
+            await self.expand_now()
+            
+            
+        
+    
+    
                 
         
     async def scout(self):
