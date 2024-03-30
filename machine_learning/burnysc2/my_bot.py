@@ -5,6 +5,7 @@ from sc2 import maps  # maps method for loading maps to play in.
 from sc2.ids.unit_typeid import UnitTypeId as ut
 import sc2
 import time
+import random
 
 class MyBot(BotAI):
     
@@ -18,10 +19,13 @@ class MyBot(BotAI):
         await self.build_pylons()
         await self.build_assimilators()
         await self.expand()
-        await self.build_offensive_force()
-
+        await self.build_offensive_force_buildings()
+        await self.build_offensive_forces()
+        await self.attack()
+        time.sleep(1)
+        
     
-    async def build_offensive_force(self):   
+    async def build_offensive_force_buildings(self):   
         if self.units(ut.PYLON).exists:
             pylon = self.units(ut.PYLON).random
             if self.units(ut.GATEWAY).ready.exists:
@@ -32,11 +36,22 @@ class MyBot(BotAI):
                 if self.can_afford(ut.GATEWAY) and not self.already_pending(ut.GATEWAY):
                     await self.build(ut.GATEWAY, near=pylon)
                     
-                        
-            
-             
-      
-      
+    async def build_offensive_forces(self):
+        for gw in self.units(ut.GATEWAY).ready.noqueue:
+            if self.can_afford(ut.STALKER) and self.supply_left > 0:
+                await self.do(gw.train(ut.STALKER))
+                
+                
+    async def attack(self):
+        # if self.units(ut.STALKER).amount > 15:
+        #     for s in self.units(ut.STALKER).idle:
+        #         await self.do(s.attack(self.find_target(self.state)))
+
+        if self.units(ut.STALKER).amount > 3:
+            if len(self.known_enemy_units) > 0:
+                for s in self.units(ut.STALKER).idle:
+                    await self.do(s.attack(random.choice(self.known_enemy_units)))
+                                                                     
     async def build_assimilators(self):
         for nexus in self.units(ut.NEXUS):
             vaspenes = self.state.vespene_geyser.closer_than(10.0, nexus)
@@ -50,15 +65,9 @@ class MyBot(BotAI):
                     await self.do(worker.build(ut.ASSIMILATOR, vaspene))
             
     async def expand(self):
-        if self.units(ut.NEXUS).amount < 3 and self.can_afford(ut.NEXUS):
+        if self.units(ut.NEXUS).amount < 2 and self.can_afford(ut.NEXUS):
             await self.expand_now()
-            
-            
-        
-    
-    
                 
-        
     async def scout(self):
             pass
         
@@ -96,11 +105,9 @@ class MyBot(BotAI):
 		# 	f"pylons: {self.units(ut.PYLON).amount}, nexus: {self.units(ut.NEXUS).amount}", \
 		# 	f"gateways: {self.units(ut.GATEWAY).amount}, cybernetics cores: {self.units(ut.CYBERNETICSCORE).amount}", \
 		# 	f"stargates: {self.units(ut.STARGATE).amount}, voidrays: {self.units(ut.VOIDRAY).amount}, supply: {self.supply_used}/{self.supply_cap}")
-        
-        
-       
+           
 sc2.run_game(
-    sc2.maps.get("Flat48"),
+    sc2.maps.get("WorldofSleepersLE"),
     [Bot(sc2.Race.Protoss, MyBot()), Computer(sc2.Race.Zerg, sc2.Difficulty.Easy)],
     realtime=True,
     game_time_limit=1800
