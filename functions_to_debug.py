@@ -32,3 +32,13 @@ def approximate_integral(a, b, n, f):
 f1 = lambda x: x**2 + 1
 
 area = approximate_integral(0, 1, 10, f1)
+
+import sys
+
+def max_diff(nums):
+    res, min_so_far = -1, sys.maxsize
+    for elem in nums:
+        min_so_far = min(min_so_far, elem)
+        if elem > min_so_far:
+            res = max(res, elem - min_so_far)
+    return res
