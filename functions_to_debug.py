@@ -42,3 +42,28 @@ def max_diff(nums):
         if elem > min_so_far:
             res = max(res, elem - min_so_far)
     return res
+
+
+def matrix_multiplication(A, B):
+    n, m, p  = len(A), len(A[0]), len(B[0])
+    C = [[0] * p for i in range(n)]
+    for i in range(n):
+        for j in range(p):
+            for k in range(m):    
+                C[i][j] += A[i][k] * B[k][j]
+    return C
+
+
+def matrix_multiplication2(A, B):
+    n, p  = len(A), len(B[0])
+    C = [[0] * p for i in range(n)]
+    for i in range(n):
+        for j in range(p):
+            C[i][j] = sum(a * b for a, b in zip(A[i], (row[j] for row in B)))
+    return C
+
+
+A = [list(range(4))] * 3
+B = [list(range(5))] * 4
+
+print(matrix_multiplication(A, B))
