@@ -1,3 +1,5 @@
+import numpy as np
+
 count_change = lambda amount: cc(amount, 5)
 
 def cc(amount, kinds_of_coins):
@@ -67,3 +69,16 @@ A = [list(range(4))] * 3
 B = [list(range(5))] * 4
 
 print(matrix_multiplication(A, B))
+
+
+
+def selection_sort(x):
+    for i in range(len(x)):
+        swap = i + np.argmin(x[i:])
+        (x[i], x[swap]) = (x[swap], x[i])
+    return x
+
+arr = [2, 4, 5, 2, 7, 3, 1, 8, 6]
+
+sorted_arr = selection_sort(arr)
+print(sorted_arr)
