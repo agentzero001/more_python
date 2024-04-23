@@ -2,7 +2,6 @@ import sys
 import pygame as pg
 from settings import *
 
-
 class App:
     def __init__(self):
         pg.init()
@@ -65,8 +64,6 @@ class Square(pg.sprite.Sprite):
         if self.rect.top > HEIGHT:
             self.kill()
         
-        
-
            
 if __name__ == '__main__':
     app = App()

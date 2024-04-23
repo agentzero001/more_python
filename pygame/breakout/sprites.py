@@ -50,14 +50,25 @@ class Ball(pg.sprite.Sprite):
         self.speed  = 400
         self.active = False
         
+    
+    def update(self, direction):
+        if direction == 'horizontal':
+            pass
+        if direction == 'vertical':
+            pass
+        
     def update(self, dt):
         if self.active:
             if self.direct.magnitude != 0:
                 self.direct = self.direct.normalize()
-                print('shot')
                 
-            self.pos += self.direct * self.speed * dt
-            self.rect.topleft = (round(self.pos.x), round(self.pos.y))
+            self.pos.x += self.direct.x * self.speed * dt
+            self.rect.x = round(self.pos.x)
+            
+            self.pos.y += self.direct.y * self.speed * dt
+            self.rect.y = round(self.pos.y)
+            
+            
         else:
             self.rect.midbottom = self.player.rect.midtop
             self.pos = pg.math.Vector2(self.rect.topleft)
