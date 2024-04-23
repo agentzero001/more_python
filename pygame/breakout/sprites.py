@@ -54,6 +54,7 @@ class Ball(pg.sprite.Sprite):
         if self.active:
             if self.direct.magnitude != 0:
                 self.direct = self.direct.normalize()
+                print('shot')
                 
             self.pos += self.direct * self.speed * dt
             self.rect.topleft = (round(self.pos.x), round(self.pos.y))
