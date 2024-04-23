@@ -52,7 +52,11 @@ class Ball(pg.sprite.Sprite):
         
     def update(self, dt):
         if self.active:
-            pass
+            if self.direct.magnitude != 0:
+                self.direct = self.direct.normalize()
+                
+            self.pos += self.direct * self.speed * dt
+            self.rect.topleft = (round(self.pos.x), round(self.pos.y))
         else:
             self.rect.midbottom = self.player.rect.midtop
             self.pos = pg.math.Vector2(self.rect.topleft)
