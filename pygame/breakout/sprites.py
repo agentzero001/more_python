@@ -13,13 +13,13 @@ class Player(pg.sprite.Sprite):
         self.pos    = pg.math.Vector2(self.rect.topleft)
         self.speed  = 300
         self.image.fill('black')
-
+        
     def control(self):
         keys = pg.key.get_pressed()
         if keys[pg.K_RIGHT]:
-            self.direct.x = 1
+            self.direct.x = 2
         elif keys[pg.K_LEFT]:
-            self.direct.x = -1
+            self.direct.x = -2
         else:
             self.direct.x = 0
 
@@ -50,12 +50,25 @@ class Ball(pg.sprite.Sprite):
         self.speed  = 400
         self.active = False
         
+    def reset_ball(self):
+        if self.rect.bottom > HEIGHT:
+            self.active = False
+            self.direct[1] = -1
     
-    def update(self, direction):
+    def window_collide(self, direction):
         if direction == 'horizontal':
-            pass
+            if self.rect.x < 0:
+                self.direct[0] = 1
+            if self.rect.right > WIDTH:
+                self.direct[0] = -1
         if direction == 'vertical':
-            pass
+            if self.rect.top == 0:
+                self.direct[1] = 1
+                
+    def player_collide(self):
+        if (self.rect.bottom == self.player.rect.top
+            and self.player.rect.right > self.rect.midbottom[0] > self.player.rect.left):
+            self.direct[1] = -1
         
     def update(self, dt):
         if self.active:
@@ -64,10 +77,14 @@ class Ball(pg.sprite.Sprite):
                 
             self.pos.x += self.direct.x * self.speed * dt
             self.rect.x = round(self.pos.x)
+            self.window_collide('horizontal')
             
             self.pos.y += self.direct.y * self.speed * dt
             self.rect.y = round(self.pos.y)
+            self.window_collide('vertical')
             
+            self.player_collide()
+            self.reset_ball()
             
         else:
             self.rect.midbottom = self.player.rect.midtop

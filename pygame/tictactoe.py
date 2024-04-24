@@ -78,8 +78,7 @@ class Tictactoe:
             print('Player {} win'.format(self.player_turn))          
             
         self.player_turn = 'O' if self.player_turn == 'X' else 'X'
-        print(self.board)
-                
+        print(self.board)                
     
     def run(self):
         for x in range(1,3):
