@@ -11,7 +11,6 @@ class Player(pg.sprite.Sprite):
         self.rect   = self.image.get_rect(midbottom=(WIDTH // 2, HEIGHT - 20))
         self.direct = pg.math.Vector2()
         self.pos    = pg.math.Vector2(self.rect.topleft)
-        self.speed  = 300
         self.image.fill('black')
         
     def control(self):
@@ -33,7 +32,7 @@ class Player(pg.sprite.Sprite):
 
     def update(self, dt):
         self.control()
-        self.pos.x += self.direct.x * self.speed * dt
+        self.pos.x += self.direct.x * PLAYER_SPEED * dt
         self.rect.x = round(self.pos.x)
         self.screen_collide()
 
@@ -47,7 +46,6 @@ class Ball(pg.sprite.Sprite):
         self.rect   = self.image.get_rect(midbottom=player.rect.midtop)
         self.pos    = pg.math.Vector2(self.rect.topleft)
         self.direct = pg.math.Vector2((random.choice((1, -1)), -1))
-        self.speed  = 400
         self.active = False
         
     def reset_ball(self):
@@ -62,11 +60,11 @@ class Ball(pg.sprite.Sprite):
             if self.rect.right > WIDTH:
                 self.direct[0] = -1
         if direction == 'vertical':
-            if self.rect.top == 0:
+            if self.rect.top <= 0:
                 self.direct[1] = 1
                 
-    def player_collide(self):
-        if (self.rect.bottom == self.player.rect.top
+    def player_collide(self):        
+        if (self.pos.y >= self.player.rect.top - 10
             and self.player.rect.right > self.rect.midbottom[0] > self.player.rect.left):
             self.direct[1] = -1
         
@@ -75,16 +73,19 @@ class Ball(pg.sprite.Sprite):
             if self.direct.magnitude != 0:
                 self.direct = self.direct.normalize()
                 
-            self.pos.x += self.direct.x * self.speed * dt
+            self.pos.x += self.direct.x * BALL_SPEED * dt
             self.rect.x = round(self.pos.x)
             self.window_collide('horizontal')
             
-            self.pos.y += self.direct.y * self.speed * dt
+            self.pos.y += self.direct.y * BALL_SPEED * dt
             self.rect.y = round(self.pos.y)
             self.window_collide('vertical')
             
             self.player_collide()
             self.reset_ball()
+            
+            self.player.pos.x = self.rect.x
+            
             
         else:
             self.rect.midbottom = self.player.rect.midtop
