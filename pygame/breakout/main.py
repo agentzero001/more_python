@@ -3,7 +3,7 @@ import sys
 import os
 import time
 from settings import *
-from sprites import Player, Ball
+from sprites import Player, Ball, Blocks
 
 
 class Game:
@@ -16,6 +16,10 @@ class Game:
         self.sprites = pg.sprite.Group()
         self.player  = Player(self.sprites)
         self.ball    = Ball(self.sprites, self.player)
+        
+        self.block_group = pg.sprite.Group()
+        self.blocks = [Blocks(self.block_group, self.ball, *xy) for xy in BLOCK_COORDS]
+        
         
     @staticmethod
     def get_scaled_image(path, res):
@@ -33,16 +37,21 @@ class Game:
                 sys.exit()
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_SPACE:
-                    self.ball.active = True
+                    self.ball.active = True  
 
     def draw(self):
         self.screen.blit(self.bg, (0, 0))
         self.sprites.draw(self.screen)
+        self.block_group.draw(self.screen)
         
     def update(self, dt):
+        self.delta_time = self.clock.tick(144)
         pg.display.update()
-        self.player.update(dt)
-        self.ball.update(dt)
+        self.player.update(self.delta_time)
+        self.ball.update(self.delta_time)
+        self.block_group.update()
+        
+        print(pg.sprite.spritecollide(self.ball, self.block_group, dokill=True))
 
     def run(self):
         last_time = time.time()

@@ -64,15 +64,17 @@ class Ball(pg.sprite.Sprite):
                 self.direct[1] = 1
                 
     def player_collide(self):        
-        if (self.pos.y >= self.player.rect.top - 10
+        if (self.rect.bottom >= self.player.rect.top
             and self.player.rect.right > self.rect.midbottom[0] > self.player.rect.left):
             self.direct[1] = -1
         
     def update(self, dt):
-        if self.active:
+        if self.active: 
+            
             if self.direct.magnitude != 0:
                 self.direct = self.direct.normalize()
-                
+              
+            
             self.pos.x += self.direct.x * BALL_SPEED * dt
             self.rect.x = round(self.pos.x)
             self.window_collide('horizontal')
@@ -82,12 +84,32 @@ class Ball(pg.sprite.Sprite):
             self.window_collide('vertical')
             
             self.player_collide()
-            self.reset_ball()
-            
-            self.player.pos.x = self.rect.x
-            
+            self.reset_ball() 
             
         else:
             self.rect.midbottom = self.player.rect.midtop
             self.pos = pg.math.Vector2(self.rect.topleft)
             
+            
+class Blocks(pg.sprite.Sprite):
+    def __init__(self, groups, ball, x, y):
+        super().__init__(groups)
+        
+        self.ball = ball
+        self.size = BLOCK_SIZE
+        self.image  = pg.Surface(BLOCK_SIZE)
+        self.rect = self.image.get_rect(topleft = (x, y))
+        self.image.fill(random.choice(COLORS))
+        
+        
+    def update(self):
+        pass
+        
+        
+        
+    
+    # def ball_collide(self, direction):
+    #     if direction == 'h':
+    #         if self.
+    #     if direction == 'v':
+    #         pass
