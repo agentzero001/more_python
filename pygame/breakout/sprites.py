@@ -80,13 +80,12 @@ class Ball(pg.sprite.Sprite):
         if self.active: 
             
             if self.direct.magnitude != 0:
-                self.direct = self.direct.normalize()
+                pass#self.direct = self.direct.normalize()
               
             
             self.pos.x += self.direct.x * BALL_SPEED * dt
             self.rect.x = round(self.pos.x)
             self.window_collide('horizontal')
-            
             
             self.pos.y += self.direct.y * BALL_SPEED * dt
             self.rect.y = round(self.pos.y)
@@ -113,18 +112,21 @@ class Blocks(pg.sprite.Sprite):
         
     def update(self):
         self.ball_collide() 
+        print(self.ball.direct)
     
     def ball_collide(self):
         if (self.rect.left < self.ball.rect.right and self.rect.right > self.ball.rect.left
         and self.rect.bottom > self.ball.rect.top and self.rect.top < self.ball.rect.bottom):
-            
-            if self.rect.bottom > self.ball.rect.top or self.rect.top < self.ball.rect.bottom:
-                self.kill()
-                self.ball.direct.y *= -1
                 
-            elif self.rect.left < self.ball.rect.right or self.rect.right > self.ball.rect.left:
+            if self.rect.left < self.ball.rect.right or self.rect.right > self.ball.rect.left:
                 self.kill()
                 self.ball.direct.x *= -1
+                
+            #elif self.rect.bottom > self.ball.rect.top or self.rect.top < self.ball.rect.bottom:
+            else:
+                self.kill()
+                self.ball.direct.y *= -1
+            
                 
 
             
