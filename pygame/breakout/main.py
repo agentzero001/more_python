@@ -51,7 +51,7 @@ class Game:
         self.ball.update(self.delta_time)
         self.block_group.update()
         
-        print(pg.sprite.spritecollide(self.ball, self.block_group, dokill=True))
+        #print(pg.sprite.spritecollide(self.ball, self.block_group, dokill=True))
 
     def run(self):
         last_time = time.time()

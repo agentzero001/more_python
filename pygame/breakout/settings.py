@@ -1,12 +1,12 @@
 RES = WIDTH, HEIGHT = 1280, 720
 PLAYER_SPEED = .4
-BALL_SPEED = .4
+BALL_SPEED = .2
 
-BLOCK_SIZE = WIDTH // 10, HEIGHT // 20
+BLOCK_SIZE = WIDTH // 10, HEIGHT // 15
 BLOCK_SPACE_X = 0
 BLOCK_SPACE_Y = 0
 
-BLOCK_COORDS = [(i, j) for i in range(10, WIDTH, WIDTH // 9) for j in range(10, HEIGHT // 2, HEIGHT // 10)]
+BLOCK_COORDS = [(i, j) for i in range(10, WIDTH - 200, WIDTH // 9) for j in range(10, HEIGHT // 2, HEIGHT // 10)]
 print([x for x in BLOCK_COORDS])
 
 BLACK = (0, 0, 0)

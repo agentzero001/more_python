@@ -45,7 +45,7 @@ class Ball(pg.sprite.Sprite):
         self.image  = pg.image.load('src/graphics/other/ball.png')
         self.rect   = self.image.get_rect(midbottom=player.rect.midtop)
         self.pos    = pg.math.Vector2(self.rect.topleft)
-        self.direct = pg.math.Vector2((random.choice((1, -1)), -1))
+        self.direct = pg.math.Vector2(1, -1)#(random.choice((1, -1)), -1))
         self.active = False
         
     def reset_ball(self):
@@ -67,6 +67,14 @@ class Ball(pg.sprite.Sprite):
         if (self.rect.bottom >= self.player.rect.top
             and self.player.rect.right > self.rect.midbottom[0] > self.player.rect.left):
             self.direct[1] = -1
+            
+    def block_collide(self, direction):
+        if direction == 'h':
+            pass
+        
+        if direction == 'V':
+            pass
+        
         
     def update(self, dt):
         if self.active: 
@@ -78,6 +86,7 @@ class Ball(pg.sprite.Sprite):
             self.pos.x += self.direct.x * BALL_SPEED * dt
             self.rect.x = round(self.pos.x)
             self.window_collide('horizontal')
+            
             
             self.pos.y += self.direct.y * BALL_SPEED * dt
             self.rect.y = round(self.pos.y)
@@ -103,13 +112,19 @@ class Blocks(pg.sprite.Sprite):
         
         
     def update(self):
-        pass
-        
-        
-        
+        self.ball_collide() 
     
-    # def ball_collide(self, direction):
-    #     if direction == 'h':
-    #         if self.
-    #     if direction == 'v':
-    #         pass
+    def ball_collide(self):
+        if (self.rect.left < self.ball.rect.right and self.rect.right > self.ball.rect.left
+        and self.rect.bottom > self.ball.rect.top and self.rect.top < self.ball.rect.bottom):
+            
+            if self.rect.bottom > self.ball.rect.top or self.rect.top < self.ball.rect.bottom:
+                self.kill()
+                self.ball.direct.y *= -1
+                
+            elif self.rect.left < self.ball.rect.right or self.rect.right > self.ball.rect.left:
+                self.kill()
+                self.ball.direct.x *= -1
+                
+
+            
