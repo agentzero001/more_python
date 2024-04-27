@@ -48,8 +48,7 @@ class Object(pg.sprite.Sprite):
         self.rect = self.image.get_rect(topleft=(WIDTH // 2, HEIGHT //2))
         self.image.fill('black')
         
-        
-        
+   
 class Square(pg.sprite.Sprite):
     def __init__(self, col, x, y):
         pg.sprite.Sprite.__init__(self)
