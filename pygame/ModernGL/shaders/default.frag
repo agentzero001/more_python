@@ -1,3 +1,8 @@
 #version 330 core
 
-void main() {}
+layout (location = 0) out vec4 fragColor;
+
+void main() {
+    vec3 color = vec3(.5, 0, 0);
+    fragColor = vec4(color, 1.0);
+}
