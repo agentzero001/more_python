@@ -28,15 +28,7 @@ def rectangle(arr, a, b, c):
     line__(arr, *c, *d)
     line__(arr, *d, *a)
     
-
-def hexagon(arr, a, b, c, d, e, f):
-    line__(arr, *a, *b)
-    line__(arr, *b, *c)
-    line__(arr, *c, *d)
-    line__(arr, *d, *e)
-    line__(arr, *e, *f)
-    line__(arr, *f, *a)
-    
+   
 originRotM = lambda angle: np.array([[np.cos(angle), -np.sin(angle), 0],
                                      [np.sin(angle),  np.cos(angle), 0],
                                      [0, 0, 1]])

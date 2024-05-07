@@ -14,9 +14,11 @@ m1.rectangle(C, *rect)
 
 def recImg(angle, scale):
     C = np.full((60,60), 0, 'int')
-    m1.rectangle(C, *list(map(m1.transformation(m1.scaleM(30, 30, scale, scale)), 
-                            map(m1.transformation(m1.rotateM(30, 30, angle)),
-                                rect))))
+    m1.rectangle(C, 
+                 *list(map(m1.transformation(m1.scaleM(30, 30, scale, scale)),
+                       map(m1.transformation(m1.rotateM(30, 30, angle)),
+                 rect))))
+    
     return C.copy()
 
 steps = 100

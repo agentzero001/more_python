@@ -10,10 +10,9 @@ class Cube:
         self.vao = self.get_vertex_array_object()
         self.m_model = self.get_model_matrix()
         self.on_init()
-        
-        
+          
     def update(self):
-        m_model = glm.rotate(self.m_model, self.app.time * .1, glm.vec3(0, 1, 0))
+        m_model = glm.rotate(self.m_model, self.app.time * .8, glm.vec3(1, 0, 1))
         self.shader_program['m_model'].write(m_model)
         self.shader_program['m_view'].write(self.app.camera.m_view)
         
@@ -41,6 +40,7 @@ class Cube:
     def get_vertex_data(self):
         vertices_ = [(-1, -1,  1), ( 1,  -1,  1), ( 1,  1,  1), (-1,  1,  1),
                      (-1,  1, -1), (-1,  -1, -1), ( 1, -1, -1), ( 1,  1, -1)]
+        
         indices = [(0, 2, 3), (0, 1, 2),
                    (1, 7, 2), (1, 6, 7),
                    (6, 5, 4), (4, 7, 6),
@@ -80,4 +80,3 @@ class Cube:
             fragment_shader = file.read()
             
         return self.ctx.program(vertex_shader=vertex_shader, fragment_shader=fragment_shader)
-    

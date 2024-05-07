@@ -10,10 +10,6 @@ f4 = lambda angle: m1.transformation(m1.rotateM(250, 250, angle))
 
 C = np.full((500,500), 0, 'int')
 rect = [(40,40), (260,40), (260, 260)]
-#hex = [(20, 80), (30, 70), (50, 70), (60, 80), (50, 90), (30, 90)]
-#hex2 = m1.hexagon(C, *list(map(f3(np.pi), hex)))
-#print(hex2)
-
 
 #m1.rectangle(C, *rect)
 

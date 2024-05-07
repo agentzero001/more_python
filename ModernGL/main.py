@@ -46,7 +46,6 @@ class GraphicsEngine:
             self.render()
             self.delta_time = self.clock.tick(60)
     
-        
 if __name__ == '__main__':
     app = GraphicsEngine()
     app.run()
