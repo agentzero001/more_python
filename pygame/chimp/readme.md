@@ -1,1 +1,1 @@
-Here i rewrote the chimp example of pygame so that it now uses object oriented design.
+Rewrote the chimp example of pygame such that it now uses object oriented design.
