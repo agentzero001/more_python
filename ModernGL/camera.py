@@ -28,7 +28,6 @@ class Camera:
         #view matrix
         self.m_view = self.get_view_matrix()
         
-        
     def rotate(self):
         rel_x, rel_y = pg.mouse.get_rel()
         self.yaw += rel_x * SENSITIVITY

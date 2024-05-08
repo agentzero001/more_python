@@ -1,31 +1,31 @@
 {
-   "editor.fontSize":20,
-   "terminal.integrated.fontSize":15,
-   "terminal.integrated.fontFamily":"Courier New",
+   "editor.fontSize":22,
+   "terminal.integrated.fontSize":18,
+   "terminal.integrated.fontFamily":"courier new",
    "editor.fontFamily":"Consolas",
    "editor.renderLineHighlight":"none",
    "workbench.colorCustomizations":{
-      "editor.background":"#0c0a04",
-      "editor.foreground":"#797777",
-      "sideBar.background":"#0c0a04",
-      "menu.background":"#242222",
-      "terminal.background":"#131212",
-      "titleBar.activeBackground":"#000000",
+      "editor.background":"#0c1013",
+      "editor.foreground":"#8d8b8b",
+      "sideBar.background":"#080b0e",
+      "menu.background":"#3f3c3c",
+      "terminal.background":"#2a2828",
+      "titleBar.activeBackground":"#2a2a2a",
       "editor.wordHighlightBackground": "#2d2b29"
-      },
+    },
    "editor.tokenColorCustomizations":{
       "comments":"#7a8f02",
-      "strings":"#850707",
-      "variables":"#807f7f",
-      "functions":"#22808c",
-      "numbers":"#147e14",
-      "keywords":"#29882f",
-      "types":"#7217ea",
+      "strings":"#740505",
+      "variables":"#696060",
+      "functions":"#19565e",
+      "numbers":"#157e15",
+      "keywords":"#28882e",
+      "types":"#7b049f",
       "textMateRules":[
          {
             "scope":"variable.other.constant",
             "settings":{
-               "foreground":"#621a4d"
+               "foreground":"#5e4ad1"
             }
          },
          {
@@ -43,7 +43,7 @@
                "string.quoted.double"
             ],
             "settings":{
-               "foreground":"#922307"
+               "foreground":"#661803"
             }
          },
          {
@@ -60,5 +60,10 @@
    "[python]":{
       "editor.formatOnType":true
    },
-"workbench.editor.empty.hint": "hidden"
+"workbench.editor.empty.hint": "hidden",
+"liveServer.settings.donotShowInfoMsg": true,
+"window.zoomLevel": -1,
+"editor.minimap.showSlider": "always",
+"python.defaultInterpreterPath": "C:\\Users\\jensm\\anaconda3\\python.exe",
+"explorer.confirmDelete": false
 }
