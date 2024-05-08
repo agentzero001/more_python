@@ -11,13 +11,13 @@ screen = pg.display.set_mode(RES)
  
 
 while True:
-  screen.fill((0, 0, 0))
+    screen.fill((0, 0, 0))
   
-  for event in pg.event.get():
-    if event.type == pg.QUIT:
-      pg.quit()
-      sys.exit()
+    for event in pg.event.get():
+        if event.type == pg.QUIT:
+            pg.quit()
+            sys.exit()
   
-  pg.display.flip()
-  value = fpsClock.tick(FPS)
-  print(value)
+    pg.display.flip()
+    value = fpsClock.tick(FPS)
+    print(value)
