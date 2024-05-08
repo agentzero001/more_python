@@ -22,7 +22,7 @@ class MyBot(BotAI):
         await self.build_offensive_force_buildings()
         await self.build_offensive_forces()
         await self.attack()
-        time.sleep(1)
+        
         
     
     async def build_offensive_force_buildings(self):   
@@ -85,10 +85,11 @@ class MyBot(BotAI):
         #     await self.do(scout_probe.move(self.enemy_start_locations[1]))
             
     async def build_workers(self):
-        for nexuses in self.units(ut.NEXUS).ready.idle:    #build and not producing
-            if self.can_afford(ut.PROBE):
-                await self.do(nexuses.train(ut.PROBE))
-                
+        if 44 > self.workers.amount:
+            for nexuses in self.units(ut.NEXUS).ready.idle:    #build and not producing
+                if self.can_afford(ut.PROBE):
+                    await self.do(nexuses.train(ut.PROBE))
+                    
     async def build_pylons(self):
         if self.supply_left < 5 and not self.already_pending(ut.PYLON):
             nexuses = self.units(ut.NEXUS).ready
@@ -99,7 +100,7 @@ class MyBot(BotAI):
     
         
         
-        print(self.supply_cap)       
+        #print(self.supply_cap)       
         # print(f"{iteration}, n_workers: {self.workers.amount}, n_idle_workers: {self.workers.idle.amount},", \
 		# 	f"minerals: {self.minerals}, gas: {self.vespene}, cannons: {self.units(ut.PHOTONCANNON).amount}," \
 		# 	f"pylons: {self.units(ut.PYLON).amount}, nexus: {self.units(ut.NEXUS).amount}", \
@@ -109,6 +110,6 @@ class MyBot(BotAI):
 sc2.run_game(
     sc2.maps.get("WorldofSleepersLE"),
     [Bot(sc2.Race.Protoss, MyBot()), Computer(sc2.Race.Zerg, sc2.Difficulty.Easy)],
-    realtime=True,
+    realtime=False,
     game_time_limit=1800
 )

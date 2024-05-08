@@ -46,6 +46,6 @@ class MyBot(BotAI):
 sc2.run_game(
     sc2.maps.get("Flat48"),
     [Bot(sc2.Race.Protoss, MyBot()), Computer(sc2.Race.Zerg, sc2.Difficulty.Hard)],
-    realtime=True,
+    realtime=False,
     game_time_limit=1800
 )
