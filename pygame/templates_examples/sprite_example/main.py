@@ -32,18 +32,14 @@ class App:
                 pos = pg.mouse.get_pos()
                 self.square = Square('black', pos[0], pos[1])
                 self.sprites.add(self.square)
-                print(pg.mouse.get_rel())
-                
-                
+                print(pg.mouse.get_rel())      
                 
     def run(self):
         while True:
-           # print(self.sprites)
+            print(self.sprites)
             self.check_events()
             self.update()
-            pg.display.flip() 
-           
-            
+            pg.display.flip()            
             
 class Object(pg.sprite.Sprite):
     def __init__(self, groups):

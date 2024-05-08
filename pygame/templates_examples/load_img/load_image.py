@@ -1,5 +1,4 @@
 import pygame as pg
-import module as m
 import sys, os
 
 main_dir = os.path.split(os.path.abspath(__file__))[0]
@@ -9,10 +8,8 @@ pg.init()
 
 pg.display.set_mode([500,500])
 
-running = m.running
+running = True
 
-
-      
 def load_image(name, colorkey=None, scale=1):
     fullname = os.path.join(data_dir, name)
     image = pg.image.load(fullname)
@@ -27,9 +24,7 @@ def load_image(name, colorkey=None, scale=1):
             colorkey = image.get_at((0, 0))
         image.set_colorkey(colorkey, pg.RLEACCEL)
     return image, image.get_rect()     
-     
-     
-      
+           
 def input(events):
     global running
     for event in events:
@@ -37,10 +32,6 @@ def input(events):
             running = False
         else:
             print(event)
-
-
-
-
 
 while running:
     input(pg.event.get())
