@@ -26,6 +26,7 @@ class Game:
         
     def draw(self):
         self.scene.draw()
+        
     
     def update(self):
         self.scene.update()
@@ -36,7 +37,6 @@ class Game:
         sys.exit()
                    
             
-        
 if __name__ == '__main__':
     app = Game()
     app.run()
