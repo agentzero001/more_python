@@ -8,7 +8,7 @@ class Player(pg.sprite.Sprite):
         self.y = y
         pg.sprite.Sprite.__init__(self)
         self.frame_amount = 10
-        self.frames = get_img_frames('assets/warrior.png', 32, 32, self.frame_amount, sheet_line, 2, 2)
+        self.frames = get_img_frames('assets/warrior.png', 32, 32, self.frame_amount, sheet_line, 5, 5)
         self.image = self.frames[0]
         self.rect = self.image.get_rect()
         self.rect.center = (self.x, self.y)
