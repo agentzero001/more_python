@@ -46,7 +46,7 @@ def _2d_lin_trans(M,xylim=500):
                 line.set_data([v[0, i], new_v_t[0, i]], [v[1, i], new_v_t[1, i]])
 
     anim = FuncAnimation(fig, update, frames=200, interval=50, repeat=True)
-    #anim.save('animation2.gif', writer='pillow') 
+    anim.save('GIFS/animation5.gif', writer='pillow') 
     plt.show()
 
 angle = np.pi / 4
