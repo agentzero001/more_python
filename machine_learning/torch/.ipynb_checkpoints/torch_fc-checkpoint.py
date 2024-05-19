@@ -6,7 +6,10 @@ from torch import nn, optim, Tensor as t
 from torch.utils.data import DataLoader
 import matplotlib.pyplot as plt
 import numpy as np
-from tqdm import tqdm
+#from tqdm.notebook import tqdm
+from tqdm.notebook import tqdm
+import sys
+
  
 
 class NN(nn.Module):
@@ -65,8 +68,8 @@ def check_accuracy(loader, model):
 
 
 def main():
-    for epoch in range(num_epochs):    
-        for batch_idx, (data, targets) in enumerate(train_loader):
+    for epoch in tqdm(range(num_epochs), desc='epoch', leave=True):    
+        for batch_idx, (data, targets) in enumerate(tqdm(train_loader, desc='training', leave=True)):
             data = data.to(device=device)
             targets = targets.to(device=device)
 
@@ -79,3 +82,4 @@ def main():
             loss.backward()
 
             optimizer.step()
+            
