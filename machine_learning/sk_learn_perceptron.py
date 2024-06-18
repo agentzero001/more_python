@@ -18,18 +18,16 @@ plt.rcParams.update(params)
 
 
 class PerceptronEstimator(BaseEstimator, ClassifierMixin):
-
     def __init__(self, n_iterations=20, random_state=None):
         self.n_iterations = n_iterations
         self.random_state = random_state
         self.errors       = []
 
-    
     heaviside = lambda self, x: 0 if x < 0 else 1    
 
-    def fit(self, X=None, y=None ):
+    def fit(self, X=None, y=None):
         random_state  = check_random_state(self.random_state)
-        self.w        = random_state.random_sample(np.size(X,1))
+        self.w        = random_state.random_sample(np.size(X, 1))
         X, y          = check_X_y(X, y)
         self.classes_ = unique_labels(y)
         self.X_       = X
@@ -44,12 +42,10 @@ class PerceptronEstimator(BaseEstimator, ClassifierMixin):
             self.w += error * x_
         return self
     
-    
     def predict(self, x):
         check_is_fitted(self, ['X_', 'y_'])
         y_hat = self.heaviside(np.dot(self.w,x))
         return y_hat
-    
     
     def plot(self):                 
         fignr = 1

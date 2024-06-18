@@ -23,8 +23,6 @@ class MyBot(BotAI):
         await self.build_offensive_forces()
         await self.attack()
         
-        
-    
     async def build_offensive_force_buildings(self):   
         if self.units(ut.PYLON).exists:
             pylon = self.units(ut.PYLON).random
@@ -40,8 +38,7 @@ class MyBot(BotAI):
         for gw in self.units(ut.GATEWAY).ready.noqueue:
             if self.can_afford(ut.STALKER) and self.supply_left > 0:
                 await self.do(gw.train(ut.STALKER))
-                
-                
+                     
     async def attack(self):
         # if self.units(ut.STALKER).amount > 15:
         #     for s in self.units(ut.STALKER).idle:
@@ -97,9 +94,6 @@ class MyBot(BotAI):
                 if self.can_afford(ut.PYLON):
                     await self.build(ut.PYLON, near=nexuses.first)
                
-    
-        
-        
         #print(self.supply_cap)       
         # print(f"{iteration}, n_workers: {self.workers.amount}, n_idle_workers: {self.workers.idle.amount},", \
 		# 	f"minerals: {self.minerals}, gas: {self.vespene}, cannons: {self.units(ut.PHOTONCANNON).amount}," \
@@ -107,9 +101,7 @@ class MyBot(BotAI):
 		# 	f"gateways: {self.units(ut.GATEWAY).amount}, cybernetics cores: {self.units(ut.CYBERNETICSCORE).amount}", \
 		# 	f"stargates: {self.units(ut.STARGATE).amount}, voidrays: {self.units(ut.VOIDRAY).amount}, supply: {self.supply_used}/{self.supply_cap}")
            
-sc2.run_game(
-    sc2.maps.get("WorldofSleepersLE"),
-    [Bot(sc2.Race.Protoss, MyBot()), Computer(sc2.Race.Zerg, sc2.Difficulty.Easy)],
-    realtime=False,
-    game_time_limit=1800
-)
+sc2.run_game(sc2.maps.get("WorldofSleepersLE"),
+             [Bot(sc2.Race.Protoss, MyBot()), Computer(sc2.Race.Zerg, sc2.Difficulty.Easy)],
+             realtime=False,
+             game_time_limit=1800)

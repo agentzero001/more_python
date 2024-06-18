@@ -17,7 +17,7 @@ preprocess = transforms.Compose([
         std=[0.229, 0.224, 0.225]
         )
 ])
-breakpoint()
+
 tiger = Image.open('unbenannt.jpg')
 tiger_proc = preprocess(tiger)
 
