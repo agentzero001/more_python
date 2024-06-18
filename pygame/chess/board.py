@@ -1,15 +1,22 @@
 import pygame as pg
-from const import TILE_SIZE
-from const import WIN_SIZE
+from const import *
 
 class Board:
     def __init__(self, app):
         self.app = app
         self.tile_size = TILE_SIZE
-        self.surface = pg.surface.Surface(WIN_SIZE)
-        self.surface.fill((100, 100, 100))
-        self.rect = pg.Rect(0, 0, TILE_SIZE, TILE_SIZE)
-        pg.draw.rect(self.surface,(100, 0, 0), self.rect)
+        self.color = BOARD_COLOR_2
+        
+    
                 
     def draw(self):
-        self.app.screen.blit(self.surface, (0, 0))
+        k = 0
+        for i in range(0, WIDTH, TILE_SIZE*2):
+            for j in range(0, HEIGHT, TILE_SIZE):
+                self.surface = pg.Surface((TILE_SIZE, TILE_SIZE))
+                self.surface.fill(BOARD_COLOR_2)
+                if k % 2 == 0:
+                    self.app.screen.blit(self.surface, (i, j))
+                else:
+                    self.app.screen.blit(self.surface, (i+TILE_SIZE, j))
+                k += 1
