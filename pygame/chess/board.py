@@ -6,8 +6,6 @@ class Board:
         self.app = app
         self.tile_size = TILE_SIZE
         self.color = BOARD_COLOR_2
-        
-    
                 
     def draw(self):
         k = 0

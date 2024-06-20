@@ -1,7 +1,6 @@
 import pygame as pg
 import sys, os
 from const import *
-from objects import Piece
 from board import Board
 from player import Player
 
@@ -10,26 +9,15 @@ class Game:
     def __init__(self, W_SIZE):
         pg.init()
         self.screen = pg.display.set_mode(W_SIZE)
-        self.clock = pg.time.Clock()
-        self.sprites = pg.sprite.Group()     
+        self.clock = pg.time.Clock()     
         self.board = Board(self)
-        self.piece = Piece(self, 32, 32, 'black', TYPES[0])
-        self.player_white = Player('white')
-        self.player_black = Player('black')
-        self.sprites.add(self.piece)
-        self.pawns = self.draw_pieces('black', 'pawn')
+        self.player_white = Player(self, 'white')
+        self.player_black = Player(self, 'black')      
         
-        for pawn in self.pawns:
+        for pawn in self.player_black.pawns:
             print(pawn.rect.topleft, pawn.rect.bottomright)
                          
-    def draw_pieces(self, color, type_):
-        pieces = pg.sprite.Group()
-        for i in range(32, WIDTH, 64):
-            piece = Piece(self, i, TILE_SIZE + TILE_SIZE // 2, color, type_)
-            pieces.add(piece)
-        return pieces
         
-
     def input(self, events):    
         for event in events:
             if event.type == pg.QUIT:
@@ -38,21 +26,18 @@ class Game:
                 
     def update(self):
         self.clock.tick(FPS)                   
-        self.draw()
-        self.sprites.update()
-        self.pawns.update            
-    
+        self.draw()                   
                 
     def draw(self):
         self.screen.fill(BOARD_COLOR_1)
         self.board.draw()
-        self.sprites.draw(self.screen)
-        self.pawns.draw(self.screen)
+        self.player_black.draw()
+        self.player_white.draw()
             
     def run(self):
         while True:
             self.input(pg.event.get())
-            self.draw()
+            self.update()
             pg.display.update()    
     
 if __name__ == '__main__':
