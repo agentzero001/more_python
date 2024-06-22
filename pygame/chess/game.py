@@ -1,7 +1,7 @@
 import pygame as pg
 import sys, os
 from const import *
-from utils import render_letter
+from utils import render_letter, get_idx
 from board import Board
 from player import Player
 
@@ -15,8 +15,10 @@ class App:
         self.clock = pg.time.Clock() 
         self.font = pg.font.Font(None, 40)
         self.board = Board(self)
+        self.board_pos = ([SOME_MORE_SPACE // 2] * 2)
         self.player_white = Player(self, 'white')
-        self.player_black = Player(self, 'black')      
+        self.player_black = Player(self, 'black')
+              
         
         for pawn in self.player_black.pawns:
             print(pawn.rect.topleft, pawn.rect.bottomright)                         
@@ -27,13 +29,18 @@ class App:
                 pg.quit()
                 sys.exit()
                 
+            if event.type == pg.MOUSEBUTTONDOWN:
+                pos_idx = get_idx(self.board_pos)
+                self.board.chess_matrix[pos_idx[1]][pos_idx[0]] = 'x'
+                print(self.board.chess_matrix)
+                
     def update(self):
         self.clock.tick(FPS)                   
         self.draw()                   
                 
     def draw(self):
         self.screen.fill(BACKGROUND_COLOR)
-        self.screen.blit(self.surface, ([SOME_MORE_SPACE // 2] * 2))
+        self.screen.blit(self.surface, (self.board_pos))
         self.board.draw()
         self.player_black.draw()
         self.player_white.draw()
@@ -42,16 +49,27 @@ class App:
                           (SOME_MORE_SPACE // 2 + TILE_SIZE_05 + i * TILE_SIZE,
                            SOME_MORE_SPACE // 2 + HEIGHT + TILE_SIZE_05))
             
+        for i, letter in enumerate('ABCDEFGH'):
+            render_letter(self.font, letter, self.screen,
+                          (SOME_MORE_SPACE // 2 + TILE_SIZE_05 + i * TILE_SIZE,
+                           SOME_MORE_SPACE // 2 - TILE_SIZE_05))
+            
         for i, number in enumerate(range(8, 0, -1)):
             render_letter(self.font, number, self.screen, 
                           (SOME_MORE_SPACE // 2 - TILE_SIZE_05,
-                           SOME_MORE_SPACE // 2 + TILE_SIZE_05 + i * TILE_SIZE))       
+                           SOME_MORE_SPACE // 2 + TILE_SIZE_05 + i * TILE_SIZE))
+            
+        for i, number in enumerate(range(8, 0, -1)):
+            render_letter(self.font, number, self.screen, 
+                          (SOME_MORE_SPACE // 2 + WIDTH + TILE_SIZE_05,
+                           SOME_MORE_SPACE // 2 + TILE_SIZE_05 + i * TILE_SIZE))         
             
     def run(self):
         while True:
             self.input(pg.event.get())
             self.update()
-            pg.display.update()    
+            pg.display.update() 
+            
     
 if __name__ == '__main__':
     game = App(WIN_SIZE)
