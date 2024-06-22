@@ -14,16 +14,12 @@ class App:
         self.surface.fill(BOARD_COLOR_1)
         self.clock = pg.time.Clock() 
         self.font = pg.font.Font(None, 40)
-        self.letters = [i for i in 'ABCDEFGH']
         self.board = Board(self)
         self.player_white = Player(self, 'white')
         self.player_black = Player(self, 'black')      
         
         for pawn in self.player_black.pawns:
-            print(pawn.rect.topleft, pawn.rect.bottomright)
-            
-        print(self.letters)
-                         
+            print(pawn.rect.topleft, pawn.rect.bottomright)                         
         
     def input(self, events):    
         for event in events:
@@ -41,7 +37,7 @@ class App:
         self.board.draw()
         self.player_black.draw()
         self.player_white.draw()
-        for i, letter in enumerate(self.letters):
+        for i, letter in enumerate('ABCDEFGH'):
             render_letter(self.font, letter, self.screen,
                           (SOME_MORE_SPACE // 2 + TILE_SIZE_05 + i * TILE_SIZE,
                            SOME_MORE_SPACE // 2 + HEIGHT + TILE_SIZE_05))
