@@ -16,12 +16,12 @@ class App:
         self.font = pg.font.Font(None, 40)
         self.board = Board(self)
         self.board_pos = ([SOME_MORE_SPACE // 2] * 2)
-        self.player_white = Player(self, 'white')
-        self.player_black = Player(self, 'black')
+        self.player_white = Player(self, self.board, 'white')
+        self.player_black = Player(self, self.board, 'black')
               
         
-        for pawn in self.player_black.pawns:
-            print(pawn.rect.topleft, pawn.rect.bottomright)                         
+        # for pawn in self.player_black.pawns:
+        #     print(pawn.rect.topleft, pawn.rect.bottomright)                         
         
     def input(self, events):    
         for event in events:

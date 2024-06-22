@@ -7,12 +7,10 @@ def get_scaled_image(path, res):
     img = pg.image.load(os.path.join(cwd, path))
     return pg.transform.smoothscale(img, res) 
 
-
 def render_letter(font, letter, surface, pos):
     letter_surface = font.render(str(letter), True, LETTER_COLOR)
     letter_rect = letter_surface.get_rect(center=pos)
     surface.blit(letter_surface, letter_rect)
-    
     
 def get_idx(board_pos):
     pos = pg.mouse.get_pos()
