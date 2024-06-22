@@ -27,25 +27,25 @@ class Player:
             
                    
     def draw_pawns(self, color):
-        pieces = pg.sprite.Group()
+        pawns = pg.sprite.Group()
         if color == 'black':
             for i in range(TILE_SIZE_05, WIDTH, 64):
                 piece = Pawn(i, TILE_SIZE + TILE_SIZE // 2, color)
-                pieces.add(piece)
+                pawns.add(piece)
         else:
             for i in range(TILE_SIZE_05, WIDTH, 64):
                 piece = Pawn(i , TILE_SIZE * 6 + TILE_SIZE // 2, color)
-                pieces.add(piece)
-        return pieces
+                pawns.add(piece)
+        return pawns
         
     def draw(self):
-        self.pawns.draw(self.app.screen)
-        self.king.draw(self.app.screen)
-        self.queen.draw(self.app.screen)
-        self.knight1.draw(self.app.screen)
-        self.knight2.draw(self.app.screen)
-        self.rook1.draw(self.app.screen)
-        self.rook2.draw(self.app.screen)
-        self.bishop1.draw(self.app.screen)
-        self.bishop2.draw(self.app.screen)
+        self.pawns.draw(self.app.surface)
+        self.king.draw(self.app.surface)
+        self.queen.draw(self.app.surface)
+        self.knight1.draw(self.app.surface)
+        self.knight2.draw(self.app.surface)
+        self.rook1.draw(self.app.surface)
+        self.rook2.draw(self.app.surface)
+        self.bishop1.draw(self.app.surface)
+        self.bishop2.draw(self.app.surface)
         
