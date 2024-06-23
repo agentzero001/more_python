@@ -12,8 +12,7 @@ def render_letter(font, letter, surface, pos):
     letter_rect = letter_surface.get_rect(center=pos)
     surface.blit(letter_surface, letter_rect)
     
-def get_idx(board_pos):
-    pos = pg.mouse.get_pos()
+def get_idx(board_pos, pos):
     pos = (pos[0] - board_pos[0], pos[1] - board_pos[1])
     pos_idx = (pos[0] // TILE_SIZE, pos[1] // TILE_SIZE)
     return pos_idx

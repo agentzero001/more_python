@@ -1,6 +1,7 @@
 import pygame as pg
 import sys, os
 from const import *
+from pygame.math import Vector2 as V
 from utils import render_letter, get_idx
 from board import Board
 from player import Player
@@ -29,10 +30,13 @@ class App:
                 pg.quit()
                 sys.exit()
                 
+                
             if event.type == pg.MOUSEBUTTONDOWN:
-                pos_idx = get_idx(self.board_pos)
-                self.board.chess_matrix[pos_idx[1]][pos_idx[0]] = 'x'
-                print(self.board.chess_matrix)
+                pos = pg.mouse.get_pos()
+                pos_idx = get_idx(self.board_pos, pos)
+                
+                self.board.chess_matrix[pos_idx[1]][pos_idx[0]].rect.center += V(pos)
+                #print(self.board.chess_matrix)
                 
     def update(self):
         self.clock.tick(FPS)                   
