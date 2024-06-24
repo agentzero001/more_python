@@ -8,8 +8,10 @@ class Player:
         self.board = board
         self.pawns = self.draw_pawns(color)
         pieces = [Rook, Knight, Bishop, Queen, King, Bishop, Rook, Knight]
-        y_pos = TILE_SIZE * 7 + TILE_SIZE_05 if color == 'white' else TILE_SIZE_05
-        self.pieces = [piece(TILE_SIZE * x_pos + TILE_SIZE_05, y_pos, color, self.board) 
+        self.pieces = [piece(TILE_SIZE * x_pos + TILE_SIZE_05,
+                             TILE_SIZE * 7 + TILE_SIZE_05 if color == 'white' else TILE_SIZE_05,
+                             color,
+                             self.board) 
                         for piece, x_pos in zip(pieces, range(8))]       
                    
     def draw_pawns(self, color):
