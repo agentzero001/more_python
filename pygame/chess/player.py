@@ -7,12 +7,11 @@ class Player:
         self.app = app
         self.board = board
         self.pawns = self.draw_pawns(color)
-        pieces = [Rook, Knight, Bishop, Queen, King, Bishop, Rook, Knight]
         self.pieces = [piece(TILE_SIZE * x_pos + TILE_SIZE_05,
                              TILE_SIZE * 7 + TILE_SIZE_05 if color == 'white' else TILE_SIZE_05,
                              color,
                              self.board) 
-                        for piece, x_pos in zip(pieces, range(8))]       
+                        for piece, x_pos in zip([Rook, Knight, Bishop, Queen, King, Bishop, Rook, Knight], range(8))]       
                    
     def draw_pawns(self, color):
         pawns = pg.sprite.Group()

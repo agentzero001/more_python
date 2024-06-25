@@ -19,10 +19,12 @@ class App:
         self.board_pos = ([SOME_MORE_SPACE // 2] * 2)
         self.player_white = Player(self, self.board, 'white')
         self.player_black = Player(self, self.board, 'black')
+        self.board.draw()
               
         
         # for pawn in self.player_black.pawns:
-        #     print(pawn.rect.topleft, pawn.rect.bottomright)                         
+    
+    #     print(pawn.rect.topleft, pawn.rect.bottomright)                         
         
     def input(self, events):    
         for event in events:
@@ -35,8 +37,8 @@ class App:
                 pos = pg.mouse.get_pos()
                 pos_idx = get_idx(self.board_pos, pos)
                 
-                self.board.chess_matrix[pos_idx[1]][pos_idx[0]].rect.center += V(pos)
-                #print(self.board.chess_matrix)
+                self.board.chess_matrix[pos_idx[1]][pos_idx[0]].pick(pos_idx)
+                print(pos_idx)
                 
     def update(self):
         self.clock.tick(FPS)                   
@@ -45,7 +47,6 @@ class App:
     def draw(self):
         self.screen.fill(BACKGROUND_COLOR)
         self.screen.blit(self.surface, (self.board_pos))
-        self.board.draw()
         self.player_black.draw()
         self.player_white.draw()
         for i, letter in enumerate('ABCDEFGH'):
@@ -66,7 +67,9 @@ class App:
         for i, number in enumerate(range(8, 0, -1)):
             render_letter(self.font, number, self.screen, 
                           (SOME_MORE_SPACE // 2 + WIDTH + TILE_SIZE_05,
-                           SOME_MORE_SPACE // 2 + TILE_SIZE_05 + i * TILE_SIZE))         
+                           SOME_MORE_SPACE // 2 + TILE_SIZE_05 + i * TILE_SIZE))  
+            
+        pg.display.flip()       
             
     def run(self):
         while True:
