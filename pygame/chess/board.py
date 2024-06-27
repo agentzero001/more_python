@@ -33,3 +33,12 @@ class Board:
         self.light_surface.fill((255, 0, 0, 70))
         self.app.surface.blit(self.light_surface, (x * TILE_SIZE, y * TILE_SIZE))
         
+    def border_tile(self, x, y):
+        pg.draw.rect(self.app.surface,
+                     (0, 0, 0),
+                     (x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE),
+                     12)
+        # self.light_surface.fill((0, 0, 0, 0))
+        # self.app.surface.blit(self.light_surface, x * TILE_SIZE, y * TILE_SIZE)
+        
+       

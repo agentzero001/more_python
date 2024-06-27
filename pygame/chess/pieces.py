@@ -26,8 +26,7 @@ class Piece(pg.sprite.Sprite):
         self.board.chess_matrix[self.idx_pos[1]][self.idx_pos[0]] = self
             
     def pick(self, pos_idx):
-        if self.picked == False:
-        
+        if self.picked == False:        
             self.board.blink_tile(*self.idx_pos)
             print(self)
             for i in range(8):
@@ -41,10 +40,12 @@ class Piece(pg.sprite.Sprite):
         else:
             pass
                         
-            
-                    
-                    
-                
+                        
+    def drop(self, x, y):
+        print(x, y)
+        self.rect.center = (x * TILE_SIZE, y * TILE_SIZE)
+        
+                  
                     
 
 class Queen(Piece):
@@ -71,7 +72,29 @@ class King(Piece):
 class Pawn(Piece):
     def __init__(self, x, y, color, board):
         super().__init__(x, y, color, 'pawn', board)
+        self.touched = False
         
+        
+    def pick(self, x, y):
+        self.board.border_tile(x, y)
+        if self.color == 'black':
+            if self.touched == False:
+                for i in range(1, 3):
+                    self.board.blink_tile(x, y+i)
+                self.touched = True    
+            else: 
+                self.board.blink_tile(x, y+1)       
+        else:
+            if self.touched == False:
+                for i in range(1, 3):
+                    self.board.blink_tile(x, y-i)
+                self.touched = True    
+            else: 
+                self.board.blink_tile(x, y-1)
+        self.picked = True
+        print(self.picked)
+        
+                          
     # def update(self):
     #     pass
                 

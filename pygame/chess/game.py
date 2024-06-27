@@ -20,6 +20,9 @@ class App:
         self.player_white = Player(self, self.board, 'white')
         self.player_black = Player(self, self.board, 'black')
         self.board.draw()
+        self.picked = False
+        self.current_player = 0
+        self.selected = 0
               
         
         # for pawn in self.player_black.pawns:
@@ -31,15 +34,43 @@ class App:
             if event.type == pg.QUIT:
                 pg.quit()
                 sys.exit()
-                
-                
             if event.type == pg.MOUSEBUTTONDOWN:
-                pos = pg.mouse.get_pos()
-                pos_idx = get_idx(self.board_pos, pos)
-                
-                self.board.chess_matrix[pos_idx[1]][pos_idx[0]].pick(pos_idx)
-                print(pos_idx)
-                
+                if event.button == 1:
+                    pos = pg.mouse.get_pos()
+                    pos_idx = get_idx(self.board_pos, pos)
+                    if self.picked == False:                    
+                        if self.current_player == 0:
+                            self.selected = self.board.chess_matrix[pos_idx[1]][pos_idx[0]]
+                            if hasattr(self.selected, 'color'):
+                                if self.selected.color == 'white':
+                                    self.picked = True
+                                    self.selected.pick(*pos_idx)
+                            if self.selected == 0:
+                                pass
+                        else:
+                            self.selected = self.board.chess_matrix[pos_idx[1]][pos_idx[0]]
+                            if hasattr(self.selected, 'color'):
+                                if self.selected.color == 'black':
+                                    self.picked = True
+                                    self.selected.pick(*pos_idx)
+                            if self.selected == 0:
+                                pass
+                        
+                            
+                    #next thing to do would be update the chess matrix.   
+                    else:
+                        self.selected.rect.center = (pos_idx[0] * TILE_SIZE + TILE_SIZE_05,
+                                                     pos_idx[1] * TILE_SIZE + TILE_SIZE_05)
+                        self.surface.fill(BOARD_COLOR_1)
+                        self.board.draw()
+                        self.picked = False
+                        self.current_player = 1 if self.current_player == 0 else 0
+                        
+                else:
+                    self.picked = False
+                    self.surface.fill(BOARD_COLOR_1)
+                    self.board.draw() 
+                      
     def update(self):
         self.clock.tick(FPS)                   
         self.draw()                   
@@ -75,6 +106,7 @@ class App:
         while True:
             self.input(pg.event.get())
             self.update()
+            print(self.picked)
             pg.display.update() 
             
     
