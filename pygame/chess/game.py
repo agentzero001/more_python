@@ -23,8 +23,7 @@ class App:
         self.picked = False
         self.current_player = 0
         self.selected = 0
-              
-        
+            
         # for pawn in self.player_black.pawns:
     
     #     print(pawn.rect.topleft, pawn.rect.bottomright)                         
@@ -44,13 +43,13 @@ class App:
                             color = 'white' if self.current_player == 0 else 'black'
                             if self.selected.color == color:
                                 self.picked = True
-                                self.selected.pick(*pos_idx)
-                    
-                                                    
-                    #next thing to do would be update the chess matrix.   
+                                self.selected.pick(*pos_idx) 
                     else:
+                        if hasattr(self.selected, 'touched'):
+                            self.selected.touched = True
                         self.selected.rect.center = (pos_idx[0] * TILE_SIZE + TILE_SIZE_05,
                                                      pos_idx[1] * TILE_SIZE + TILE_SIZE_05)
+                        self.selected.assign_pos(pos_idx[1], pos_idx[0])
                         self.surface.fill(BOARD_COLOR_1)
                         self.board.draw()
                         self.picked = False

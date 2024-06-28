@@ -17,13 +17,13 @@ class Piece(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = (self.x, self.y)
         self.idx_pos = self.x // TILE_SIZE, self.y // TILE_SIZE
-        self.assign_pos()
+        self.assign_pos(self.idx_pos[1], self.idx_pos[0])
         self.picked = False
         print(self.idx_pos)
         print(piece_name)
            
-    def assign_pos(self):
-        self.board.chess_matrix[self.idx_pos[1]][self.idx_pos[0]] = self
+    def assign_pos(self, x, y):
+        self.board.chess_matrix[x][y] = self
             
     def pick(self, pos_idx):
         if self.picked == False:        
@@ -41,9 +41,9 @@ class Piece(pg.sprite.Sprite):
             pass
                         
                         
-    def drop(self, x, y):
-        print(x, y)
-        self.rect.center = (x * TILE_SIZE, y * TILE_SIZE)
+    # def drop(self, x, y):
+    #     print(x, y)
+    #     self.rect.center = (x * TILE_SIZE, y * TILE_SIZE)
         
                   
                     
@@ -74,17 +74,14 @@ class Pawn(Piece):
         super().__init__(x, y, color, 'pawn', board)
         self.touched = False
         
-        
     def pick(self, x, y):
         self.board.border_tile(x, y)
         self.board.blink_tile(x, y+1 if self.color == 'black' else y-1)
         if self.touched == False:
             self.board.blink_tile(x,y+2 if self.color == 'black' else y-2)
-            self.touched = True
         self.picked = True
         print(self.picked)
-        
-                          
+
     # def update(self):
     #     pass
                 
