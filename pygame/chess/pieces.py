@@ -77,20 +77,10 @@ class Pawn(Piece):
         
     def pick(self, x, y):
         self.board.border_tile(x, y)
-        if self.color == 'black':
-            if self.touched == False:
-                for i in range(1, 3):
-                    self.board.blink_tile(x, y+i)
-                self.touched = True    
-            else: 
-                self.board.blink_tile(x, y+1)       
-        else:
-            if self.touched == False:
-                for i in range(1, 3):
-                    self.board.blink_tile(x, y-i)
-                self.touched = True    
-            else: 
-                self.board.blink_tile(x, y-1)
+        self.board.blink_tile(x, y+1 if self.color == 'black' else y-1)
+        if self.touched == False:
+            self.board.blink_tile(x,y+2 if self.color == 'black' else y-2)
+            self.touched = True
         self.picked = True
         print(self.picked)
         

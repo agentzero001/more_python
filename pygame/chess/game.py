@@ -39,24 +39,14 @@ class App:
                     pos = pg.mouse.get_pos()
                     pos_idx = get_idx(self.board_pos, pos)
                     if self.picked == False:                    
-                        if self.current_player == 0:
-                            self.selected = self.board.chess_matrix[pos_idx[1]][pos_idx[0]]
-                            if hasattr(self.selected, 'color'):
-                                if self.selected.color == 'white':
-                                    self.picked = True
-                                    self.selected.pick(*pos_idx)
-                            if self.selected == 0:
-                                pass
-                        else:
-                            self.selected = self.board.chess_matrix[pos_idx[1]][pos_idx[0]]
-                            if hasattr(self.selected, 'color'):
-                                if self.selected.color == 'black':
-                                    self.picked = True
-                                    self.selected.pick(*pos_idx)
-                            if self.selected == 0:
-                                pass
-                        
-                            
+                        self.selected = self.board.chess_matrix[pos_idx[1]][pos_idx[0]]
+                        if hasattr(self.selected, 'color'):
+                            color = 'white' if self.current_player == 0 else 'black'
+                            if self.selected.color == color:
+                                self.picked = True
+                                self.selected.pick(*pos_idx)
+                    
+                                                    
                     #next thing to do would be update the chess matrix.   
                     else:
                         self.selected.rect.center = (pos_idx[0] * TILE_SIZE + TILE_SIZE_05,
