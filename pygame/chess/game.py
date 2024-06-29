@@ -22,11 +22,7 @@ class App:
         self.board.draw()
         self.picked = False
         self.current_player = 0
-        self.selected = 0
-            
-        # for pawn in self.player_black.pawns:
-    
-    #     print(pawn.rect.topleft, pawn.rect.bottomright)                         
+        self.selected = 0                       
         
     def input(self, events):    
         for event in events:
@@ -47,6 +43,14 @@ class App:
                     else:
                         if hasattr(self.selected, 'touched'):
                             self.selected.touched = True
+                        
+                        self.move_to = self.board.chess_matrix[pos_idx[1]][pos_idx[0]]
+                        if hasattr(self.move_to, 'color'):
+                            if self.move_to.color == 'white' if self.current_player == 1 else 'black':
+                                self.move_to.kill()
+                                
+                            
+                        
                         self.selected.rect.center = (pos_idx[0] * TILE_SIZE + TILE_SIZE_05,
                                                      pos_idx[1] * TILE_SIZE + TILE_SIZE_05)
                         self.selected.assign_pos(pos_idx[1], pos_idx[0])
@@ -63,32 +67,22 @@ class App:
     def update(self):
         self.clock.tick(FPS)                   
         self.draw()                   
-                
+        
+        
+    def draw_symbols(self):
+        for i in range(2):
+            for pos in XY_POS[i]:   
+                for j, number in enumerate(SYMBOLS[i]):
+                    render_letter(self.font, number, self.screen, 
+                                  (pos, SOME_MORE_SPACE // 2 + TILE_SIZE_05 + j * TILE_SIZE)
+                                   if i == 0 else (SOME_MORE_SPACE // 2 + TILE_SIZE_05 + j * TILE_SIZE, pos)) 
+        
     def draw(self):
         self.screen.fill(BACKGROUND_COLOR)
         self.screen.blit(self.surface, (self.board_pos))
         self.player_black.draw()
         self.player_white.draw()
-        for i, letter in enumerate('ABCDEFGH'):
-            render_letter(self.font, letter, self.screen,
-                          (SOME_MORE_SPACE // 2 + TILE_SIZE_05 + i * TILE_SIZE,
-                           SOME_MORE_SPACE // 2 + HEIGHT + TILE_SIZE_05))
-            
-        for i, letter in enumerate('ABCDEFGH'):
-            render_letter(self.font, letter, self.screen,
-                          (SOME_MORE_SPACE // 2 + TILE_SIZE_05 + i * TILE_SIZE,
-                           SOME_MORE_SPACE // 2 - TILE_SIZE_05))
-            
-        for i, number in enumerate(range(8, 0, -1)):
-            render_letter(self.font, number, self.screen, 
-                          (SOME_MORE_SPACE // 2 - TILE_SIZE_05,
-                           SOME_MORE_SPACE // 2 + TILE_SIZE_05 + i * TILE_SIZE))
-            
-        for i, number in enumerate(range(8, 0, -1)):
-            render_letter(self.font, number, self.screen, 
-                          (SOME_MORE_SPACE // 2 + WIDTH + TILE_SIZE_05,
-                           SOME_MORE_SPACE // 2 + TILE_SIZE_05 + i * TILE_SIZE))  
-            
+        self.draw_symbols()
         pg.display.flip()       
             
     def run(self):
