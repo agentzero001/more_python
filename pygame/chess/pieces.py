@@ -45,7 +45,8 @@ class Queen(Piece):
     def update(self):
         pass
           
-#checkmate and stalemate left here        
+#checkmate and stalemate left here  
+#the King is still able to kill his own Figures, needs fix      
 class King(Piece):
     def __init__(self, x, y, color, board):
         super().__init__(x, y, color, 'king', board)
@@ -58,7 +59,7 @@ class King(Piece):
                 blocking_piece = self.board.chess_matrix[coords[1]][coords[0]]
             except IndexError:
                 blocking_piece = None
-            if not(hasattr(blocking_piece, 'color')):
+            if not(isinstance(blocking_piece, Piece)):
                 self.board.blink_tile(*coords)
         return allowed_moves
     
@@ -94,7 +95,7 @@ class Pawn(Piece):
         self.board.border_tile(x, y)
         allowed_move1 = x, y+1 if self.color == 'black' else y-1
         blocking_piece = self.board.chess_matrix[allowed_move1[1]][allowed_move1[0]]
-        if hasattr(blocking_piece, 'color'):
+        if isinstance(blocking_piece, Piece):
             return [None]
         
         self.board.blink_tile(*allowed_move1)
@@ -102,7 +103,7 @@ class Pawn(Piece):
         if self.touched == False:
             allowed_move2 = x, y+2 if self.color == 'black' else y-2
             blocking_piece = self.board.chess_matrix[allowed_move2[1]][allowed_move2[0]]
-            if hasattr(blocking_piece, 'color'):
+            if isinstance(blocking_piece, Piece):
                 return [allowed_move1, None]
             
             self.board.blink_tile(*allowed_move2)
@@ -119,11 +120,11 @@ class Pawn(Piece):
             pos_move2 = None
         allowed_move1 = None
         allowed_move2 = None    
-        if hasattr(pos_move1, 'color'):
+        if isinstance(pos_move1, Piece):
             if pos_move1.color == opp_color:
                 allowed_move1 = x - 1, y - 1 if player == 0 else y + 1
                 self.board.red_tile(*allowed_move1)
-        if hasattr(pos_move2, 'color'):
+        if isinstance(pos_move2, Piece):
             if pos_move2.color == opp_color:
                 allowed_move2 = x + 1, y - 1 if player == 0 else y + 1
                 self.board.red_tile(*allowed_move2)
