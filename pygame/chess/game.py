@@ -46,7 +46,7 @@ class App:
                             color = 'white' if self.current_player == 0 else 'black'
                             if self.selected.color == color:
                                 self.picked = True
-                                self.allowed_moves = list(self.selected.pick(*pos_idx))
+                                self.allowed_moves = list(self.selected.pick(*pos_idx, self.current_player))
                                 self.allowed_moves.extend(self.selected.show_capture(*pos_idx, self.current_player))
                                 self.old_pos_idx = pos_idx
                     else:
@@ -61,7 +61,7 @@ class App:
                                     
                             self.board.chess_matrix[self.old_pos_idx[1]][self.old_pos_idx[0]] = 0        
                             self.selected.rect.center = (pos_idx[0] * TILE_SIZE + TILE_SIZE_05,
-                                                        pos_idx[1] * TILE_SIZE + TILE_SIZE_05)
+                                                         pos_idx[1] * TILE_SIZE + TILE_SIZE_05)
                             self.selected.assign_pos(pos_idx[1], pos_idx[0])
                             self.surface.fill(BOARD_COLOR_1)
                             self.board.draw()

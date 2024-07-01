@@ -67,18 +67,17 @@ class Pawn(Piece):
         super().__init__(x, y, color, 'pawn', board)
         self.touched = False
         
-    def pick(self, x, y):
+    def pick(self, x, y, player):
         self.board.border_tile(x, y)
+        opp_color = 'black' if player == 0 else 'white'
         allowed_move1 = x, y+1 if self.color == 'black' else y-1
-        allowed_move2 = None
         self.board.blink_tile(*allowed_move1)
+        self.picked = True
         if self.touched == False:
             allowed_move2 = x, y+2 if self.color == 'black' else y-2
             self.board.blink_tile(*allowed_move2)
-        self.picked = True
-        return allowed_move1, allowed_move2
-        
-    
+            return allowed_move1, allowed_move2
+        return [allowed_move1]
     
     def show_capture(self, x, y, player):
         opp_color = 'black' if player == 0 else 'white'
