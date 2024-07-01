@@ -22,7 +22,15 @@ class Board:
                 else:
                     self.app.surface.blit(self.surface, (i + TILE_SIZE, j))
                 k += 1
-               
+                
+    def update(self):
+        for row in self.chess_matrix:
+            for piece in row:
+                if hasattr(piece, 'color'):
+                    piece.assi
+                
+                
+            
         
        
     def blink_tile(self, x, y):
@@ -30,15 +38,13 @@ class Board:
         self.app.surface.blit(self.light_surface, (x * TILE_SIZE, y * TILE_SIZE))
         
     def red_tile(self, x, y):
-        self.light_surface.fill((255, 0, 0, 70))
+        self.light_surface.fill((255, 0, 0, 100))
         self.app.surface.blit(self.light_surface, (x * TILE_SIZE, y * TILE_SIZE))
         
     def border_tile(self, x, y):
         pg.draw.rect(self.app.surface,
-                     (0, 0, 0),
+                     (0, 100, 30),
                      (x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE),
-                     12)
-        # self.light_surface.fill((0, 0, 0, 0))
-        # self.app.surface.blit(self.light_surface, x * TILE_SIZE, y * TILE_SIZE)
+                     8)
         
        
