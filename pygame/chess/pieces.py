@@ -24,26 +24,20 @@ class Piece(pg.sprite.Sprite):
            
     def assign_pos(self, x, y):
         self.board.chess_matrix[x][y] = self
-            
-    def pick(self, pos_idx):
-        if self.picked == False:        
-            self.board.blink_tile(*self.idx_pos)
-            print(self)
-            for i in range(8):
-                for j in range(8):
-                    if self.board.chess_matrix[i][j] == 0:
-                        self.board.blink_tile(j, i)
-                    
-                    elif self.board.chess_matrix[i][j].color == 'white':
-                        self.board.red_tile(j, i)
-            self.picked = True
-        else:
-            pass            
+                     
                     
 
 class Queen(Piece):
     def __init__(self, x, y, color, board):
         super().__init__(x, y, color, 'queen', board)
+        
+    def pick(self, x, y):
+        self.board.border_tile(x, y)
+        return [None]
+    
+    def show_capture(self, x, y, color):
+        return [None]    
+    
         
     def draw(self, screen):
         screen.blit(self.image, self.rect) 
@@ -51,32 +45,66 @@ class Queen(Piece):
     def update(self):
         pass
           
-        
+#checkmate and stalemate left here        
 class King(Piece):
     def __init__(self, x, y, color, board):
         super().__init__(x, y, color, 'king', board)
         
-    def draw(self, screen):
-        screen.blit(self.image, self.rect) 
+    def pick(self, x, y):
+        self.board.border_tile(x, y)
+        allowed_moves = self.calculate_moves(x, y)
+        for coords in allowed_moves:
+            try:
+                blocking_piece = self.board.chess_matrix[coords[1]][coords[0]]
+            except IndexError:
+                blocking_piece = None
+            if not(hasattr(blocking_piece, 'color')):
+                self.board.blink_tile(*coords)
+        return allowed_moves
+    
+    def show_capture(self, x, y, player):
+        opp_color = 'black' if player == 0 else 'white'
+        possible_moves = self.calculate_moves(x, y)
+        kill_moves = [None]
+        for coords in possible_moves:
+            try:
+                enemy_piece = self.board.chess_matrix[coords[1]][coords[0]]
+            except IndexError:
+                enemy_piece = None
+            if hasattr(enemy_piece, 'color'):
+                if enemy_piece.color == opp_color:
+                    self.board.red_tile(*coords)
+                    kill_moves.append(coords)    
+        return kill_moves        
+    
+    calculate_moves = lambda self, x, y: [(dx + x, dy + y)
+                                          for dx in range(-1, 2) 
+                                          for dy in range(-1, 2)
+                                          if not(dx == 0 and dy == 0)]
+                
         
-    def update(self):
-        pass
         
+#only thing left to do here is pawn promotion.
 class Pawn(Piece):
     def __init__(self, x, y, color, board):
         super().__init__(x, y, color, 'pawn', board)
         self.touched = False
         
-    #it is left here to check if a piece is standing right in front of the pawn.
-    #And to block that move and not blink that tile.
-    def pick(self, x, y, player):
+    def pick(self, x, y):
         self.board.border_tile(x, y)
-        opp_color = 'black' if player == 0 else 'white'
         allowed_move1 = x, y+1 if self.color == 'black' else y-1
+        blocking_piece = self.board.chess_matrix[allowed_move1[1]][allowed_move1[0]]
+        if hasattr(blocking_piece, 'color'):
+            return [None]
+        
         self.board.blink_tile(*allowed_move1)
         self.picked = True
         if self.touched == False:
             allowed_move2 = x, y+2 if self.color == 'black' else y-2
+            blocking_piece = self.board.chess_matrix[allowed_move2[1]][allowed_move2[0]]
+            if hasattr(blocking_piece, 'color'):
+                return [allowed_move1, None]
+            
             self.board.blink_tile(*allowed_move2)
             return allowed_move1, allowed_move2
         return [allowed_move1]
@@ -84,13 +112,13 @@ class Pawn(Piece):
     def show_capture(self, x, y, player):
         opp_color = 'black' if player == 0 else 'white'
         move_direction = y - 1 if player == 0 else y + 1
-        allowed_move1 = None
-        allowed_move2 = None
         pos_move1 = self.board.chess_matrix[move_direction][x-1]
         try:
             pos_move2 = self.board.chess_matrix[move_direction][x+1]
         except IndexError:
             pos_move2 = None
+        allowed_move1 = None
+        allowed_move2 = None    
         if hasattr(pos_move1, 'color'):
             if pos_move1.color == opp_color:
                 allowed_move1 = x - 1, y - 1 if player == 0 else y + 1
@@ -105,6 +133,14 @@ class Knight(Piece):
     def __init__(self, x, y, color, board):
         super().__init__(x, y, color, 'knight', board)
         
+    def pick(self, x, y):
+        self.board.border_tile(x, y)
+        return [None]
+    
+    def show_capture(self, x, y, color):
+        return [None]    
+            
+                
     def draw(self, screen):
         screen.blit(self.image, self.rect) 
         
@@ -116,6 +152,13 @@ class Rook(Piece):
     def __init__(self, x, y, color, board):
         super().__init__(x, y, color, 'rook', board)
         
+    def pick(self, x, y):
+        self.board.border_tile(x, y)
+        return [None]
+    
+    def show_capture(self, x, y, color):
+        return [None]
+        
     def draw(self, screen):
         screen.blit(self.image, self.rect) 
         
@@ -125,6 +168,13 @@ class Rook(Piece):
 class Bishop(Piece):
     def __init__(self, x, y, color, board):
         super().__init__(x, y, color, 'bishop', board)
+        
+    def pick(self, x, y):
+        self.board.border_tile(x, y)
+        return [None]
+    
+    def show_capture(self, x, y, color):
+        return [None]
         
     def draw(self, screen):
         screen.blit(self.image, self.rect) 

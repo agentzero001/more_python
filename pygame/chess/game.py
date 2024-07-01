@@ -46,14 +46,15 @@ class App:
                             color = 'white' if self.current_player == 0 else 'black'
                             if self.selected.color == color:
                                 self.picked = True
-                                self.allowed_moves = list(self.selected.pick(*pos_idx, self.current_player))
+                                self.allowed_moves = list(self.selected.pick(*pos_idx))
                                 self.allowed_moves.extend(self.selected.show_capture(*pos_idx, self.current_player))
                                 self.old_pos_idx = pos_idx
                     else:
                         if hasattr(self.selected, 'touched'):
                             self.selected.touched = True
-                        #one more thing left to do
+        
                         self.move_to = self.board.chess_matrix[pos_idx[1]][pos_idx[0]]
+                        print(self.move_to)
                         if pos_idx in self.allowed_moves:
                             if hasattr(self.move_to, 'color'):
                                 if self.move_to.color == 'white' if self.current_player == 1 else 'black':
@@ -66,8 +67,7 @@ class App:
                             self.surface.fill(BOARD_COLOR_1)
                             self.board.draw()
                             self.picked = False
-                            self.current_player = 1 if self.current_player == 0 else 0
-                            
+                            self.current_player = 1 if self.current_player == 0 else 0          
                 else:
                     self.picked = False
                     self.surface.fill(BOARD_COLOR_1)

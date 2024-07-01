@@ -11,7 +11,7 @@ class Player:
                              TILE_SIZE * 7 + TILE_SIZE_05 if color == 'white' else TILE_SIZE_05,
                              color,
                              self.board) 
-                        for piece, x_pos in zip([Rook, Knight, Bishop, Queen, King, Bishop, Rook, Knight], range(8))] 
+                        for piece, x_pos in zip([Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook], range(8))] 
         self.piece_group = pg.sprite.Group()
         self.piece_group.add(*self.pieces)      
                    
@@ -35,5 +35,4 @@ class Player:
         
     def draw(self):
         self.pawns.draw(self.app.surface)
-        for piece in self.pieces:
-            piece.draw(self.app.surface)       
+        self.piece_group.draw(self.app.surface)      
