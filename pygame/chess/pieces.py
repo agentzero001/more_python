@@ -67,6 +67,8 @@ class Pawn(Piece):
         super().__init__(x, y, color, 'pawn', board)
         self.touched = False
         
+    #it is left here to check if a piece is standing right in front of the pawn.
+    #And to block that move and not blink that tile.
     def pick(self, x, y, player):
         self.board.border_tile(x, y)
         opp_color = 'black' if player == 0 else 'white'
