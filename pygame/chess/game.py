@@ -1,7 +1,6 @@
 import pygame as pg
-import sys, os
+import sys
 from const import *
-from pygame.math import Vector2 as V
 from utils import render_letter, get_idx
 from board import Board
 from player import Player
@@ -47,7 +46,7 @@ class App:
                             color = 'white' if self.current_player == 0 else 'black'
                             if self.selected.color == color:
                                 self.picked = True
-                                self.allowed_moves = list(self.selected.pick(*pos_idx))
+                                self.allowed_moves = list(self.selected.pick(*pos_idx, self.current_player))
                                 self.allowed_moves.extend(self.selected.show_capture(*pos_idx, self.current_player))
                                 self.current_pos_idx = pos_idx
                     else:
@@ -55,7 +54,6 @@ class App:
                             self.selected.touched = True
         
                         self.move_to = self.board.chess_matrix[pos_idx[1]][pos_idx[0]]
-                        print(self.move_to)
                         if pos_idx in self.allowed_moves:
                             if isinstance(self.move_to, Piece):
                                 if self.move_to.color == 'white' if self.current_player == 1 else 'black':
