@@ -27,6 +27,22 @@ class Piece(pg.sprite.Sprite):
     def show_capture(self, x, y, color):
         return [None]
                      
+                     
+    def check_fields(self, field, opp_color):
+        moves = []
+        field_obj = self.board.chess_matrix[field[1]][field[0]]
+        if isinstance(field_obj, Piece):
+            if field_obj.color == opp_color:
+                self.board.red_tile(*field)
+                moves.append(field)
+                self.d = None 
+            else:             
+                self.d = None 
+        else:
+            moves.append(field)
+            self.board.blink_tile(*field)
+        return moves                 
+
                     
 
 class Queen(Piece):
@@ -50,10 +66,7 @@ class King(Piece):
         allowed_moves = self.calculate_moves(x, y)
         actual_allowed_moves = []
         for coords in allowed_moves:
-            try:
-                blocking_piece = self.board.chess_matrix[coords[1]][coords[0]]
-            except IndexError:
-                blocking_piece = None
+            blocking_piece = self.board.chess_matrix[coords[1]][coords[0]]
             if not(isinstance(blocking_piece, Piece)):
                 self.board.blink_tile(*coords)
                 actual_allowed_moves.append(coords)
@@ -64,10 +77,7 @@ class King(Piece):
         possible_moves = self.calculate_moves(x, y)
         kill_moves = [None]
         for coords in possible_moves:
-            try:
-                enemy_piece = self.board.chess_matrix[coords[1]][coords[0]]
-            except IndexError:
-                enemy_piece = None
+            enemy_piece = self.board.chess_matrix[coords[1]][coords[0]]
             if isinstance(enemy_piece, Piece):
                 if enemy_piece.color == opp_color:
                     self.board.red_tile(*coords)
@@ -77,7 +87,9 @@ class King(Piece):
     calculate_moves = lambda self, x, y: [(dx + x, dy + y)
                                           for dx in range(-1, 2) 
                                           for dy in range(-1, 2)
-                                          if not(dx == 0 and dy == 0)]
+                                          if not(dx == 0 and dy == 0) 
+                                             and (0 <= dx + x <= 7)
+                                             and (0 <= dy + y <= 7)]
                      
 #only thing left to do here is pawn promotion.
 class Pawn(Piece):
@@ -91,7 +103,6 @@ class Pawn(Piece):
         blocking_piece = self.board.chess_matrix[allowed_move1[1]][allowed_move1[0]]
         if isinstance(blocking_piece, Piece):
             return [None]
-        
         self.board.blink_tile(*allowed_move1)
         self.picked = True
         if self.touched == False:
@@ -134,10 +145,7 @@ class Knight(Piece):
         moves = self.calculate_moves(x, y)
         
         for coords in moves:
-            try:
-                blocking_piece = self.board.chess_matrix[coords[1]][coords[0]]
-            except IndexError:
-                blocking_piece = None
+            blocking_piece = self.board.chess_matrix[coords[1]][coords[0]]
             if isinstance(blocking_piece, Piece):
                 if blocking_piece.color == opp_color:
                     self.board.red_tile(*coords)
@@ -174,21 +182,7 @@ class Rook(Piece):
         
     def draw(self, screen):
         screen.blit(self.image, self.rect) 
-    
-    def check_fields(self, field, opp_color):
-        moves = []
-        field_obj = self.board.chess_matrix[field[1]][field[0]]
-        if isinstance(field_obj, Piece):
-            if field_obj.color == opp_color:
-                self.board.red_tile(*field)
-                moves.append(field)
-                self.d = None
-            else:
-                self.d = None
-        else:
-            moves.append(field)
-            self.board.blink_tile(*field)
-        return moves
+        
     
     #if you know a way to write these 4 while statements in a loop please let me know.
     def calculate_moves(self, x, y, player):
@@ -229,7 +223,48 @@ class Bishop(Piece):
         
     def pick(self, x, y, player):
         self.board.border_tile(x, y)
-        return [None]
+        possible_moves = self.calculate_moves(x, y, player)
+        return possible_moves
         
     def draw(self, screen):
         screen.blit(self.image, self.rect) 
+        
+    def calculate_moves(self, x, y, player):
+        opp_color = 'black' if player == 0 else 'white'
+        pos_moves = []
+        self.d = 1   
+        dxy = 1
+                
+        while self.d != None and 7 >= x + self.d and 7 >= y + dxy:
+            field = x + self.d, y + dxy
+            self.d += 1
+            dxy += 1
+            pos_moves.extend(self.check_fields(field, opp_color))    
+        self.d = 1
+        dxy = 1
+          
+        while self.d != None and 0 <= x - self.d and 0 <= y - dxy:
+            field = x - self.d, y - dxy
+            self.d += 1
+            dxy += 1
+            pos_moves.extend(self.check_fields(field, opp_color))
+        self.d = 1
+        dxy = 1
+                        
+        while self.d != None and 7 >= y + self.d and 0 <= x - dxy:
+            field = x - dxy, y + self.d
+            self.d += 1
+            dxy += 1
+            pos_moves.extend(self.check_fields(field, opp_color))
+        self.d = 1
+        dxy = 1
+        
+        while self.d != None and 0 <= y - self.d and 7 >= x + dxy:
+            field = x + dxy, y - self.d
+            self.d += 1
+            dxy += 1
+            pos_moves.extend(self.check_fields(field, opp_color))
+        self.d = 1
+        dxy = 1
+            
+        return pos_moves

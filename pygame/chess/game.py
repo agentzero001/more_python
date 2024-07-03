@@ -4,7 +4,7 @@ from const import *
 from utils import render_letter, get_idx
 from board import Board
 from player import Player
-from pieces import Piece
+from pieces import Piece, Pawn
 
 
 class App:
@@ -50,7 +50,7 @@ class App:
                                 self.allowed_moves.extend(self.selected.show_capture(*pos_idx, self.current_player))
                                 self.current_pos_idx = pos_idx
                     else:
-                        if hasattr(self.selected, 'touched'):
+                        if isinstance(self.selected, Pawn):
                             self.selected.touched = True
         
                         self.move_to = self.board.chess_matrix[pos_idx[1]][pos_idx[0]]
