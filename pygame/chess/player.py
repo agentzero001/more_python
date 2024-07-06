@@ -29,9 +29,7 @@ class Player:
     
     def update(self):
         self.pawns.update()
-        self.piece_group.update()
-        
-        
+        self.piece_group.update()   
         
     def draw(self):
         self.pawns.draw(self.app.surface)

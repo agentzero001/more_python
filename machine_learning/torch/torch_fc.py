@@ -6,7 +6,6 @@ from torch import nn, optim, Tensor as t
 from torch.utils.data import DataLoader
 import matplotlib.pyplot as plt
 import numpy as np
-#from tqdm.notebook import tqdm
 from tqdm.notebook import tqdm
 import sys
 
@@ -30,7 +29,7 @@ input_size = 784
 num_classes = 10
 learning_rate = .001
 batch_size = 64
-num_epochs = 1
+num_epochs = 4
 
 mnist_path = './data'
 train_dataset = datasets.MNIST(root=mnist_path, train=True, download=True,

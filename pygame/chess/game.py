@@ -28,13 +28,7 @@ class App:
         for event in events:
             if event.type == pg.QUIT:
                 pg.quit()
-                sys.exit()
-                
-            #these 3 lines exist only for a debugging purpose
-            # cur_pos = pg.mouse.get_pos()
-            # x, y = get_idx(self.board_pos, cur_pos)
-            # print(self.board.chess_matrix[y][x])
-            
+                sys.exit()           
             
             if event.type == pg.MOUSEBUTTONDOWN:
                 if event.button == 1:
@@ -50,6 +44,8 @@ class App:
                                 self.allowed_moves.extend(self.selected.show_capture(*pos_idx, self.current_player))
                                 self.current_pos_idx = pos_idx
                     else:
+                        #if you click the other players pawn after selecting one of yours
+                        #and then unselect it, the touched variable has already been set to true.
                         if isinstance(self.selected, Pawn):
                             self.selected.touched = True
         

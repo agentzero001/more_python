@@ -9,9 +9,7 @@ class Board:
         self.chess_matrix = [[0] * 8 for i in range(8)]
         self.surface = pg.Surface((TILE_SIZE, TILE_SIZE))
         self.light_surface = pg.Surface((TILE_SIZE, TILE_SIZE), pg.SRCALPHA)
-        
-                
-                        
+                         
     def draw(self):
         k = 0
         for i in range(0, WIDTH, TILE_SIZE*2):
@@ -28,11 +26,7 @@ class Board:
             for piece in row:
                 if hasattr(piece, 'color'):
                     piece.assi
-                
-                
-            
-        
-       
+                  
     def blink_tile(self, x, y):
         self.light_surface.fill((255, 255, 255, 70))
         self.app.surface.blit(self.light_surface, (x * TILE_SIZE, y * TILE_SIZE))
