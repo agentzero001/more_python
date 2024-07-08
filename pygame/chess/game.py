@@ -34,21 +34,16 @@ class App:
                 if event.button == 1:
                     pos = pg.mouse.get_pos()
                     pos_idx = get_idx(self.board_pos, pos)
+                    color = 'white' if self.current_player == 0 else 'black'
                     if self.picked == False:                    
                         self.selected = self.board.chess_matrix[pos_idx[1]][pos_idx[0]]
                         if isinstance(self.selected, Piece):
-                            color = 'white' if self.current_player == 0 else 'black'
                             if self.selected.color == color:
                                 self.picked = True
                                 self.allowed_moves = list(self.selected.pick(*pos_idx, self.current_player))
                                 self.allowed_moves.extend(self.selected.show_capture(*pos_idx, self.current_player))
                                 self.current_pos_idx = pos_idx
-                    else:
-                        #if you click the other players pawn after selecting one of yours
-                        #and then unselect it, the touched variable has already been set to true.
-                        if isinstance(self.selected, Pawn):
-                            self.selected.touched = True
-        
+                    else:                    
                         self.move_to = self.board.chess_matrix[pos_idx[1]][pos_idx[0]]
                         if pos_idx in self.allowed_moves:
                             if isinstance(self.move_to, Piece):
@@ -62,7 +57,9 @@ class App:
                             self.surface.fill(BOARD_COLOR_1)
                             self.board.draw()
                             self.picked = False
-                            self.current_player = 1 if self.current_player == 0 else 0          
+                            self.current_player = 1 if self.current_player == 0 else 0    
+                            if isinstance(self.selected, Pawn):
+                                self.selected.touched = True      
                 else:
                     self.picked = False
                     self.surface.fill(BOARD_COLOR_1)

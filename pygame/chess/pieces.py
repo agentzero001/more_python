@@ -162,19 +162,6 @@ class Knight(Piece):
 class Rook(Piece):
     def __init__(self, x, y, color, board):
         super().__init__(x, y, color, 'rook', board)
-                
-    # @property        
-    # def queries(self):
-    #     return (7 >= self.x + d,
-    #             0 <= self.x - d,
-    #             7 >= self.y + d,
-    #             0 <= self.y - d)
-    # @property        
-    # def fields(self):
-    #     return ((self.x + d, self.y),
-    #             (self.x - d, self.y), 
-    #             (self.x, self.y + d),
-    #             (self.x, self.y - d))
         
     def pick(self, x, y, player):
         self.board.border_tile(x, y)
@@ -190,9 +177,7 @@ class Rook(Piece):
         possible_moves = []
         
         positive_x_moves = 7 - x
-        positive_y_moves = 7 - y        
-        
-
+        positive_y_moves = 7 - y
         
         directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
         limits = [positive_x_moves, x, positive_y_moves, y]
@@ -212,14 +197,12 @@ class Bishop(Piece):
         
     def pick(self, x, y, player):
         self.board.border_tile(x, y)
-        possible_moves = self.calculate_moves(x, y, player)
+        possible_moves = self.calculate_moves(x, y, player)        
         return possible_moves
         
     def draw(self, screen):
         screen.blit(self.image, self.rect) 
         
-        
-    #need to convert this rook move pattern into bishop move pattern
     def calculate_moves(self, x, y, player):
         opp_color = 'black' if player == 0 else 'white'
         self.active = True   
@@ -228,35 +211,15 @@ class Bishop(Piece):
         positive_x_moves = 7 - x
         positive_y_moves = 7 - y        
         
+        directions = [(1, -1), (1, 1), (-1, -1), (-1, 1)]
+        limits = [(positive_x_moves, y), (positive_x_moves, positive_y_moves), (x, y), (x, positive_y_moves)]
         
-        for i in range(positive_x_moves):
-            if self.active:
-                possible_moves.extend(self.check_fields((x + i + 1, y), opp_color))
-        self.active = True
-        
-        for i in range(x):
-            if self.active:
-                possible_moves.extend(self.check_fields((x - i - 1, y), opp_color))
-        self.active = True
-        
-        for i in range(positive_y_moves):
-            if self.active:
-                possible_moves.extend(self.check_fields((x, y + i + 1), opp_color))
-        self.active = True
-        
-        for i in range(y):
-            if self.active:
-                possible_moves.extend(self.check_fields((x, y - i - 1), opp_color))
-        self.active = True
-        
-        # directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
-        # limits = [positive_x_moves, x, positive_y_moves, y]
 
-        # for (dx, dy), limit in zip(directions, limits):
-        #     for i in range(limit):
-        #         if self.active:
-        #             possible_moves.extend(self.check_fields((x + (i + 1) * dx, y + (i + 1) * dy), opp_color))
-        #     self.active = True
+        for (dx, dy), limit in zip(directions, limits):
+            for i, j in zip(range(limit[0]), range(limit[1])):
+                if self.active:
+                    possible_moves.extend(self.check_fields((x + (i + 1) * dx, y + (i + 1) * dy), opp_color))
+            self.active = True
 
         return possible_moves
     
@@ -266,8 +229,35 @@ class Queen(Piece):
         super().__init__(x, y, color, 'queen', board)
         
     def pick(self, x, y, player):
+        opp_color = 'black' if player == 0 else 'white'
+        self.active = True  
+        
         self.board.border_tile(x, y)
-        return [None]  
+        possible_moves = []
+                
+        positive_x_moves = 7 - x
+        positive_y_moves = 7 - y  
+        
+        directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+        limits = [positive_x_moves, x, positive_y_moves, y]
+
+        for (dx, dy), limit in zip(directions, limits):
+            for i in range(limit):
+                if self.active:
+                    possible_moves.extend(self.check_fields((x + (i + 1) * dx, y + (i + 1) * dy), opp_color))
+            self.active = True
+        
+        directions = [(1, -1), (1, 1), (-1, -1), (-1, 1)]
+        limits = [(positive_x_moves, y), (positive_x_moves, positive_y_moves), (x, y), (x, positive_y_moves)]
+        
+
+        for (dx, dy), limit in zip(directions, limits):
+            for i, j in zip(range(limit[0]), range(limit[1])):
+                if self.active:
+                    possible_moves.extend(self.check_fields((x + (i + 1) * dx, y + (i + 1) * dy), opp_color))
+            self.active = True
+        
+        return possible_moves 
         
     def draw(self, screen):
         screen.blit(self.image, self.rect) 
