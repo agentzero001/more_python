@@ -216,7 +216,7 @@ class Bishop(Piece):
         
 
         for (dx, dy), limit in zip(directions, limits):
-            for i, j in zip(range(limit[0]), range(limit[1])):
+            for i, _ in zip(range(limit[0]), range(limit[1])):
                 if self.active:
                     possible_moves.extend(self.check_fields((x + (i + 1) * dx, y + (i + 1) * dy), opp_color))
             self.active = True
@@ -250,9 +250,10 @@ class Queen(Piece):
         directions = [(1, -1), (1, 1), (-1, -1), (-1, 1)]
         limits = [(positive_x_moves, y), (positive_x_moves, positive_y_moves), (x, y), (x, positive_y_moves)]
         
-
+        #we use zip here because python's zip automatically ends when one of its iterables is exhausted.
+        #which is very convenient in this case.
         for (dx, dy), limit in zip(directions, limits):
-            for i, j in zip(range(limit[0]), range(limit[1])):
+            for i, _ in zip(range(limit[0]), range(limit[1])):
                 if self.active:
                     possible_moves.extend(self.check_fields((x + (i + 1) * dx, y + (i + 1) * dy), opp_color))
             self.active = True
