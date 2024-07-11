@@ -4,7 +4,7 @@ from const import *
 from utils import render_letter, get_idx
 from board import Board
 from player import Player
-from pieces import Piece, Pawn
+from pieces import Piece, Pawn, King
 
 
 class App:
@@ -59,7 +59,16 @@ class App:
                             self.picked = False
                             self.current_player = 1 if self.current_player == 0 else 0    
                             if isinstance(self.selected, Pawn):
-                                self.selected.touched = True      
+                                self.selected.touched = True  
+                            next_move = self.selected.calculate_next_move(pos_idx[0], pos_idx[1])
+                            for move in next_move:
+                                if move != None:
+                                    x, y = move
+                                    position = self.board.chess_matrix[y][x]
+                                    if isinstance(position, King):
+                                        position.check()
+                            
+                                    
                 else:
                     self.picked = False
                     self.surface.fill(BOARD_COLOR_1)

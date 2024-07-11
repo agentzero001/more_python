@@ -11,6 +11,7 @@ class Piece(pg.sprite.Sprite):
         self.board = board
         self.piece_name = piece_name
         self.color = color
+        self.current_player = 1 if color == 'black' else 0
         pg.sprite.Sprite.__init__(self)
         self.img_res = [TILE_SIZE - 16] * 2
         self.image = get_scaled_image('assets/{}_{}.png'.format(color, piece_name), self.img_res)
@@ -26,7 +27,14 @@ class Piece(pg.sprite.Sprite):
         
     def show_capture(self, x, y, color):
         return [None]             
-                     
+    
+    
+    #firstly next up every unique piece type will need a calculate move method.
+    #secondly the calls to blink tile have to happen externally (somehow???)
+    #thirdly every piece will have to get its next move calculated to block that move from
+    #the king's allowed moves.
+    #also the piece that sets check should get a different border tile color
+                    
     def check_fields(self, field, opp_color):
         moves = []
         field_obj = self.board.chess_matrix[field[1]][field[0]]
@@ -40,7 +48,15 @@ class Piece(pg.sprite.Sprite):
         else:
             moves.append(field)
             self.board.blink_tile(*field)
-        return moves        
+        return moves 
+    
+    
+    def calculate_next_move(self, x, y):
+        moves = list(self.pick(x, y, self.current_player))
+        moves.extend(self.show_capture(x, y, self.current_player))
+        return moves
+    
+    
        
        
 #checkmate and stalemate left here 
@@ -50,7 +66,6 @@ class King(Piece):
         
     def pick(self, x, y, player):
         self.board.border_tile(x, y)
-        self.board.red_tile(x, y)
         allowed_moves = self.calculate_moves(x, y)
         actual_allowed_moves = []
         for coords in allowed_moves:
@@ -58,6 +73,8 @@ class King(Piece):
             if not(isinstance(blocking_piece, Piece)):
                 self.board.blink_tile(*coords)
                 actual_allowed_moves.append(coords)
+                
+            actual_allowed_moves.append((3, 3))
         return actual_allowed_moves
     
     def show_capture(self, x, y, player):
@@ -78,6 +95,11 @@ class King(Piece):
                                           if not(dx == 0 and dy == 0) 
                                              and (0 <= dx + x <= 7)
                                              and (0 <= dy + y <= 7)]
+    
+    def check(self):
+        print('check')
+    
+    
                      
 #only thing left to do here is pawn promotion.
 class Pawn(Piece):
@@ -85,13 +107,15 @@ class Pawn(Piece):
         super().__init__(x, y, color, 'pawn', board)
         self.touched = False
         
-    def pick(self, x, y, player):
-        self.board.border_tile(x, y)
+    def pick(self, x, y, player, blink=True):
+        if blink:
+            self.board.border_tile(x, y)
         allowed_move1 = x, y+1 if self.color == 'black' else y-1
         blocking_piece = self.board.chess_matrix[allowed_move1[1]][allowed_move1[0]]
         if isinstance(blocking_piece, Piece):
             return [None]
-        self.board.blink_tile(*allowed_move1)
+        if blink:
+            self.board.blink_tile(*allowed_move1)
         self.picked = True
         if self.touched == False:
             allowed_move2 = x, y+2 if self.color == 'black' else y-2
@@ -121,6 +145,8 @@ class Pawn(Piece):
                 allowed_move2 = x + 1, y - 1 if player == 0 else y + 1
                 self.board.red_tile(*allowed_move2)
         return allowed_move1, allowed_move2
+    
+    
                         
 class Knight(Piece):
     def __init__(self, x, y, color, board):
@@ -251,8 +277,6 @@ class Queen(Piece):
         directions = [(1, -1), (1, 1), (-1, -1), (-1, 1)]
         limits = [(positive_x_moves, y), (positive_x_moves, positive_y_moves), (x, y), (x, positive_y_moves)]
         
-        #we use zip here because python's zip automatically finishes when one of its iterables is exhausted.
-        #which turns out to be very convenient in this case.
         for (dx, dy), limit in zip(directions, limits):
             for i, _ in zip(range(limit[0]), range(limit[1])):
                 if self.active:
