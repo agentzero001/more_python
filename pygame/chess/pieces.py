@@ -49,8 +49,7 @@ class King(Piece):
         super().__init__(x, y, color, 'king', board)
         
     def pick(self, x, y, player):
-        self.board.border_tile(self.x, self.y)
-        #self.board.border_tile(x, y)
+        self.board.border_tile(x, y)
         self.board.red_tile(x, y)
         allowed_moves = self.calculate_moves(x, y)
         actual_allowed_moves = []
