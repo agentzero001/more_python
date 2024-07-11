@@ -16,17 +16,16 @@ class Piece(pg.sprite.Sprite):
         self.image = get_scaled_image('assets/{}_{}.png'.format(color, piece_name), self.img_res)
         self.rect = self.image.get_rect()
         self.rect.center = (self.x, self.y)
-        self.idx_pos = self.rect.center[0] // TILE_SIZE, self.rect.center[1] // TILE_SIZE
-        self.assign_pos(self.idx_pos[1], self.idx_pos[0])
+        self.idx_x = self.x // TILE_SIZE
+        self.idx_y = self.y // TILE_SIZE
+        self.assign_pos(self.idx_y, self.idx_x)
         self.picked = False
            
     def assign_pos(self, x, y):
         self.board.chess_matrix[x][y] = self
         
-        
     def show_capture(self, x, y, color):
-        return [None]
-                     
+        return [None]             
                      
     def check_fields(self, field, opp_color):
         moves = []
@@ -43,14 +42,16 @@ class Piece(pg.sprite.Sprite):
             self.board.blink_tile(*field)
         return moves        
        
-          
+       
 #checkmate and stalemate left here 
 class King(Piece):
     def __init__(self, x, y, color, board):
         super().__init__(x, y, color, 'king', board)
         
     def pick(self, x, y, player):
-        self.board.border_tile(x, y)
+        self.board.border_tile(self.x, self.y)
+        #self.board.border_tile(x, y)
+        self.board.red_tile(x, y)
         allowed_moves = self.calculate_moves(x, y)
         actual_allowed_moves = []
         for coords in allowed_moves:
@@ -126,6 +127,8 @@ class Knight(Piece):
     def __init__(self, x, y, color, board):
         super().__init__(x, y, color, 'knight', board)
         
+        
+    
     def pick(self, x, y, player):
         opp_color = 'black' if player == 0 else 'white'
         allowed_moves = [None]
@@ -231,10 +234,9 @@ class Queen(Piece):
     def pick(self, x, y, player):
         opp_color = 'black' if player == 0 else 'white'
         self.active = True  
-        
         self.board.border_tile(x, y)
+        
         possible_moves = []
-                
         positive_x_moves = 7 - x
         positive_y_moves = 7 - y  
         
@@ -250,8 +252,8 @@ class Queen(Piece):
         directions = [(1, -1), (1, 1), (-1, -1), (-1, 1)]
         limits = [(positive_x_moves, y), (positive_x_moves, positive_y_moves), (x, y), (x, positive_y_moves)]
         
-        #we use zip here because python's zip automatically ends when one of its iterables is exhausted.
-        #which is very convenient in this case.
+        #we use zip here because python's zip automatically finishes when one of its iterables is exhausted.
+        #which turns out to be very convenient in this case.
         for (dx, dy), limit in zip(directions, limits):
             for i, _ in zip(range(limit[0]), range(limit[1])):
                 if self.active:
