@@ -41,4 +41,17 @@ class Board:
                      (x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE),
                      8)
         
+        
+    def blink_moves(self, coords, opp_color):
+        for x_y in coords:
+            if x_y != None:
+                x, y = x_y
+                field = self.chess_matrix[y][x]
+                if field == 0:
+                    self.blink_tile(x, y)
+                else:
+                    if field.color == opp_color:
+                        self.red_tile(x, y)
+                
+        
        

@@ -40,8 +40,7 @@ class App:
                         if isinstance(self.selected, Piece):
                             if self.selected.color == color:
                                 self.picked = True
-                                self.allowed_moves = list(self.selected.pick(*pos_idx, self.current_player))
-                                self.allowed_moves.extend(self.selected.show_capture(*pos_idx, self.current_player))
+                                self.allowed_moves = list(self.selected.pick())
                                 self.current_pos_idx = pos_idx
                     else:                    
                         self.move_to = self.board.chess_matrix[pos_idx[1]][pos_idx[0]]
@@ -54,13 +53,14 @@ class App:
                             self.selected.rect.center = (pos_idx[0] * TILE_SIZE + TILE_SIZE_05,
                                                          pos_idx[1] * TILE_SIZE + TILE_SIZE_05)
                             self.selected.assign_pos(pos_idx[1], pos_idx[0])
+                            self.selected.update_idx()
                             self.surface.fill(BOARD_COLOR_1)
                             self.board.draw()
                             self.picked = False
                             self.current_player = 1 if self.current_player == 0 else 0    
                             if isinstance(self.selected, Pawn):
                                 self.selected.touched = True  
-                            next_move = self.selected.calculate_next_move(pos_idx[0], pos_idx[1])
+                            next_move = self.selected.calculate_next_move()
                             for move in next_move:
                                 if move != None:
                                     x, y = move
@@ -72,11 +72,8 @@ class App:
                 else:
                     self.picked = False
                     self.surface.fill(BOARD_COLOR_1)
-                    self.board.draw() 
-                      
-    def update(self):
-        self.clock.tick(FPS)                   
-        self.draw()                   
+                    self.board.draw()  
+                                
         
         
     def draw_symbols(self):
@@ -87,13 +84,20 @@ class App:
                                   (pos, SOME_MORE_SPACE // 2 + TILE_SIZE_05 + j * TILE_SIZE)
                                    if i == 0 else (SOME_MORE_SPACE // 2 + TILE_SIZE_05 + j * TILE_SIZE, pos)) 
         
+        
+    def update(self):
+        self.clock.tick(FPS)                
+        self.draw()          
+    
+        
     def draw(self):
         self.screen.fill(BACKGROUND_COLOR)
         self.screen.blit(self.surface, (self.board_pos))
         self.player_black.draw()
         self.player_white.draw()
         self.draw_symbols()
-        pg.display.flip()       
+        pg.display.flip()    
+           
             
     def run(self):
         while True:

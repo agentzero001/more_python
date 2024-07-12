@@ -21,116 +21,86 @@ class Piece(pg.sprite.Sprite):
         self.idx_y = self.y // TILE_SIZE
         self.assign_pos(self.idx_y, self.idx_x)
         self.picked = False
+        
+    def pick(self):
+        self.board.border_tile(self.idx_x, self.idx_y)
+        possible_moves = self.calculate_moves()      
+        self.board.blink_moves(possible_moves, 'black' if self.color == 'white' else 'white')  
+        return possible_moves
            
     def assign_pos(self, x, y):
-        self.board.chess_matrix[x][y] = self
-        
-    def show_capture(self, x, y, color):
-        return [None]             
-    
-    
-    #firstly next up every unique piece type will need a calculate move method.
-    #secondly the calls to blink tile have to happen externally (somehow???)
-    #thirdly every piece will have to get its next move calculated to block that move from
-    #the king's allowed moves.
-    #also the piece that sets check should get a different border tile color
+        self.board.chess_matrix[x][y] = self         
                     
     def check_fields(self, field, opp_color):
         moves = []
         field_obj = self.board.chess_matrix[field[1]][field[0]]
         if isinstance(field_obj, Piece):
             if field_obj.color == opp_color:
-                self.board.red_tile(*field)
                 moves.append(field)
                 self.active = False 
             else:             
                 self.active = False 
         else:
             moves.append(field)
-            self.board.blink_tile(*field)
         return moves 
     
     
-    def calculate_next_move(self, x, y):
-        moves = list(self.pick(x, y, self.current_player))
-        moves.extend(self.show_capture(x, y, self.current_player))
+    def calculate_next_move(self):
+        if type(self).__name__ == 'Pawn':
+            moves = self.show_capturing_moves()
+        else:
+            moves = self.calculate_moves()
+            
+        print(moves)
         return moves
     
-    
-       
+    def update_idx(self):
+        self.idx_x, self.idx_y = self.rect.center[0] // TILE_SIZE, self.rect.center[1] // TILE_SIZE
+        print(self.idx_x, self.idx_y)
        
 #checkmate and stalemate left here 
+#block the king moves where it would run into check.
 class King(Piece):
     def __init__(self, x, y, color, board):
         super().__init__(x, y, color, 'king', board)
+    
+    def calculate_moves(self):
+        opp_color = 'black' if self.color == 'white' else 'white'
+        x, y = self.idx_x, self.idx_y
+        allowed_moves = []
+        possible_moves = [(dx + x, dy + y) for dx in range(-1, 2) for dy in range(-1, 2)
+                         if not(dx == 0 and dy == 0) and (0 <= dx + x <= 7) and (0 <= dy + y <= 7)]
         
-    def pick(self, x, y, player):
-        self.board.border_tile(x, y)
-        allowed_moves = self.calculate_moves(x, y)
-        actual_allowed_moves = []
-        for coords in allowed_moves:
-            blocking_piece = self.board.chess_matrix[coords[1]][coords[0]]
-            if not(isinstance(blocking_piece, Piece)):
-                self.board.blink_tile(*coords)
-                actual_allowed_moves.append(coords)
-                
-            actual_allowed_moves.append((3, 3))
-        return actual_allowed_moves
-    
-    def show_capture(self, x, y, player):
-        opp_color = 'black' if player == 0 else 'white'
-        possible_moves = self.calculate_moves(x, y)
-        kill_moves = [None]
-        for coords in possible_moves:
-            enemy_piece = self.board.chess_matrix[coords[1]][coords[0]]
-            if isinstance(enemy_piece, Piece):
-                if enemy_piece.color == opp_color:
-                    self.board.red_tile(*coords)
-                    kill_moves.append(coords)    
-        return kill_moves        
-    
-    calculate_moves = lambda self, x, y: [(dx + x, dy + y)
-                                          for dx in range(-1, 2) 
-                                          for dy in range(-1, 2)
-                                          if not(dx == 0 and dy == 0) 
-                                             and (0 <= dx + x <= 7)
-                                             and (0 <= dy + y <= 7)]
-    
+        for field in possible_moves:
+            allowed_moves.extend(self.check_fields(field, opp_color))
+
+        return allowed_moves
+
+
     def check(self):
-        print('check')
+        self.board.red_tile(self.idx_x, self.idx_y)
     
     
                      
 #only thing left to do here is pawn promotion.
+
 class Pawn(Piece):
     def __init__(self, x, y, color, board):
         super().__init__(x, y, color, 'pawn', board)
         self.touched = False
         
-    def pick(self, x, y, player, blink=True):
-        if blink:
-            self.board.border_tile(x, y)
-        allowed_move1 = x, y+1 if self.color == 'black' else y-1
-        blocking_piece = self.board.chess_matrix[allowed_move1[1]][allowed_move1[0]]
-        if isinstance(blocking_piece, Piece):
-            return [None]
-        if blink:
-            self.board.blink_tile(*allowed_move1)
-        self.picked = True
-        if self.touched == False:
-            allowed_move2 = x, y+2 if self.color == 'black' else y-2
-            blocking_piece = self.board.chess_matrix[allowed_move2[1]][allowed_move2[0]]
-            if isinstance(blocking_piece, Piece):
-                return [allowed_move1]
-            self.board.blink_tile(*allowed_move2)
-            return allowed_move1, allowed_move2
-        return [allowed_move1]
+    def pick(self):
+        self.board.border_tile(self.idx_x, self.idx_y)
+        self.board.blink_moves(self.calculate_moves(), 'black' if self.color == 'white' else 'white')
+        self.board.blink_moves(self.show_capturing_moves(), 'black' if self.color == 'white' else 'white')  
+        return self.calculate_moves() + self.show_capturing_moves()
     
-    def show_capture(self, x, y, player):
-        opp_color = 'black' if player == 0 else 'white'
-        move_direction = y - 1 if player == 0 else y + 1
+    def show_capturing_moves(self):
+        x, y = self.idx_x, self.idx_y
+        opp_color = 'black' if self.color == 'white' else 'white'
+        move_direction = y - 1 if self.color == 'white' else y + 1
         pos_move1 = self.board.chess_matrix[move_direction][x-1]
-        if x+1 <= 7:
+        if x + 1 <= 7:
             pos_move2 = self.board.chess_matrix[move_direction][x+1]
         else:
             pos_move2 = None
@@ -138,13 +108,31 @@ class Pawn(Piece):
         allowed_move2 = None    
         if isinstance(pos_move1, Piece):
             if pos_move1.color == opp_color:
-                allowed_move1 = x - 1, y - 1 if player == 0 else y + 1
-                self.board.red_tile(*allowed_move1)
+                allowed_move1 = x - 1, y - 1 if self.color == 'white' else y + 1
+                # self.board.red_tile(*allowed_move1)
         if isinstance(pos_move2, Piece):
             if pos_move2.color == opp_color:
-                allowed_move2 = x + 1, y - 1 if player == 0 else y + 1
-                self.board.red_tile(*allowed_move2)
-        return allowed_move1, allowed_move2
+                allowed_move2 = x + 1, y - 1 if self.color == 'white' else y + 1
+                # self.board.red_tile(*allowed_move2)
+        return [allowed_move1, allowed_move2]
+    
+    def calculate_moves(self):
+        x, y = self.idx_x, self.idx_y
+        allowed_move1 = x, y+1 if self.color == 'black' else y-1
+        blocking_piece = self.board.chess_matrix[allowed_move1[1]][allowed_move1[0]]
+        if isinstance(blocking_piece, Piece):
+            return [None]
+        # self.board.blink_tile(*allowed_move1)
+        if self.touched == False:
+            allowed_move2 = x, y+2 if self.color == 'black' else y-2
+            blocking_piece = self.board.chess_matrix[allowed_move2[1]][allowed_move2[0]]
+            if isinstance(blocking_piece, Piece):
+                return [allowed_move1]
+            # self.board.blink_tile(*allowed_move2)
+            return [allowed_move1, allowed_move2]
+        return [allowed_move1]
+        
+        
     
     
                         
@@ -152,55 +140,33 @@ class Knight(Piece):
     def __init__(self, x, y, color, board):
         super().__init__(x, y, color, 'knight', board)
         
-        
-    
-    def pick(self, x, y, player):
-        opp_color = 'black' if player == 0 else 'white'
-        allowed_moves = [None]
-        self.board.border_tile(x, y)
-        moves = self.calculate_moves(x, y)
-        
-        for coords in moves:
-            blocking_piece = self.board.chess_matrix[coords[1]][coords[0]]
-            if isinstance(blocking_piece, Piece):
-                if blocking_piece.color == opp_color:
-                    self.board.red_tile(*coords)
-                    allowed_moves.append(coords)
-            else:
-                self.board.blink_tile(*coords) 
-                allowed_moves.append(coords)
-                      
-        print(allowed_moves)
-        return allowed_moves
-                
     def draw(self, screen):
         screen.blit(self.image, self.rect) 
         
-    calculate_moves = lambda self, x, y: [(dx, dy) for dx, dy in (( 2 + x, y + 1),
-                                                                  ( 2 + x, y - 1),
-                                                                  (-2 + x, y + 1), 
-                                                                  (-2 + x, y - 1),
-                                                                  (-1 + x, y + 2),
-                                                                  ( 1 + x, y + 2), 
-                                                                  (-1 + x, y - 2), 
-                                                                  ( 1 + x, y - 2))  
-                                                    if (0 <= dx <=7 and 0 <= dy <= 7)]
+    def calculate_moves(self):
+        x, y = self.idx_x, self.idx_y
+        opp_color = 'black' if self.color == 'white' else 'white'
+        allowed_moves = []
+        move_pattern = (( 2 + x, y + 1), ( 2 + x, y - 1), (-2 + x, y + 1), (-2 + x, y - 1),
+                        (-1 + x, y + 2), ( 1 + x, y + 2), (-1 + x, y - 2), ( 1 + x, y - 2))
+        possible_moves = [(dx, dy) for dx, dy in move_pattern if (0 <= dx <=7 and 0 <= dy <= 7)]
+        
+        for field in possible_moves:
+            allowed_moves.extend(self.check_fields(field, opp_color))
+        
+        return allowed_moves
         
     
 class Rook(Piece):
     def __init__(self, x, y, color, board):
         super().__init__(x, y, color, 'rook', board)
         
-    def pick(self, x, y, player):
-        self.board.border_tile(x, y)
-        possible_moves = self.calculate_moves(x, y, player)
-        return possible_moves
-        
     def draw(self, screen):
         screen.blit(self.image, self.rect) 
     
-    def calculate_moves(self, x, y, player):
-        opp_color = 'black' if player == 0 else 'white'
+    def calculate_moves(self):
+        x, y = self.idx_x, self.idx_y
+        opp_color = 'black' if self.color == 'white' else 'white'
         self.active = True   
         possible_moves = []
         
@@ -223,16 +189,12 @@ class Bishop(Piece):
     def __init__(self, x, y, color, board):
         super().__init__(x, y, color, 'bishop', board)
         
-    def pick(self, x, y, player):
-        self.board.border_tile(x, y)
-        possible_moves = self.calculate_moves(x, y, player)        
-        return possible_moves
-        
     def draw(self, screen):
         screen.blit(self.image, self.rect) 
         
-    def calculate_moves(self, x, y, player):
-        opp_color = 'black' if player == 0 else 'white'
+    def calculate_moves(self):
+        x, y = self.idx_x, self.idx_y
+        opp_color = 'black' if self.color == 'white' else 'white'
         self.active = True   
         possible_moves = []
         
@@ -256,11 +218,13 @@ class Queen(Piece):
     def __init__(self, x, y, color, board):
         super().__init__(x, y, color, 'queen', board)
         
-    def pick(self, x, y, player):
-        opp_color = 'black' if player == 0 else 'white'
-        self.active = True  
-        self.board.border_tile(x, y)
+    def draw(self, screen):
+        screen.blit(self.image, self.rect) 
         
+    def calculate_moves(self):
+        x, y = self.idx_x, self.idx_y
+        self.active = True
+        opp_color = 'black' if self.color == 'white' else 'white'  
         possible_moves = []
         positive_x_moves = 7 - x
         positive_y_moves = 7 - y  
@@ -283,11 +247,4 @@ class Queen(Piece):
                     possible_moves.extend(self.check_fields((x + (i + 1) * dx, y + (i + 1) * dy), opp_color))
             self.active = True
         
-        return possible_moves 
-        
-    def draw(self, screen):
-        screen.blit(self.image, self.rect) 
-        
-        
-    def calculate_moves(self, x, y, player):
-        pass
+        return possible_moves
