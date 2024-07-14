@@ -3,7 +3,6 @@ import pygame as pg
 from const import *
 from utils import get_scaled_image
       
-        
 class Piece(pg.sprite.Sprite):
     def __init__(self, x, y, color, piece_name, board):
         self.x = x
@@ -24,8 +23,7 @@ class Piece(pg.sprite.Sprite):
         
     def pick(self):
         self.board.border_tile(self.idx_x, self.idx_y)
-        possible_moves = self.calculate_moves()      
-        self.board.blink_moves(possible_moves, 'black' if self.color == 'white' else 'white')  
+        possible_moves = self.calculate_moves()       
         return possible_moves
            
     def assign_pos(self, x, y):
@@ -51,15 +49,20 @@ class Piece(pg.sprite.Sprite):
         else:
             moves = self.calculate_moves()
             
-        print(moves)
+        #print(moves)
         return moves
     
     def update_idx(self):
         self.idx_x, self.idx_y = self.rect.center[0] // TILE_SIZE, self.rect.center[1] // TILE_SIZE
         print(self.idx_x, self.idx_y)
-       
-#checkmate and stalemate left here 
-#block the king moves where it would run into check.
+        
+    def blink(self):
+        self.board.red_border(self.idx_x, self.idx_y)
+        
+
+#when check the only next moves are to move the king out or
+#to move another piece inbetween. But only if that piece you are moving inbetween
+#is not already blocking a check move
 class King(Piece):
     def __init__(self, x, y, color, board):
         super().__init__(x, y, color, 'king', board)
@@ -76,7 +79,6 @@ class King(Piece):
 
         return allowed_moves
 
-
     def check(self):
         self.board.red_tile(self.idx_x, self.idx_y)
     
@@ -91,8 +93,6 @@ class Pawn(Piece):
         
     def pick(self):
         self.board.border_tile(self.idx_x, self.idx_y)
-        self.board.blink_moves(self.calculate_moves(), 'black' if self.color == 'white' else 'white')
-        self.board.blink_moves(self.show_capturing_moves(), 'black' if self.color == 'white' else 'white')  
         return self.calculate_moves() + self.show_capturing_moves()
     
     def show_capturing_moves(self):
@@ -109,11 +109,9 @@ class Pawn(Piece):
         if isinstance(pos_move1, Piece):
             if pos_move1.color == opp_color:
                 allowed_move1 = x - 1, y - 1 if self.color == 'white' else y + 1
-                # self.board.red_tile(*allowed_move1)
         if isinstance(pos_move2, Piece):
             if pos_move2.color == opp_color:
                 allowed_move2 = x + 1, y - 1 if self.color == 'white' else y + 1
-                # self.board.red_tile(*allowed_move2)
         return [allowed_move1, allowed_move2]
     
     def calculate_moves(self):
@@ -122,20 +120,23 @@ class Pawn(Piece):
         blocking_piece = self.board.chess_matrix[allowed_move1[1]][allowed_move1[0]]
         if isinstance(blocking_piece, Piece):
             return [None]
-        # self.board.blink_tile(*allowed_move1)
         if self.touched == False:
             allowed_move2 = x, y+2 if self.color == 'black' else y-2
             blocking_piece = self.board.chess_matrix[allowed_move2[1]][allowed_move2[0]]
             if isinstance(blocking_piece, Piece):
                 return [allowed_move1]
-            # self.board.blink_tile(*allowed_move2)
             return [allowed_move1, allowed_move2]
         return [allowed_move1]
-        
-        
     
+    def calculate_capturing_moves(self):
+        x, y = self.idx_x, self.idx_y
+                   
+        allowed_move1 = x - 1, y - 1 if self.color == 'white' else y + 1  
+        allowed_move2 = x + 1, y - 1 if self.color == 'white' else y + 1
+        return [allowed_move1, allowed_move2]  
     
-                        
+           
+                    
 class Knight(Piece):
     def __init__(self, x, y, color, board):
         super().__init__(x, y, color, 'knight', board)
