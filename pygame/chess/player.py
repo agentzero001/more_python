@@ -38,10 +38,10 @@ class Player:
     def kill_moves(self):
         kill_moves = []
         for piece in self.piece_group:
-            kill_moves += piece.calculate_next_move()
+            kill_moves += piece.possible_moves
             
         for pawn in self.pawns:
-            kill_moves += pawn.calculate_capturing_moves()
+            kill_moves += pawn.calculate_capturing_moves
             
         return kill_moves
             

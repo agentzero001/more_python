@@ -12,7 +12,7 @@ class Cube:
         self.on_init()
           
     def update(self):
-        m_model = glm.rotate(self.m_model, self.app.time * .8, glm.vec3(1, 0, 1))
+        m_model = glm.rotate(self.m_model, self.app.time * .08, glm.vec3(1, 0, 0))
         self.shader_program['m_model'].write(m_model)
         self.shader_program['m_view'].write(self.app.camera.m_view)
         
