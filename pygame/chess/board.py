@@ -8,8 +8,7 @@ class Board:
         self.color = BOARD_COLOR_2
         self.chess_matrix = [[0] * 8 for i in range(8)]
         self.surface = pg.Surface((TILE_SIZE, TILE_SIZE))
-        self.light_surface = pg.Surface((TILE_SIZE, TILE_SIZE), pg.SRCALPHA)
-        
+        self.light_surface = pg.Surface((TILE_SIZE, TILE_SIZE), pg.SRCALPHA)        
                          
     def draw(self):
         k = 0
@@ -22,8 +21,7 @@ class Board:
                     self.app.surface.blit(self.surface, (i + TILE_SIZE, j))
                 k += 1
                 
-
-                  
+        
     def blink_tile(self, x, y):
         self.light_surface.fill((255, 255, 255, 70))
         self.app.surface.blit(self.light_surface, (x * TILE_SIZE, y * TILE_SIZE))
@@ -43,15 +41,11 @@ class Board:
                      (127, 100, 100),
                      (x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE),
                      8)
-        
-        
-    def red_tile2(self,move):
-        if move != None:
-            x, y = move
-            self.light_surface.fill((255, 0, 0, 100))
-            self.app.surface.blit(self.light_surface, (x * TILE_SIZE, y * TILE_SIZE))
-        else:
-            pass        
+            
+    
+    def black_tile(self, x, y):
+        self.light_surface.fill((120, 0, 0, 100))
+        self.app.surface.blit(self.light_surface, (x * TILE_SIZE, y * TILE_SIZE))  
         
     def blink_moves(self, coords, opp_color):
         for x_y in coords:

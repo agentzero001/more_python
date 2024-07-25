@@ -40,11 +40,14 @@ class Camera:
         self.forward.y = glm.sin(pitch)
         self.forward.z = glm.sin(yaw) * glm.cos(pitch)
         
-        self.forward = glm.normalize(self.forward)
-        self.right = glm.normalize(glm.cross(self.forward), glm.vec3(0, 1, 0))
+        self.forward = glm.normalize(self.forward) 
+        self.right = glm.normalize(glm.cross(self.forward, glm.vec3(0, 1, 0)))
+        self.right = glm.normalize(glm.cross(self.right, self.forward))
         
     def update(self):
         self.move()
+        self.rotate()
+        self.update_camera_vectors()
         self.m_view = self.get_view_matrix() 
         
     def move(self):

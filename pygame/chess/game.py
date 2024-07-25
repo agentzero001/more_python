@@ -54,17 +54,28 @@ class App:
         
     def take_turn(self, pos_idx, color):
         opp_player = self.player_black if self.current_player == 'white' else self.player_white
+        curr_player = self.player_black if self.current_player == 'black' else self.player_white
         if self.picked == False:                    
             self.selected = self.board.chess_matrix[pos_idx[1]][pos_idx[0]]
             if isinstance(self.selected, Piece):
                 if self.selected.color == color:
                     self.picked = True
-                    if isinstance(self.selected, King):
-                        self.allowed_moves = self.selected.pick()
-                        self.allowed_moves = [move for move in self.allowed_moves if move not in opp_player.kill_moves()]
-                    else:                                   
-                        self.allowed_moves = self.selected.pick()
-                        
+                    if self.check == True:
+                        if not isinstance(self.selected, King):
+                            #only a piece which can kill the self.check_piece or a piece to move inbetween can be selected here
+                            #and the only possible move has to be that move.
+                            pass
+                        else: 
+                            self.allowed_moves = self.selected.pick()
+                            self.allowed_moves = [move for move in self.allowed_moves if move not in opp_player.kill_moves()]
+                                                                  
+                    else:    
+                        if isinstance(self.selected, King):
+                            self.allowed_moves = self.selected.pick()
+                            self.allowed_moves = [move for move in self.allowed_moves if move not in opp_player.kill_moves()]
+                        else:                                   
+                            self.allowed_moves = self.selected.pick()
+                            
                     self.current_pos_idx = pos_idx
                     self.board.blink_moves(self.allowed_moves, 'black' if self.current_player == 'white' else 'white') 
         else:                    
@@ -82,6 +93,7 @@ class App:
                 self.surface.fill(BOARD_COLOR_1)
                 self.board.draw()
                 self.picked = False
+                self.check = False
                 self.current_player = 'black' if self.current_player == 'white' else 'white'    
                 if isinstance(self.selected, Pawn):
                     self.selected.touched = True  
@@ -89,12 +101,24 @@ class App:
                 for move in next_move:
                     if move != None:
                         x, y = move
-                        self.king = self.board.chess_matrix[y][x]
-                        if isinstance(self.king, King):
-                            self.king.check()
-                            self.selected.blink() 
-                                    
-        
+                        if isinstance(self.board.chess_matrix[y][x], King):
+                            self.check = True
+                            self.king = self.board.chess_matrix[y][x]
+                            
+                            #the index of the self.check_piece is gonna be important
+                            #need to use it in a method in the player class
+                            self.check_piece = self.selected
+                kill_moves = curr_player.kill_moves()
+                print(kill_moves)
+                if (opp_player.king.idx_x, opp_player.king.idx_y) in kill_moves:
+                    #we need a dict here to solve the problem that the self.check_piece 
+                    #has to be determined. Something like this {piece: [*kill_moves], ...}
+                    #also check_piece in this particular case can only be Queen, Rook or Bishop.
+                    self.check = True
+                    self.king = opp_player.king
+                
+                
+                                                                
     def draw_symbols(self):
         for i in range(2):
             for pos in XY_POS[i]:   
@@ -103,11 +127,9 @@ class App:
                                   (pos, SOME_MORE_SPACE // 2 + TILE_SIZE_05 + j * TILE_SIZE)
                                    if i == 0 else (SOME_MORE_SPACE // 2 + TILE_SIZE_05 + j * TILE_SIZE, pos)) 
         
-        
     def update(self):
-        self.clock.tick(FPS)                
+        self.clock.tick(FPS)              
         self.draw()     
-    
         
     def draw(self):
         self.screen.fill(BACKGROUND_COLOR)
@@ -115,8 +137,10 @@ class App:
         self.player_black.draw()
         self.player_white.draw()
         self.draw_symbols()
-        pg.display.flip()    
-           
+        if self.check:
+            self.check_piece.blink()
+            self.board.black_tile(self.king.idx_x, self.king.idx_y)
+        pg.display.flip()          
             
     def run(self):
         while True:
