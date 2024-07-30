@@ -5,7 +5,7 @@ FOV = 50 #deg
 NEAR = .1
 FAR = 100
 SPEED = .01
-SENSITIVITY  = .05
+SENSITIVITY  = .1
 
 class Camera:
     def __init__(self, app, position=(0, 0, 4), yaw = -90, pitch=0):
@@ -42,7 +42,7 @@ class Camera:
         
         self.forward = glm.normalize(self.forward) 
         self.right = glm.normalize(glm.cross(self.forward, glm.vec3(0, 1, 0)))
-        self.right = glm.normalize(glm.cross(self.right, self.forward))
+        self.up = glm.normalize(glm.cross(self.right, self.forward))
         
     def update(self):
         self.move()
