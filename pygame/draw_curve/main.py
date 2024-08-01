@@ -1,20 +1,14 @@
 import sys 
 import numpy as np
 import pygame as pg
+from const import *
  
 pg.init()
 
-RES = WIDTH, HEIGHT = 800, 800
-SCALE_FACTOR = 1
-SIZE = 200
-FPS = 60
-GREY = (100,100,100)
-POINTS = [(-10, -10), (100, 100), (200, 200), (400, 200)]
-
 def draw_curve(f, a, b, n=200):
     t = np.linspace(a, b, n)
-    c_x, c_y = f(t)
-    pg.draw.aalines(screen, GREY, False, [conv_coords(x, y) for x,y in zip(c_x, c_y)]  , 1) 
+    # c_x, c_y = f(t)
+    pg.draw.aalines(screen, GREY, False, [conv_coords(x, y) for x, y in zip(*f(t))]  , 1) 
 
 
 
@@ -28,8 +22,6 @@ conv_coords = lambda x, y: ((x + WIDTH // 2), (-y  + HEIGHT // 2))
 draw_point = lambda x, y, color=GREY, radius=2: pg.draw.circle(screen, color, conv_coords(x,y), radius)
 
 a = lambda t: (200*np.sin(t), 100*np.cos(t))
-
-#da_dt = lambda t: 
 
 print(conv_coords(20, 20))
 
