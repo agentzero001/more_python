@@ -1,7 +1,7 @@
 import pygame as pg
 from const import *
 from utils import *
-from curve import Curve
+from objects import Curve, Vector
 import numpy as np
 from numpy import sin, cos
 import sys
@@ -18,6 +18,7 @@ class Render_Curve:
         self.running = True
         self.curve = Curve(self, self.f)
         self.k = 0
+        
         
                 
     def check_events(self):
@@ -40,6 +41,7 @@ class Render_Curve:
         self.display_function()
         self.display_current_value()
         self.curve.draw(self.k)
+        self.display_velocity_vector()
         pg.display.flip()
     
     def update(self):
@@ -47,6 +49,7 @@ class Render_Curve:
         self.clock.tick(FPS)
         self.k += STEP
         self.k %= 2 * np.pi
+        self.curve.update(self.k)
         
     def close(self):
         pg.quit()
@@ -59,24 +62,31 @@ class Render_Curve:
     def render_mouse_pos(self):
         m_x, m_y  = pg.mouse.get_pos() 
         m_x, m_y = m_x - WIDTH // 2, - (m_y - HEIGHT // 2 )
-        display_text(self.screen, "Mouse Position: ({}, {}) (not normalized)".format(m_x, m_y), (10, 10), 24)
+        display_text(self.screen, "Mouse Position: ({}, {}) (not normalized)".format(m_x, m_y), (10, 10), FONT_SIZE)
         
     def display_function(self):
-        display_text(self.screen, "x(t) = " + self.x_t, (10, 50), 24)
-        display_text(self.screen, "y(t) = " + self.y_t, (10, 70), 24)
+        display_text(self.screen, "x(t) = " + self.x_t, (10, 50), FONT_SIZE)
+        display_text(self.screen, "y(t) = " + self.y_t, (10, 70), FONT_SIZE)
+        
+        
+    def display_velocity_vector(self):
+        display_text(self.screen, "x'({}) = {}".format(round(self.k, 1), self.curve.dx_dt), (10, 210), FONT_SIZE)
+        display_text(self.screen, "y'({}) = {}".format(round(self.k, 1), self.curve.dy_dt), (10, 230), FONT_SIZE)
         
     def display_current_value(self):
         n_digits = 1
         k = round(self.k, n_digits)
         x, y = self.curve.current_value
         x, y = round(x, n_digits), round(y, n_digits)        
-        strings = [ "t = {}".format(k), "x({}) = {}".format(k, x), "y({}) = {}".format(k, y)]
-        coordinates = [(10, 110), (10, 130),(10, 150)]
+        strings = ["t = {}".format(k), "x({}) = {}".format(k, x), "y({}) = {}".format(k, y)]
+        coordinates = [(10, 130), (10, 150),(10, 170)]
         for text, coords in zip(strings, coordinates):
-            display_text(self.screen, text, coords, 26)                        
+            display_text(self.screen, text, coords, FONT_SIZE)                        
                         
                         
 if __name__ == '__main__':
-    app = Render_Curve(x_t = "2*sin(2*t)", y_t="1.5*cos(3*t)")
+    #app = Render_Curve(x_t = "2*sin(2*t)", y_t="1.5*cos(t)")
+    app = Render_Curve(x_t = "cos(t)", y_t="sin(t)")
+    
     app.run()
     

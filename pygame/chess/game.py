@@ -104,7 +104,6 @@ class App:
                         if isinstance(self.board.chess_matrix[y][x], King):
                             self.check = True
                             self.king = self.board.chess_matrix[y][x]
-                            
                             #the index of the self.check_piece is gonna be important
                             #need to use it in a method in the player class
                             self.check_piece = self.selected
