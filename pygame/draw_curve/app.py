@@ -85,8 +85,8 @@ class Render_Curve:
                         
                         
 if __name__ == '__main__':
-    #app = Render_Curve(x_t = "2*sin(2*t)", y_t="1.5*cos(t)")
-    app = Render_Curve(x_t = "cos(t)", y_t="sin(t)")
+    app = Render_Curve(x_t = "2*sin(2*t)", y_t="1.5*cos(t)")
+    #app = Render_Curve(x_t = "cos(t)", y_t="sin(t)")
     
     app.run()
     
