@@ -33,13 +33,13 @@ class App:
                 sys.exit()  
             
             #the next 6 lines are only for debugging purposes
-            king2 = self.board.chess_matrix[7][4]   
-            if isinstance(king2, King):
-                king2.idx_x = 3
-                king2.idx_y = 3
-                king2.assign_pos(king2.idx_x, king2.idx_y)
-                king2.rect.center = king2.idx_x * TILE_SIZE + TILE_SIZE_05, king2.idx_y * TILE_SIZE + TILE_SIZE_05
-                self.board.chess_matrix[7][4] = 0
+            # king2 = self.board.chess_matrix[7][4]   
+            # if isinstance(king2, King):
+            #     king2.idx_x = 3
+            #     king2.idx_y = 3
+            #     king2.assign_pos(king2.idx_x, king2.idx_y)
+            #     king2.rect.center = king2.idx_x * TILE_SIZE + TILE_SIZE_05, king2.idx_y * TILE_SIZE + TILE_SIZE_05
+            #     self.board.chess_matrix[7][4] = 0
                   
             if event.type == pg.MOUSEBUTTONDOWN:
                 if event.button == 1:

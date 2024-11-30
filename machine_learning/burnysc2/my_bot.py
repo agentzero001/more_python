@@ -3,8 +3,9 @@ from sc2.data import Difficulty, Race
 from sc2.player import Bot, Computer  
 from sc2 import maps  # maps method for loading maps to play in.
 from sc2.ids.unit_typeid import UnitTypeId as ut
-import sc2
+from sc2.main import run_game
 import time
+import sc2
 import random
 
 class MyBot(BotAI):
@@ -101,7 +102,7 @@ class MyBot(BotAI):
 		# 	f"gateways: {self.units(ut.GATEWAY).amount}, cybernetics cores: {self.units(ut.CYBERNETICSCORE).amount}", \
 		# 	f"stargates: {self.units(ut.STARGATE).amount}, voidrays: {self.units(ut.VOIDRAY).amount}, supply: {self.supply_used}/{self.supply_cap}")
            
-sc2.run_game(sc2.maps.get("WorldofSleepersLE"),
+run_game(sc2.maps.get("WorldofSleepersLE"),
              [Bot(sc2.Race.Protoss, MyBot()), Computer(sc2.Race.Zerg, sc2.Difficulty.Easy)],
              realtime=False,
              game_time_limit=1800)
